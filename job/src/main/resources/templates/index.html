@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="keywords" content="" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- Custom Theme files -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+    <!-- font-awesome icons -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- //Custom Theme files -->
+    <!-- online-fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Slider -->
+    <div class="w3-banner-info-w3ltd position-relative">
+        <!-- header -->
+        <header>
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light p-0">
+                    <h1><a class="navbar-brand" href="index.html">校园兼职网</a></h1>
+                    <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="ml-lg-5 navbar-nav mr-lg-auto">
+                            <li class="nav-item active  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a href="index.html">首页</a>
+                            </li>
+                            <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a href="about.html">about</a>
+                            </li>
+                            <li class="nav-item dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
+                                <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Pages
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a href="job_list.html">Job List</a>
+                                    <a href="job_single.html">Job Single</a>
+                                </div>
+                            </li>
+                            <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
+                                <a href="contact.html">contact</a>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
+                            aria-pressed="false" data-target="#exampleModal1">
+                            Register
+                        </button>
+                        <button type="button" class="btn w3ls-btn btn-2 ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#exampleModal">
+                            Sign in
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- //header -->
+        <div class="slider">
+            <ul class="rslides" id="slider">
+                <li>
+                    <div class="d-flex banner-w3pvt-bg1 common-bg">
+                        <div class="d-flex mx-auto align-items-center justify-content-center flex-column">
+                            <div class="bnr-w3pvt">
+                                <h3>global recruitment</h3>
+                                <div class="d-flex justify-content-between bnr-sub-txt align-items-center">
+                                    <span></span>
+                                    <p class="text-uppercase text-white">allowing you to expand quickly</p>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between bnr-form-w3ls">
+                                <div class="col-lg-4">
+                                    <h4>寻找一份心仪的兼职.</h4>
+                                </div>
+                                <div class="col-lg-8">
+                                    <form action="" th:action="@{~/job/findJob}"  method="post" class="bnr-field">
+                                        <div class="row">
+                                            <div class="col-md-5 form-group mb-md-0">
+
+                                                <input class="form-control" type="text" name="jobName" required=""
+                                                    placeholder="工作名称">
+                                            </div>
+                                            <div class="col-md-5 mb-md-0 form-group">
+
+                                                <input class="form-control" type="text" name="jobPlace" required=""
+                                                    placeholder="工作地点">
+                                            </div>
+                                            <div class="col-md-2 d-flex align-items-end">
+                                                <button type="submit" class="btn btn-w3ltd btn-block w-100 bg-theme font-weight-bold text-uppercase"><span
+                                                        class="fa fa-search"></span></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- //services -->
+    <!-- job roles -->
+    <div class="wthreepvt-pos py-md-5 py-5" id="positions">
+        <div class="container py-lg-5">
+            <div class="wthreepvt-pos-row row  text-center">
+                <div class="col-lg-4 col-sm-6 wthreepvt-pos-grids">
+                    <div class="p-md-5 p-sm-3">
+                        <span class="fa fa-check-square" aria-hidden="true"></span>
+                        <h4 class="mt-2 mb-3">Computer & IT</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 wthreepvt-pos-grids  border-left border-right my-sm-0 my-5">
+                    <div class="p-md-5 p-sm-3">
+                        <span class="fa fa-suitcase" aria-hidden="true"></span>
+                        <h4 class="mt-2 mb-3">Marketing</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 wthreepvt-pos-grids">
+                    <div class="p-md-5 p-sm-3">
+                        <span class="fa fa-thumbs-up" aria-hidden="true"></span>
+                        <h4 class="mt-2 mb-3">Insurance</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
+                    </div>
+                </div>
+            </div>
+            <div class="wthreepvt-pos-row border-top row text-center pb-lg-5 pt-md-0 pt-5 mt-md-0 mt-sm-5 mt-4">
+                <div class="col-lg-4 col-sm-6 wthreepvt-pos-grids">
+                    <div class="p-md-5 p-sm-3 col-label">
+                        <span class="fa fa-thumb-tack" aria-hidden="true"></span>
+                        <h4 class="mt-2 mb-3">Customer Service</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 wthreepvt-pos-grids mt-lg-0 mt-md-3 border-left border-right pt-sm-0 pt-5">
+                    <div class="p-md-5 p-sm-3 col-label">
+                        <span class="fa fa-external-link" aria-hidden="true"></span>
+                        <h4 class="mt-2 mb-3">health care</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 wthreepvt-pos-grids pt-md-0 pt-5">
+                    <div class="p-md-5 p-sm-3 col-label">
+                        <span class="fa fa-cog" aria-hidden="true"></span>
+                        <h4 class="mt-2 mb-3">automotive</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //blog -->
+    <!-- Footer -->
+    <footer id="footer" class="py-sm-5 py-4 bg-theme">
+        <div class="container">
+            <div class="footer-top-w3ls">
+                <h2><a href="index.html" class="navbar-brand">校园兼职网</a></h2>
+                <p class="text-white">Lorem ipsum dolor sit amet,sed diam nonumy eirmod tempor invidunt
+                    ut labore et dolore magna aliquyam
+                    erat, At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, no sea
+                    takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus
+                    est
+                    Lorem ipsum dolor sit amet. no sea takimata sanctus est Lorem ipsum dolor sit amet. no sea takimata
+                    sanctus est Lorem ipsum dolor sit amet. sed diam voluptua. </p>
+            </div>
+        </div>
+    </footer>
+    <!-- /Footer -->
+    <div class="cpy-right text-center py-4">
+        <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#">文一舟</a>
+        </p>
+    </div>
+    <!-- blog modal1 -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-theme1">
+                    <h5 class="modal-title" id="exampleModalLabel2">Cras ultricies ligula sed magna dictum porta auris
+                        blandita.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="images/b1.jpg" class="img-fluid" alt="" />
+                    <p class="text-left my-4">
+                        Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur non nulla sit amet nisl
+                        tempus convallis quis ac
+                        lectus. Cras ultricies ligula sed magna dictum porta.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //blog modal1 -->
+    <!-- blog modal2 -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-theme1">
+                    <h5 class="modal-title" id="exampleModalLabel3">Cras ultricies ligula sed magna dictum porta auris
+                        blandita.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="images/b2.jpg" class="img-fluid" alt="" />
+                    <p class="text-left my-4">
+                        Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur non nulla sit amet nisl
+                        tempus convallis quis ac
+                        lectus. Cras ultricies ligula sed magna dictum porta.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //blog modal2 -->
+    <!-- blog modal3 -->
+    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-theme1">
+                    <h5 class="modal-title" id="exampleModalLabel4">Cras ultricies ligula sed magna dictum porta auris
+                        blandita.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="images/b3.jpg" class="img-fluid" alt="" />
+                    <p class="text-left my-4">
+                        Quisque velit nisi, pretium ut lacinia in, elementum id enim. Curabitur non nulla sit amet nisl
+                        tempus convallis quis ac
+                        lectus. Cras ultricies ligula sed magna dictum porta.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //blog modal3-->
+    <!-- login modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-theme1">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post" class="p-3">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Username</label>
+                            <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name"
+                                required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input type="password" class="form-control" placeholder=" " name="Password" id="password"
+                                required="">
+                        </div>
+                        <div class="right-w3l">
+                            <input type="submit" class="form-control bg-theme" value="Login">
+                        </div>
+                        <div class="row sub-w3l my-3">
+                            <div class="col sub-w3ltd">
+                                <input type="checkbox" id="brand1" value="">
+                                <label for="brand1" class="text-dark">
+                                    <span></span>Remember me?</label>
+                            </div>
+                            <div class="col forgot-w3l text-right">
+                                <a href="#" class="text-dark">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <p class="text-center dont-do">Don't have an account?
+                            <a href="#" data-toggle="modal" data-target="#exampleModal1" class="text-dark">
+                                <strong>Register Now</strong></a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //login modal -->
+    <!-- register modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-theme1">
+                    <h5 class="modal-title" id="exampleModalLabel1">注册</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{~/user/register}" method="post" class="p-3" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">用户名</label>
+                            <input type="text" class="form-control" placeholder=" " name="userName" id="recipient-rname"
+                                required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-email" class="col-form-label">邮箱</label>
+                            <input type="email" class="form-control" placeholder=" " name="userEmail" id="recipient-email"
+                                required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-phone" class="col-form-label">手机号</label>
+                            <input type="text" class="form-control" placeholder=" " name="userPhone" id="recipient-phone"
+                                   required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password1" class="col-form-label">密码</label>
+                            <input type="password" class="form-control" placeholder=" " name="userPassword" id="password1"
+                                required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password2" class="col-form-label">重复密码</label>
+                            <input type="password" class="form-control" placeholder=" " name="Confirm Password" id="password2"
+                                required="">
+                        </div>
+                        <div class="sub-w3l">
+                            <div class="sub-w3ltd">
+                                <input type="checkbox" id="brand2" value="">
+                                <label for="brand2" class="mb-3 text-dark">
+                                    <span></span>我接受条款和条件</label>
+                            </div>
+                        </div>
+                        <div class="right-w3l">
+                            <input type="submit" class="form-control bg-theme" value="Register">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //register modal -->
+    <!-- js -->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <!-- Slider-JavaScript -->
+    <script src="js/responsiveslides.min.js"></script>
+    <script>
+        $(function () {
+            $("#slider, #slider1").responsiveSlides({
+                auto: true,
+                nav: false,
+                speed: 1500,
+                namespace: "callbacks",
+                pager: true,
+            });
+        });
+    </script>
+    <!-- //Slider-JavaScript -->
+    <!-- script for password match -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <!-- script for password match -->
+    <!-- //js -->
+    <script src="js/move-top.js"></script>
+    <script src="js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear' 
+            };
+            */
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <script src="js/SmoothScroll.min.js"></script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
