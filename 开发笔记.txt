@@ -1,6 +1,6 @@
 ﻿项目:maven3.6+JDK8+Tomcat8.5+MySQL5.7(腾讯云数据库)+Git
 开发工具:IDEA
-前端:thymeleaf2.1.6(去掉jsp|解析页面),bootstrap,jquery,JavaScript
+前端:thymeleaf2.1.6(去掉jsp|解析页面),bootstrap,jquery,JavaScript,ajax异步请求
 后端:SpringBoot1.5.18
 ORM:Mybatis
 面向接口编程+POJO

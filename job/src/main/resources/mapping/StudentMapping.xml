@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenyizhou.job.mapping.StudentMapping">
+    <resultMap id="studentResult" type="com.wenyizhou.job.model.Student">
+        <result property="stuId" column="StuId"/>
+        <result property="introduction" column="Introduction"/>
+        <result property="specialty" column="Specialty"/>
+        <result property="salary" column="Salary"/>
+        <result property="userId" column="UserId"/>
+    </resultMap>
+    <resultMap id="studentVOResult" type="com.wenyizhou.job.model.VO.StudentVO">
+        <result property="stuId" column="StuId"/>
+        <result property="introduction" column="Introduction"/>
+        <result property="specialty" column="Specialty"/>
+        <result property="salary" column="Salary"/>
+        <result property="jobType" column="JobType"/>
+        <result property="userId" column="UserId"/>
+        <collection property="freeTimes" ofType="FreeTime">
+            <result property="freId" column="FreId"/>
+            <result property="startTime" column="StartTime"/>
+            <result property="endTime" column="EndTime"/>
+            <result property="stuId" column="StuId"/>
+        </collection>
+    </resultMap>
+<!--    <select id="selectStudentById" resultMap="studentVOResult">
+        select * from Student
+        where UserId = #{userId}
+    </select>-->
+    <select id="selectStudentById" resultMap="studentVOResult">
+        SELECT * FROM Student
+        LEFT JOIN FreeTime
+        ON Student.StuId = FreeTime.StuId
+        WHERE Student.UserId = #{userId}
+    </select>
+
+    <update id="updateIntroduction">
+        update Student set
+            Introduction=#{introduction}
+        where UserId=#{userId}
+    </update>
+
+    <update id="updateJobType">
+        update Student set
+            JobType=#{jobType}
+        where UserId=#{userId}
+    </update>
+
+
+</mapper>

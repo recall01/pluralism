@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: job
+Implementation-Version: test
+Built-By: PC
+Implementation-Vendor-Id: com.wenyizhou
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_201
+Main-Class: ${start-class}
+

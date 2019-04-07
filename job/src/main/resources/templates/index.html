@@ -34,7 +34,7 @@
         <header>
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
-                    <h1><a class="navbar-brand" href=" " th:href="@{~/index}">校园兼职网</a></h1>
+                    <h1><a class="navbar-brand" href=" " th:href="@{~/index}">CUIT校园兼职网</a></h1>
                     <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -55,20 +55,27 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a href="job_list.html">Job List</a>
-                                    <a href="job_single.html">Job Single</a>
+                                    <a href="jobSingle.html">Job Single</a>
                                 </div>
                             </li>
                             <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
-                                <a href="contact.html">contact</a>
+                                <a href="contact.html">联系我们</a>
                             </li>
                         </ul>
                         <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
-                            aria-pressed="false" data-target="#exampleModal1">
+                            aria-pressed="false" data-target="#exampleModal1" th:unless="${session.user}">
                             注册
                         </button>
-                        <button type="button" class="btn w3ls-btn btn-2 ml-lg-1 text-uppercase font-weight-bold d-block"
-                            data-toggle="modal" aria-pressed="false" data-target="#exampleModal">
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
                             登录
+                        </button>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                th:if="${session.user}" th:text="${session.user.userName}" id="userInfo">
+                        </button>
+                        <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" aria-pressed="false" data-target="#userInfoModal" th:if="${session.user}" id="exit">退出系统
                         </button>
                     </div>
                 </nav>
@@ -129,21 +136,18 @@
                     <div class="p-md-5 p-sm-3">
                         <span class="fa fa-check-square" aria-hidden="true"></span>
                         <h4 class="mt-2 mb-3">Computer & IT</h4>
-                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 wthreepvt-pos-grids  border-left border-right my-sm-0 my-5">
                     <div class="p-md-5 p-sm-3">
                         <span class="fa fa-suitcase" aria-hidden="true"></span>
                         <h4 class="mt-2 mb-3">Marketing</h4>
-                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
                     </div>
                 </div>
                 <div class="col-lg-4 wthreepvt-pos-grids">
                     <div class="p-md-5 p-sm-3">
                         <span class="fa fa-thumbs-up" aria-hidden="true"></span>
                         <h4 class="mt-2 mb-3">Insurance</h4>
-                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
                     </div>
                 </div>
             </div>
@@ -152,21 +156,18 @@
                     <div class="p-md-5 p-sm-3 col-label">
                         <span class="fa fa-thumb-tack" aria-hidden="true"></span>
                         <h4 class="mt-2 mb-3">Customer Service</h4>
-                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 wthreepvt-pos-grids mt-lg-0 mt-md-3 border-left border-right pt-sm-0 pt-5">
                     <div class="p-md-5 p-sm-3 col-label">
                         <span class="fa fa-external-link" aria-hidden="true"></span>
                         <h4 class="mt-2 mb-3">health care</h4>
-                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
                     </div>
                 </div>
                 <div class="col-lg-4 wthreepvt-pos-grids pt-md-0 pt-5">
                     <div class="p-md-5 p-sm-3 col-label">
                         <span class="fa fa-cog" aria-hidden="true"></span>
                         <h4 class="mt-2 mb-3">automotive</h4>
-                        <p>Itaque earum rerum hic tenetur a sapiente delectus reiciendis maiores alias consequatur aut</p>
                     </div>
                 </div>
             </div>
@@ -190,7 +191,7 @@
     </footer>
     <!-- /Footer -->
     <div class="cpy-right text-center py-4">
-        <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#" th:unless="${user}">文一舟</a>
+        <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#">文一舟</a>
         </p>
     </div>
     <!-- blog modal1 -->
@@ -435,8 +436,7 @@
                 },
                 success:function (data) {
                     if(data != null){
-                        alert(data.status)
-                        // window.location.href = "test.html"
+                        location.href="index.html";
                     }else {
                         alert("登录失败");
                     }
@@ -447,8 +447,49 @@
             });
             return false;
         });
-
-
+        $("#userInfo").on("click",function () {
+            var userId = $("#userId").html();
+            if(userId == null||"" == userId){
+                alert("请求参数出错,请重新登录");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/user/userInfo",
+                data:{
+                    "userId":userId,
+                },
+                success:function (data) {
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/jobSingle";
+                    }else {
+                        alert("登录失败");
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+        });
+        $("#exit").on("click",function () {
+            location.href="http://localhost:8080/exit";
+/*            $.ajax({
+                type:"GET",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/exit",
+                success:function (data) {
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/index";
+                    }else {
+                        alert("登录失败");
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });*/
+        });
     </script>
     <!-- //end-smooth-scrolling -->
     <!-- smooth-scrolling-of-move-up -->
