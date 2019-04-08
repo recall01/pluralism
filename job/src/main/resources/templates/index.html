@@ -43,13 +43,13 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="ml-lg-5 navbar-nav mr-lg-auto">
                             <li class="nav-item active  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                                <a href="index.html">首页</a>
+                                <a th:href="@{~/index}">首页</a>
                             </li>
                             <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                                <a href="about.html">工作列表</a>
+                                <a th:href="@{~/jobList}">工作列表</a>
                             </li>
                             <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                                <a href="about.html">勤工通告</a>
+                                <a th:href="@{~/about}">勤工通告</a>
                             </li>
 <!--                            <li class="nav-item dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
                                 <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -62,7 +62,7 @@
                                 </div>
                             </li>-->
                             <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
-                                <a href="contact.html">兼职须知</a>
+                                <a th:href="@{~/about}">兼职须知</a>
                             </li>
                         </ul>
                         <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
@@ -462,7 +462,7 @@
                 },
                 success:function (data) {
                     if(data.status == 200){
-                        location.href="http://localhost:8080/jobSingle";
+                        location.href="http://localhost:8080/studentInfo";
                     }else {
                         alert("登录失败");
                     }

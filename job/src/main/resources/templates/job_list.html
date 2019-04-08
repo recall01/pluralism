@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>Job List</title>
+    <title>工作列表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
     <meta name="keywords" content="" />
@@ -31,9 +30,7 @@
     <header>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
-                <h1><a class="navbar-brand" href="index.html">Recruit
-
-                    </a></h1>
+                <h1><a class="navbar-brand" href=" " th:href="@{~/index}">大学生勤工俭学网</a></h1>
                 <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -42,32 +39,32 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="ml-lg-5 navbar-nav mr-lg-auto">
                         <li class="nav-item mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                            <a href="index.html">Home</a>
+                            <a th:href="@{~/index}">首页</a>
+                        </li>
+                        <li class="nav-item active mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                            <a th:href="@{~/jobList}">工作列表</a>
                         </li>
                         <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                            <a href="about.html">about</a>
-                        </li>
-                        <li class="nav-item dropdown mr-lg-4 my-lg-0 my-sm-4 my-3  active ">
-                            <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Pages
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a href="job_list.html">Job List</a>
-                                <a href="jobSingle.html">Job Single</a>
-                            </div>
+                            <a th:href="@{~/about}">勤工通告</a>
                         </li>
                         <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
-                            <a href="contact.html">contact</a>
+                            <a th:href="@{~/about}">兼职须知</a>
                         </li>
                     </ul>
                     <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
-                        aria-pressed="false" data-target="#exampleModal1">
-                        Register
+                            aria-pressed="false" data-target="#exampleModal1" th:unless="${session.user}">
+                        注册
                     </button>
-                    <button type="button" class="btn w3ls-btn btn-2 ml-lg-1 text-uppercase font-weight-bold d-block"
-                        data-toggle="modal" aria-pressed="false" data-target="#exampleModal">
-                        Sign in
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
+                        登录
+                    </button>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            th:if="${session.user}" th:text="${session.user.userName}" id="userInfo">
+                    </button>
+                    <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#userInfoModal" th:if="${session.user}" id="exit">退出系统
                     </button>
                 </div>
             </nav>

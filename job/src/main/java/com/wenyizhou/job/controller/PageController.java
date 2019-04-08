@@ -17,9 +17,9 @@ public class PageController {
     public String index(Model model){
         return "index";
     }
-    @RequestMapping("/jobSingle")
+    @RequestMapping("/studentInfo")
     public String jobSingle(){
-        return "job_single";
+        return "student_info";
     }
     @RequestMapping("/test")
     public String test(){
@@ -37,5 +37,13 @@ public class PageController {
             httpServletRequest.getSession().removeAttribute("student");
         }
         return "/index";
+    }
+    @RequestMapping("/about")
+    public String about(){
+        return "about";
+    }
+    @RequestMapping("/jobList")
+    public String joblist(){
+        return "job_list";
     }
 }
