@@ -15,4 +15,6 @@ public interface StudentMapping {
     boolean updateIntroduction(Map m);
 
     boolean updateJobType(Map m);
+
+    void updateInfo(Student student);
 }

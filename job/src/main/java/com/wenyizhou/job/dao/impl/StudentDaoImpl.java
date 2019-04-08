@@ -4,6 +4,7 @@ import com.wenyizhou.job.dao.IStudentDao;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.mapping.StudentMapping;
 import com.wenyizhou.job.mapping.UserMapping;
+import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.StudentVO;
 import org.springframework.stereotype.Component;
@@ -39,5 +40,16 @@ public class StudentDaoImpl implements IStudentDao {
         m.put("jobType",jobType);
         m.put("userId",userId);
         return studentMapping.updateJobType(m);
+    }
+
+    @Override
+    public boolean changeInfo(Student student) {
+        try {
+            studentMapping.updateInfo(student);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

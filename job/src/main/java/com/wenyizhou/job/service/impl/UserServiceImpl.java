@@ -115,11 +115,21 @@ public class UserServiceImpl implements IUserService {
             response.setError(ErrorCode.PARAMETER_ERROR);
             return response;
         }
-        if(userDao.changeInfo(user)){
-            response.setStatus(RESPONSE_SUCCESS);
-            response.setMsg("修改基本信息成功");
+        //修改信息
+        if(!userDao.changeInfo(user)){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        //移除缓存
+        if(httpServletRequest.getSession().getAttribute("user") != null){
+            httpServletRequest.getSession().removeAttribute("user");
+        }
+        //查询数据
+        response = this.userInfo(user.getUserId());
+        if(response.getData() == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
         }else {
-            response.setError(ErrorCode.SYSTEM_EXCEPTION);
+            response.setMsg("修改用户基本成功");
         }
         return response;
     }

@@ -363,6 +363,8 @@
             var userName = $("#recipient-name").val();
             var userEmail = $("#recipient-email").val();
             var userPhone = $("#recipient-phone").val();
+            var salary = $("#recipient-salary").val();
+            var specialty = $("#recipient-specialty").val();
             if(userId == null||"" == userId){
                 alert("获取用户编号出错");
                 return false;
@@ -379,6 +381,14 @@
                 alert("手机号错误");
                 return false;
             }
+            if(salary == null||"" == salary){
+                alert("期待薪资不能为空");
+                return false;
+            }
+            if(specialty == null||"" == specialty){
+                alert("特长不能为空");
+                return false;
+            }
             $.ajax({
                 type:"POST",
                 contentType:"application/x-www-form-urlencoded",
@@ -388,13 +398,31 @@
                     "userName":userName,
                     "userEmail":userEmail,
                     "userPhone":userPhone,
-                    "userPassword":"",
                 },
                 success:function (data) {
                     if(data.status == 200){
-                        alert("修改成功");
+                        $.ajax({
+                            type:"POST",
+                            contentType:"application/x-www-form-urlencoded",
+                            url:"http://localhost:8080/student/changeInfo",
+                            data:{
+                                "userId":userId,
+                                "salary":salary,
+                                "specialty":specialty,
+                            },
+                            success:function (data) {
+                                if(data.status == 200){
+                                    alert("修改成功");
+                                }else {
+                                    alert("修改学生信息失败");
+                                }
+                            },
+                            error:function (data) {
+                                alert("请求失败");
+                            }
+                        });
                     }else {
-                        alert("修改失败");
+                        alert("修改用户信息失败");
                     }
                 },
                 error:function (data) {
