@@ -126,6 +126,30 @@ public class StudentServiceImpl implements IStudentService {
         }
         return response;
     }
+
+    @Override
+    public Response addFreeTime(String startTime, String endTime, String stuId,String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(startTime)||StringUtils.isEmpty(endTime)||StringUtils.isEmpty(stuId)||StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(!studentDao.addFreeTime(startTime,endTime,stuId)){
+            response.setError(ErrorCode.SYSTEM_EXCEPTION);
+            return response;
+        }
+        //移除缓存
+        this.removeAttribute();
+        //查询数据
+        response = userService.userInfo(userId);
+        if(response.getData() == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+        }else {
+            response.setMsg("添加空闲时间段成功");
+        }
+        return response;
+    }
+
     //移除缓存
     private void removeAttribute(){
         if(httpServletRequest.getSession().getAttribute("student") != null){

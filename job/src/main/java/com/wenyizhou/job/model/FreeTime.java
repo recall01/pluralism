@@ -1,16 +1,16 @@
 package com.wenyizhou.job.model;
 
 public class FreeTime {
-    private String freId;
+    private int freId;
     private String startTime;
     private String endTime;
     private String stuId;
 
-    public String getFreId() {
+    public int getFreId() {
         return freId;
     }
 
-    public void setFreId(String freId) {
+    public void setFreId(int freId) {
         this.freId = freId;
     }
 

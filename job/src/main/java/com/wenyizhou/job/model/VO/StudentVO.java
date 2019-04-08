@@ -9,6 +9,10 @@ public class StudentVO extends Student {
     private List<FreeTime> freeTimes;
 
     public List<FreeTime> getFreeTimes() {
+        //如果空闲时间段大于5就进行截取
+/*        if(freeTimes.size()>5){
+            freeTimes = freeTimes.subList(0,4);
+        }*/
         return freeTimes;
     }
 

@@ -33,7 +33,11 @@ public class StudentController {
     }
     @PostMapping(value = "/delectFreeTime",consumes = "application/x-www-form-urlencoded")
     public Response delectFreeTime(String freId,String userId){
-        System.out.println(freId+" "+userId);
         return studentService.delectFreeTime(freId,userId);
+    }
+    @PostMapping(value = "/addFreeTime",consumes = "application/x-www-form-urlencoded")
+    public Response addFreeTime(String startTime,String endTime,String stuId,String userId){
+        System.out.println(startTime+" "+endTime+" "+stuId+" "+userId);
+        return studentService.addFreeTime(startTime,endTime,stuId,userId);
     }
 }

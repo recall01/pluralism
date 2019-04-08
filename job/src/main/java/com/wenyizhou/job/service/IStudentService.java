@@ -12,4 +12,6 @@ public interface IStudentService {
     Response changeInfo(Student student);
 
     Response delectFreeTime(String freId,String userId);
+
+    Response addFreeTime(String startTime, String endTime, String stuId,String userId);
 }

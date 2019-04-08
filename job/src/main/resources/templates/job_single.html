@@ -68,6 +68,7 @@
                             登录
                         </button>
                         <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                        <p hidden="hidden" th:if="${session.student}" th:text="${session.student.stuId}" id="stuId"></p>
                         <div class="navbar-nav dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
                             <button class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false" th:if="${session.user}" th:text="${session.user.userName}">
@@ -218,7 +219,13 @@
                                 <a th:onclick="|javascript:delectFreeTime(${freeTime.freId})|" class="form-control" th:utext="${freeTime.startTime}+'~'+${freeTime.endTime}+'<br>'" th:id="freeTimeId+${freeTime.freId}"></a>
                             </div>
                             <div class="right-w3l">
-                                <input type="submit" class="form-control bg-theme" value="修改" id="changeFreeTime">
+                                <label for="startTime" class="col-form-label">开始时间段</label>
+                                <input type="datetime-local" class="form-control" placeholder=" " name="userName" id="startTime"
+                                       required="">
+                                <label for="endTime" class="col-form-label">结束时间段</label>
+                                <input type="datetime-local" class="form-control" placeholder=" " name="userName" id="endTime"
+                                       required="">
+                                <input type="submit" class="form-control bg-theme" value="添加" id="addFreeTime">
                             </div>
                         </form>
                     </div>
@@ -339,6 +346,51 @@
                     scrollTop: $(this.hash).offset().top
                 }, 1000);
             });
+        });
+        //添加空闲时间段按钮
+        $("#addFreeTime").on("click",function () {
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+            var stuId = $("#stuId").html();
+            var userId = $("#userId").html();
+            if(startTime == null||"" == startTime){
+                alert("开始时间不能为空");
+                return false;
+            }
+            if(endTime == null||"" == endTime){
+                alert("结束时间不能为空");
+                return false;
+            }
+            if(stuId == null||"" == stuId){
+                alert("获取学生编号出错");
+                return false;
+            }
+            if(userId == null||"" == userId){
+                alert("获取用户编号出错");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/student/addFreeTime",
+                data:{
+                    "startTime":startTime,
+                    "endTime":endTime,
+                    "stuId":stuId,
+                    "userId":userId,
+                },
+                success:function (data) {
+                    if(data.status == 200){
+                        alert(data.msg);
+                    }else {
+                        alert("修改个人简介失败");
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+            return false;
         });
         //修改个人简历按钮
         $("#changeIntroduction").on("click",function () {

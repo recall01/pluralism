@@ -63,4 +63,19 @@ public class StudentDaoImpl implements IStudentDao {
             return false;
         }
     }
+
+    @Override
+    public boolean addFreeTime(String startTime, String endTime, String stuId) {
+        try {
+            Map m = new HashMap();
+            m.put("startTime",startTime);
+            m.put("endTime",endTime);
+            m.put("stuId",stuId);
+            studentMapping.addFreeTime(m);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

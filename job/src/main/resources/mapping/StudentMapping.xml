@@ -56,5 +56,9 @@
         delete from FreeTime
         where FreId =#{freId}
     </delete>
+    <insert id="addFreeTime">
+        insert into FreeTime (StartTime,EndTime,StuId)
+        values (#{startTime},#{endTime},#{stuId})
+    </insert>
 
 </mapper>
