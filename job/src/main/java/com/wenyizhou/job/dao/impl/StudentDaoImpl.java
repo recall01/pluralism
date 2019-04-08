@@ -24,7 +24,13 @@ public class StudentDaoImpl implements IStudentDao {
         Map m = new HashMap();
         m.put("introduction",introduction);
         m.put("userId",userId);
-        return studentMapping.updateIntroduction(m);
+        try {
+            studentMapping.updateIntroduction(m);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

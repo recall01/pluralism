@@ -1,5 +1,6 @@
 package com.wenyizhou.job.controller;
 
+import com.google.gson.Gson;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,12 @@ public class StudentController {
     private IStudentService studentService;
 
     @PostMapping(value = "/addIntroduction",consumes = "application/x-www-form-urlencoded")
-    public Response addIntroduction(@RequestParam String introduction,@RequestParam String userId){
-        return studentService.addIntroduction(introduction,userId);
+    public Response addIntroduction(String introduction,String userId){
+        Response response = studentService.addIntroduction(introduction, userId);
+        System.out.println(new Gson().toJson(response));
+        return response;
     }
+
     @PostMapping(value = "/addJobType",consumes = "application/x-www-form-urlencoded")
     public Response addJobType(@RequestParam String jobType,@RequestParam String userId){
         return studentService.addJobType(jobType,userId);

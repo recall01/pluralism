@@ -54,7 +54,7 @@ public class UserServiceImpl implements IUserService {
             response.setError(ErrorCode.PARAMETER_ERROR);
             return response;
         }
-            //封装id，registertime
+        //封装id，registertime
         user.setUserId(IDUtil.getUserId());
         user.setRegisterTime(TimeUtil.getTime());
         try {

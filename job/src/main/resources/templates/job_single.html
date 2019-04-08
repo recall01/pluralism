@@ -169,7 +169,7 @@
                                 <textarea class="form-control" th:if="${session.student}" th:text="${session.student.introduction}" id="introduction"></textarea>
                             </div>
                             <div class="right-w3l">
-                                <input type="submit" class="form-control bg-theme" value="修改" id="changeIntroduction">
+                                <input type="submit" class="form-control bg-theme" value="修改" id="changeIntroduction" >
                             </div>
                         </form>
                     </div>
@@ -290,12 +290,12 @@
                 }, 1000);
             });
         });
-
+        //修改个人简历按钮
         $("#changeIntroduction").on("click",function () {
             var introduction = $("#introduction").val();
             var userId = $("#userId").html();
             if(introduction == null||"" == introduction){
-                alert("想从事兼职类型不能为空");
+                alert("个人简介不能为空");
                 return false;
             }
             if(userId == null||"" == userId){
@@ -308,11 +308,12 @@
                 url:"http://localhost:8080/student/addIntroduction",
                 data:{
                     "introduction":introduction,
-                    "userId":userId
+                    "userId":userId,
                 },
                 success:function (data) {
+                    console.log(data);
                     if(data.status == 200){
-                        alert("修改个人简介成功");
+                        alert(data.msg);
                     }else {
                         alert("修改个人简介失败");
                     }
@@ -321,13 +322,14 @@
                     alert("请求失败");
                 }
             });
+            return false;
         });
         //修改期待工作类型按钮
         $("#changeJobType").on("click",function () {
             var jobType = $("#input_jobType").val();
             var userId = $("#userId").html();
             if(jobType == null||"" == jobType){
-                alert("个人简介不能为空");
+                alert("期待工作类型不能为空");
                 return false;
             }
             if(userId == null||"" == userId){
@@ -340,11 +342,11 @@
                 url:"http://localhost:8080/student/addJobType",
                 data:{
                     "jobType":jobType,
-                    "userId":userId
+                    "userId":userId,
                 },
                 success:function (data) {
                     if(data.status == 200){
-                        alert("修改成功");
+                        alert(data.msg);
                     }else {
                         alert("修改失败");
                     }
@@ -353,6 +355,7 @@
                     alert("请求失败");
                 }
             });
+            return false;
         });
         //修改基本信息按钮
         $("#changeBaseInfo").on("click",function () {
@@ -385,7 +388,7 @@
                     "userName":userName,
                     "userEmail":userEmail,
                     "userPhone":userPhone,
-                    "userPassword":""
+                    "userPassword":"",
                 },
                 success:function (data) {
                     if(data.status == 200){
@@ -398,6 +401,7 @@
                     alert("请求失败");
                 }
             });
+            return false;
         });
     </script>
     <!-- //end-smooth-scrolling -->
