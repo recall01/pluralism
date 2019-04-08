@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: job
+Implementation-Version: test
+Built-By: lenovo
+Implementation-Vendor-Id: com.wenyizhou
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_191
+Main-Class: ${start-class}
+

@@ -1,0 +1,6 @@
+spring:
+  thymeleaf:
+    mode: LEGACYHTML5
+    content-type: text/html
+    cache: false
+    encoding: UTF-8
