@@ -210,7 +210,7 @@ header {
 /*-- //header --*/
 /* banner */
 .common-bg {
-	min-height: 55vh;
+	min-height: 90vh;
 	position: relative;
 	z-index: 1;
 	padding: 0 1em;
