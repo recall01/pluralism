@@ -13,4 +13,6 @@ public interface IUserService {
     Response changeInfo(User user);
 
     Response exit();
+
+    Response jobType();
 }

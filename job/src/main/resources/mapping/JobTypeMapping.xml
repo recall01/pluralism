@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenyizhou.job.mapping.JobTypeMapping">
+    <resultMap id="jobTypeResult" type="com.wenyizhou.job.model.JobType">
+        <result property="jobId" column="JobId"/>
+        <result property="typeName" column="TypeName"/>
+    </resultMap>
+    <select id="selectJobType" resultMap="jobTypeResult">
+        select * from JobType
+    </select>
+</mapper>

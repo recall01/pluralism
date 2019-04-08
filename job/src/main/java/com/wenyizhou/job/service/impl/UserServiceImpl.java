@@ -1,6 +1,7 @@
 package com.wenyizhou.job.service.impl;
 
 import com.wenyizhou.job.dao.IUserDao;
+import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -136,17 +138,29 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Response exit() {
-        System.out.println("---exit1---");
+        System.out.println("---user--exit1---");
         if(httpServletRequest.getSession().getAttribute("user") != null){
-            System.out.println("---user1---");
             httpServletRequest.getSession().removeAttribute("user");
         }
         if(httpServletRequest.getSession().getAttribute("student") != null){
-            System.out.println("---student1---");
             httpServletRequest.getSession().removeAttribute("student");
         }
         Response response = new Response();
         response.setStatus(RESPONSE_SUCCESS);
+        return response;
+    }
+
+    @Override
+    public Response jobType() {
+        Response response = new Response();
+        List<JobType> types = userDao.getJobType();
+        if(types.size() == 0){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+        }else {
+            response.setStatus(RESPONSE_SUCCESS);
+            response.setData(types);
+            response.setMsg("获取工作类型成功");
+        }
         return response;
     }
 

@@ -47,4 +47,8 @@ public class UserController {
     public Response exit(){
         return userService.exit();
     }
+    @GetMapping(value = "/jobType")
+    public Response jobType(){
+        return userService.jobType();
+    }
 }

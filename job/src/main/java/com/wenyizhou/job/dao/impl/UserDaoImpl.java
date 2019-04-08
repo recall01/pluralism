@@ -1,14 +1,17 @@
 package com.wenyizhou.job.dao.impl;
 
 import com.wenyizhou.job.dao.IUserDao;
+import com.wenyizhou.job.mapping.JobTypeMapping;
 import com.wenyizhou.job.mapping.StudentMapping;
 import com.wenyizhou.job.mapping.UserMapping;
+import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.StudentVO;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -17,6 +20,8 @@ public class UserDaoImpl implements IUserDao {
     UserMapping userMapping;
     @Resource
     StudentMapping studentMapping;
+    @Resource
+    JobTypeMapping jobTypeMapping;
 
     @Override
     public boolean register(User user) throws Exception{
@@ -49,6 +54,16 @@ public class UserDaoImpl implements IUserDao {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<JobType> getJobType() {
+        try {
+            return jobTypeMapping.selectJobType();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }
