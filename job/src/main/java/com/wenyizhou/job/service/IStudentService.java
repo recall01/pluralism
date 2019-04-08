@@ -10,4 +10,6 @@ public interface IStudentService {
     Response addJobType(String jobType, String userId);
 
     Response changeInfo(Student student);
+
+    Response delectFreeTime(String freId,String userId);
 }

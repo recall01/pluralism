@@ -74,7 +74,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                                 <a href="#" data-toggle="modal" data-target="#baseInfoModal">基本信息</a>
-                                <a href="#">空闲时间</a>
+                                <a href="#" data-toggle="modal" data-target="#freeTimeModal">空闲时间</a>
                                 <a href="#" data-toggle="modal" data-target="#introductionModal">个人简介</a>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                         <li>联系方式: <strong th:if="${session.user}" th:text="${session.user.userPhone}"></strong><strong>&nbsp;&nbsp;</strong><strong th:if="${session.user}" th:text="${session.user.userEmail}"></strong></li>
                                         <li>特长: <strong th:if="${session.student}" th:text="${session.student.specialty}"></strong></li>
                                         <li>期待薪水: <strong th:if="${session.student}" th:text="${session.student.salary}"></strong></li>
-                                        <li title="点击添加空闲时间">空闲时间:<br>
+                                        <li>空闲时间:<br>
                                             <strong th:if="${session.student}" th:each="freeTime:${session.student.freeTimes}" th:utext="${freeTime.startTime}+'~'+${freeTime.endTime}+'<br>'"></strong>
                                         </li>
                                     </ul>
@@ -113,7 +113,6 @@
                                     <ul class="e-tags">
                                         <li th:if="${session.student}" th:each="job:${session.student.jobList}" th:text="${job}"></li>
                                     </ul>
-
                                 </div>
                                 <hr>
                             </div>
@@ -202,8 +201,33 @@
             </div>
         </div>
         <!-- //jobType modal -->
+        <!-- freeTime Modal -->
+        <div class="modal fade" id="freeTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-theme1">
+                        <h5 class="modal-title">空闲时间</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="post" class="p-3">
+                            <div class="form-group" th:if="${session.student}" th:each="freeTime:${session.student.freeTimes}">
+                                <a th:onclick="|javascript:delectFreeTime(${freeTime.freId})|" class="form-control" th:utext="${freeTime.startTime}+'~'+${freeTime.endTime}+'<br>'" th:id="freeTimeId+${freeTime.freId}"></a>
+                            </div>
+                            <div class="right-w3l">
+                                <input type="submit" class="form-control bg-theme" value="修改" id="changeFreeTime">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //jobType modal -->
 
-        <!-- register modal -->
+        <!-- baseInfo modal -->
         <div class="modal fade" id="baseInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -254,7 +278,7 @@
                 </div>
             </div>
         </div>
-        <!-- //register modal -->
+        <!-- //baseInfo modal -->
     </div>
     <!-- js -->
     <script src="js/jquery-2.2.3.min.js"></script>
@@ -273,6 +297,32 @@
             else
                 document.getElementById("password2").setCustomValidity('');
             //empty string means no validation error
+        }
+        function delectFreeTime(s) {
+            var userId = $("#userId").html();
+            if(window.confirm('你确定要删除该数据?')){
+                //执行删除请求
+                $.ajax({
+                    type:"POST",
+                    contentType:"application/x-www-form-urlencoded",
+                    url:"http://localhost:8080/student/delectFreeTime",
+                    data:{
+                        "freId":s,
+                        "userId":userId,
+                    },
+                    success:function (data) {
+                        console.log(data);
+                        if(data.status == 200){
+                            alert(data.msg);
+                        }else {
+                            alert("删除空闲时间失败");
+                        }
+                    },
+                    error:function (data) {
+                        alert("请求失败");
+                    }
+                });
+            }
         }
     </script>
     <!-- script for password match -->

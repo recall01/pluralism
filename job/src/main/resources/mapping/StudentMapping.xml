@@ -52,5 +52,9 @@
         </trim>
         where UserId=#{userId}
     </update>
+    <delete id="delectFreeTime">
+        delete from FreeTime
+        where FreId =#{freId}
+    </delete>
 
 </mapper>

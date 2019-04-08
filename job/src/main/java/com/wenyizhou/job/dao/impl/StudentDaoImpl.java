@@ -52,4 +52,15 @@ public class StudentDaoImpl implements IStudentDao {
             return false;
         }
     }
+
+    @Override
+    public boolean delectFreeTime(String freId) {
+        try {
+            studentMapping.delectFreeTime(freId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

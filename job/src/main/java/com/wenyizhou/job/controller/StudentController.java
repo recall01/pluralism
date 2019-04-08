@@ -31,4 +31,9 @@ public class StudentController {
         System.out.println(new Gson().toJson(student));
         return studentService.changeInfo(student);
     }
+    @PostMapping(value = "/delectFreeTime",consumes = "application/x-www-form-urlencoded")
+    public Response delectFreeTime(String freId,String userId){
+        System.out.println(freId+" "+userId);
+        return studentService.delectFreeTime(freId,userId);
+    }
 }

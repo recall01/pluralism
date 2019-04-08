@@ -10,4 +10,6 @@ public interface IStudentDao {
     boolean addJobType(String jobType, String userId);
 
     boolean changeInfo(Student student);
+
+    boolean delectFreeTime(String freId);
 }

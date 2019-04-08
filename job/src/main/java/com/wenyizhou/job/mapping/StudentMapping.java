@@ -17,4 +17,6 @@ public interface StudentMapping {
     boolean updateJobType(Map m);
 
     void updateInfo(Student student);
+
+    void delectFreeTime(String freId);
 }

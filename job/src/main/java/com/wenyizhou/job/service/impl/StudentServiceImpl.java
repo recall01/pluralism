@@ -101,4 +101,45 @@ public class StudentServiceImpl implements IStudentService {
         }
         return response;
     }
+
+    @Override
+    public Response delectFreeTime(String freId,String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(freId)||StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(!studentDao.delectFreeTime(freId)){
+            response.setError(ErrorCode.SYSTEM_EXCEPTION);
+            return response;
+        }
+        //移除缓存this.removeAttribute();
+        if(httpServletRequest.getSession().getAttribute("student") != null){
+            httpServletRequest.getSession().removeAttribute("student");
+        }
+        //查询数据
+        response = userService.userInfo(userId);
+        if(response.getData() == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+        }else {
+            response.setMsg("删除空闲时间段成功");
+        }
+        return response;
+    }
+    //移除缓存
+    private void removeAttribute(){
+        if(httpServletRequest.getSession().getAttribute("student") != null){
+            httpServletRequest.getSession().removeAttribute("student");
+        }
+    }
+    //查询学生数据
+    private Response getUser(String id){
+        Response response = userService.userInfo(id);
+        if(response.getData() == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+        }else {
+            response.setMsg("修改学生信息成功");
+        }
+        return response;
+    }
 }
