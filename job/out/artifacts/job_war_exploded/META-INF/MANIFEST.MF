@@ -1,9 +1,16 @@
 Manifest-Version: 1.0
 Implementation-Title: job
 Implementation-Version: test
+<<<<<<< HEAD
 Built-By: lenovo
 Implementation-Vendor-Id: com.wenyizhou
 Created-By: IntelliJ IDEA
 Build-Jdk: 1.8.0_191
+=======
+Built-By: PC
+Implementation-Vendor-Id: com.wenyizhou
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_201
+>>>>>>> ee02aef79abd0a5236db48039db46bb52d96d0da
 Main-Class: ${start-class}
 

@@ -4,3 +4,14 @@ spring:
     content-type: text/html
     cache: false
     encoding: UTF-8
+    suffix: .html
+  datasource:
+    url: jdbc:mysql://cdb-l0d2ls4g.cd.tencentcdb.com:10026/pluralism
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: wyz833230
+    type: com.alibaba.druid.pool.DruidDataSource
+#mybatis配置
+mybatis:
+  type-aliases-package: com.wenyizhou.job.model       #映射model的地址
+  mapper-locations: classpath:mapping/*.xml                         #对应mapping地址

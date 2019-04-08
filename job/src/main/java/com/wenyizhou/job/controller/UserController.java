@@ -22,22 +22,29 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping("/index")
-    public ModelAndView index(){
-        return new ModelAndView("index");
-    }
-
     @RequestMapping("/register")
-    public ModelAndView register(User user){
+    public Response register(User user){
         //return new ModelAndView("index");
         System.out.println(user.toString());
-        return new ModelAndView("redirect:/index");
+        return userService.register(user);
     }
 
     @PostMapping(value = "/login",consumes = "application/x-www-form-urlencoded")
     public Response login(@RequestParam String userPhone, @RequestParam String userPassword){
-        System.out.println("---login---");
         return userService.login(userPhone,userPassword);
     }
+    @PostMapping(value = "/userInfo",consumes = "application/x-www-form-urlencoded")
+    public Response userInfo(@RequestParam String userId){
+        return userService.userInfo(userId);
+    }
+    @PostMapping(value = "/changeInfo",consumes = "application/x-www-form-urlencoded")
+    public Response changeInfo(User user){
+        return userService.changeInfo(user);
+    }
 
+
+    @GetMapping(value = "/exit",consumes = "application/x-www-form-urlencoded")
+    public Response exit(){
+        return userService.exit();
+    }
 }
