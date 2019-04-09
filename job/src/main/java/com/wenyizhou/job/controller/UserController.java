@@ -24,7 +24,6 @@ public class UserController {
 
     @RequestMapping("/register")
     public Response register(User user){
-        //return new ModelAndView("index");
         System.out.println(user.toString());
         return userService.register(user);
     }

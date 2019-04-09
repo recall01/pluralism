@@ -1,5 +1,8 @@
 package com.wenyizhou.job.controller;
 
+import com.wenyizhou.job.model.Response;
+import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PageController {
     @Autowired
     HttpServletRequest httpServletRequest;
+    @Autowired
+    private IUserService userService;
     @RequestMapping("/index")
     public String index(Model model){
         return "index";
@@ -24,6 +29,12 @@ public class PageController {
     @RequestMapping("/test")
     public String test(){
         return "test";
+    }
+    @RequestMapping("/register")
+    public String register(User user){
+        System.out.println(user.toString());
+        userService.register(user);
+        return "/index";
     }
     @RequestMapping("/exit")
     public String exit(){
@@ -41,6 +52,10 @@ public class PageController {
     @RequestMapping("/about")
     public String about(){
         return "about";
+    }
+    @RequestMapping("/contact")
+    public String contact(){
+        return "contact";
     }
     @RequestMapping("/jobList")
     public String joblist(){

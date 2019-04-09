@@ -1416,3 +1416,6 @@ input[type="submit"] {
 }
 
 /* -- //Responsive code -- */
+.testP{
+	font-size: .85em;
+}

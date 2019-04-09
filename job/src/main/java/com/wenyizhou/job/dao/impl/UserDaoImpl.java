@@ -1,5 +1,6 @@
 package com.wenyizhou.job.dao.impl;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.mapping.JobTypeMapping;
 import com.wenyizhou.job.mapping.StudentMapping;
@@ -8,6 +9,7 @@ import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.StudentVO;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -24,8 +26,17 @@ public class UserDaoImpl implements IUserDao {
     JobTypeMapping jobTypeMapping;
 
     @Override
-    public boolean register(User user) throws Exception{
-        return userMapping.insert(user);
+    public String register(User user) throws Exception{
+        try {
+            userMapping.insert(user);
+            return "注册成功";
+        }catch (DuplicateKeyException e){
+            e.printStackTrace();
+            return "插入数据已存在";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "注册失败,系统异常";
+        }
     }
 
     @Override

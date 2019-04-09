@@ -56,14 +56,20 @@ public class UserServiceImpl implements IUserService {
             response.setError(ErrorCode.PARAMETER_ERROR);
             return response;
         }
+        if(StringUtils.isEmpty(user.getUserName())||StringUtils.isEmpty(user.getUserPhone())||StringUtils.isEmpty(user.getUserEmail())||StringUtils.isEmpty(user.getUserPassword())){
+            response.setError(ErrorCode.PARAMETER_ERROR.getErrCode(),"入参字段不能为空");
+            return response;
+        }
         //封装id，registertime
         user.setUserId(IDUtil.getUserId());
         user.setRegisterTime(TimeUtil.getTime());
         try {
-            if(userDao.register(user)){
+            String result = userDao.register(user);
+            if("注册成功".equals(result)){
                 response.setStatus(RESPONSE_SUCCESS);
-                //response.setData(userDao.selectUserById(userId));
                 response.setMsg("注册成功");
+            }else {
+                response.setError(ErrorCode.SQL_OPERATING_FAIL.getErrCode(),result);
             }
         }catch (Exception e){
             e.printStackTrace();

@@ -8,7 +8,7 @@ import com.wenyizhou.job.model.VO.StudentVO;
 import java.util.List;
 
 public interface IUserDao {
-    boolean register(User user) throws Exception;
+    String register(User user) throws Exception;
 
     User login(String userPhone, String userPassword);
 
