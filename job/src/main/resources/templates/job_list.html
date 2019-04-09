@@ -408,9 +408,13 @@
                         }else {
                             //偶数数列，加尾部
                             hasTail = true;
-                            dom = dom + "<div class='col-sm-6 e-left'><div class='e-desc'><h6><a>我需要一个熟悉编程的助手</a></h6><p class='testP'>我是简介</p><hr><ul class='e-tags'><li>导师项目</li>";
-                            dom = dom + "<li>图书管理</li></ul><hr><ul class='desc-list'><li><span>地点:</span>教学楼三教1102教室</li><li><span>薪资:</span>10元/小时</li><li><span>经验:</span>无需任何经验</li>";
-                            dom = dom + "<li><span>发布者: </span>张三</li><li><span>发布时间: </span>32分钟前</li></ul><input type='submit' value='申请职位' class='form-control bg-theme text-uppercase'></div></div></div>";
+                            dom = dom + "<div class='col-sm-6 e-left'><div class='e-desc'><h6><a>"+job.jobName+"</a></h6><p class='testP'>"+job.introduction+"</p><hr><ul class='e-tags'>";
+                            var jobTypes = job.jobType;
+                            for(var j=0;j<jobTypes.length;j++){
+                                var jobType = jobTypes[j];
+                                dom = dom+"<li>"+jobType+"</li>";
+                            }
+                            dom = dom + "</ul><hr><ul class='desc-list'><li><span>地点:</span>"+job.location+"</li><li><span>薪资:</span>"+job.salary+"</li><li><span>经验:</span>"+job.experience+"</li><li><span>发布者: </span>"+job.user.userName+"</li><li><span>发布时间: </span>"+job.pubTime+"</li></ul><input type='submit' value='申请职位' class='form-control bg-theme text-uppercase'></div></div></div>";
                         }
                     }
                     if(!hasTail){
