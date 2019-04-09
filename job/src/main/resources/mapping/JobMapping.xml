@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenyizhou.job.mapping.JobMapping">
+    <resultMap id="jobResult" type="com.wenyizhou.job.model.Job">
+        <result property="jobId" column="JobId"/>
+        <result property="jobName" column="JobName"/>
+        <result property="introduction" column="Introduction"/>
+        <result property="jobType" column="JobType"/>
+        <result property="location" column="Location"/>
+        <result property="salary" column="Salary"/>
+        <result property="experience" column="Experience"/>
+        <result property="userId" column="UserId"/>
+        <result property="pubTime" column="PubTime"/>
+    </resultMap>
+    <resultMap id="jobVOResult" type="com.wenyizhou.job.model.VO.JobVO">
+        <result property="jobId" column="JobId"/>
+        <result property="jobName" column="JobName"/>
+        <result property="introduction" column="Introduction"/>
+        <result property="jobType" column="JobType"/>
+        <result property="location" column="Location"/>
+        <result property="salary" column="Salary"/>
+        <result property="experience" column="Experience"/>
+        <result property="userId" column="UserId"/>
+        <result property="pubTime" column="PubTime"/>
+        <association property="user" javaType="com.wenyizhou.job.model.User">
+            <result property="userId" column="UserId"/>
+            <result property="userName" column="UserName"/>
+            <result property="userEmail" column="UserEmail"/>
+            <result property="userPhone" column="UserPhone"/>
+            <result property="userPassword" column="UserPassword"/>
+            <result property="roleType" column="RoleType"/>
+            <result property="registerTime" column="RegisterTime"/>
+        </association>
+    </resultMap>
+    <select id="selectJobList" resultMap="jobVOResult">
+        SELECT * FROM Job
+        LEFT JOIN User
+        ON Job.UserId = User.UserId
+        LIMIT #{page},6
+    </select>
+</mapper>

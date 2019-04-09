@@ -23,7 +23,6 @@ public class JobController {
     }
     @GetMapping("/jobList")
     public Response jobList(Integer page){
-        System.out.println("---jobList---");
         return iJobService.jobList(page);
     }
 }
