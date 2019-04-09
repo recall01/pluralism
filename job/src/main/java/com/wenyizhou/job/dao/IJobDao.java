@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface IJobDao {
     List<JobVO> jobList(Integer page);
+
+    List<JobVO> jobListByTime(String startTime, String endTime);
 }

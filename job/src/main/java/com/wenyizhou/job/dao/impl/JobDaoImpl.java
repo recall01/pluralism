@@ -32,4 +32,17 @@ public class JobDaoImpl implements IJobDao {
     public List<JobVO> jobList(Integer page) {
         return jobMapping.selectJobList(page);
     }
+
+    @Override
+    public List<JobVO> jobListByTime(String startTime, String endTime) {
+        try {
+            Map m =new HashMap();
+            m.put("startTime",startTime);
+            m.put("endTime",endTime);
+            return jobMapping.selectjobListByTime(m);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -88,3 +88,38 @@ $("#userInfo").on("click",function () {
 $("#exit").on("click",function () {
     location.href="http://localhost:8080/exit";
 });
+//修改获取工作列表视图
+function changeJobList(data) {
+    var jobList = data.data;
+    var hasTail = false;
+    var dom = "";
+    for (var i=0;i<jobList.length;i++){
+        var job = jobList[i];
+        if(i%2==0){
+            //奇数数列，加头部
+            hasTail = false;
+            dom = dom + "<div class='row'><div class='col-sm-6 e-left'><div class='e-desc'><h6><a>"+job.jobName+"</a></h6><p class='testP'>"+job.introduction+"</p><hr><ul class='e-tags'>";
+            var jobTypes = job.jobType;
+            for(var j=0;j<jobTypes.length;j++){
+                var jobType = jobTypes[j];
+                dom = dom+"<li>"+jobType+"</li>";
+            }
+            dom = dom +"</ul><hr><ul class='desc-list'><li><span>地点:</span>"+job.location+"</li><li><span>薪资:</span>"+job.salary+"</li><li><span>经验:</span>"+job.experience+"</li><li><span>发布者: </span>"+job.user.userName+"</li><li><span>发布时间: </span>"+job.pubTime+"</li></ul><input type='submit' value='申请职位' class='form-control bg-theme text-uppercase'></div></div>"
+        }else {
+            //偶数数列，加尾部
+            hasTail = true;
+            dom = dom + "<div class='col-sm-6 e-left'><div class='e-desc'><h6><a>"+job.jobName+"</a></h6><p class='testP'>"+job.introduction+"</p><hr><ul class='e-tags'>";
+            var jobTypes = job.jobType;
+            for(var j=0;j<jobTypes.length;j++){
+                var jobType = jobTypes[j];
+                dom = dom+"<li>"+jobType+"</li>";
+            }
+            dom = dom + "</ul><hr><ul class='desc-list'><li><span>地点:</span>"+job.location+"</li><li><span>薪资:</span>"+job.salary+"</li><li><span>经验:</span>"+job.experience+"</li><li><span>发布者: </span>"+job.user.userName+"</li><li><span>发布时间: </span>"+job.pubTime+"</li></ul><input type='submit' value='申请职位' class='form-control bg-theme text-uppercase'></div></div></div>";
+        }
+    }
+    if(!hasTail){
+        dom = dom + "</div>";
+    }
+    console.log(dom);
+    $("#test").append(dom);
+}

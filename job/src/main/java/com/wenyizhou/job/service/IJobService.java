@@ -5,4 +5,6 @@ import com.wenyizhou.job.model.User;
 
 public interface IJobService {
     Response jobList(Integer page);
+
+    Response jobListByTime(Integer time);
 }

@@ -38,4 +38,13 @@
         ON Job.UserId = User.UserId
         LIMIT #{page},6
     </select>
+    <!--xml文件不支持"<"和"&"需要转义-->
+    <select id="selectjobListByTime" resultMap="jobVOResult">
+        SELECT * FROM Job
+        LEFT JOIN User
+        ON Job.UserId = User.UserId
+        WHERE Job.PubTime &gt; #{startTime}
+        AND Job.PubTime &lt; #{endTime}
+        LIMIT 6
+    </select>
 </mapper>

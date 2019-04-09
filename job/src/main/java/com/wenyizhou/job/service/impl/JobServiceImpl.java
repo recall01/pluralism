@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,4 +44,33 @@ public class JobServiceImpl implements IJobService {
         response.setMsg("获取工作列表成功");
         return response;
     }
+
+    @Override
+    public Response jobListByTime(Integer time) {
+        Response response = new Response();
+        if(time == null){
+            time = 0;
+        }
+        Date date = new Date();
+        String startTime = "";
+        switch (time){
+            case 0: startTime = TimeUtil.getLastOneDayTime(date);break;
+            case 1: startTime = TimeUtil.getLastThreeDayTime(date);break;
+            case 2: startTime = TimeUtil.getLastOneWeekTime(date);break;
+            case 3: startTime = TimeUtil.getLastOneMonthTime(date);break;
+            case 4: startTime = TimeUtil.getLastThreeMonthTime(date);break;
+            default:break;
+        }
+        if("".equals(startTime)){
+            return this.jobList(0);
+        }
+        String endTime = TimeUtil.getTime(date);
+        System.out.println(startTime+"   "+endTime);
+        List<JobVO> jobs = jobDao.jobListByTime(startTime,endTime);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(jobs);
+        response.setMsg("成功");
+        return response;
+    }
+
 }
