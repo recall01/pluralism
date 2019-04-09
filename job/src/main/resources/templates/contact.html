@@ -31,43 +31,51 @@
     <header>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
-                <h1><a class="navbar-brand" href="index.html">Recruit
-
-                    </a></h1>
+                <h1><a class="navbar-brand" href=" " th:href="@{~/index}">大学生勤工俭学网</a></h1>
                 <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="ml-lg-5 navbar-nav mr-lg-auto">
-                        <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                            <a href="index.html">Home</a>
+                        <li class="nav-item active  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                            <a th:href="@{~/index}">首页</a>
                         </li>
                         <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                            <a href="about.html">about</a>
+                            <a th:href="@{~/jobList}">工作列表</a>
                         </li>
-                        <li class="nav-item dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
-                            <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Pages
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a href="job_list.html">Job List</a>
-                                <a href="jobSingle.html">Job Single</a>
-                            </div>
+                        <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                            <a th:href="@{~/about}">勤工通告</a>
                         </li>
-                        <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3 active">
-                            <a href="contact.html">contact</a>
+                        <!--                            <li class="nav-item dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
+                                                        <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            Pages
+                                                        </a>
+                                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                            <a href="job_list.html">Job List</a>
+                                                            <a href="jobSingle.html">Job Single</a>
+                                                        </div>
+                                                    </li>-->
+                        <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
+                            <a th:href="@{~/contact}">兼职须知</a>
                         </li>
                     </ul>
                     <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
-                        aria-pressed="false" data-target="#exampleModal1">
-                        Register
+                            aria-pressed="false" data-target="#exampleModal1" th:unless="${session.user}">
+                        注册
                     </button>
-                    <button type="button" class="btn w3ls-btn btn-2 ml-lg-1 text-uppercase font-weight-bold d-block"
-                        data-toggle="modal" aria-pressed="false" data-target="#exampleModal">
-                        Sign in
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
+                        登录
+                    </button>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            th:if="${session.user}" th:text="${session.user.userName}" id="userInfo">
+                    </button>
+                    <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#userInfoModal" th:if="${session.user}" id="exit">退出系统
                     </button>
                 </div>
             </nav>
@@ -133,64 +141,6 @@
             <hr>
             <div class="row">
                 <div class="col-12 mx-auto">
-                    <!-- register form grid -->
-                    <div class="register-top1 py-lg-3">
-                        <div class="title-sec-w3layouts_pvt text-center">
-                            <h4 class="w3layouts_pvt-head">How Can We Help You?</h4>
-                        </div>
-                        <form action="#" method="get" class="register-wthree pt-md-5 pb-md-0 py-4">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>
-                                            First name
-                                        </label>
-                                        <input class="form-control" type="text" placeholder="Johnson" name="email"
-                                            required="">
-                                    </div>
-                                    <div class="col-md-6 mt-md-0 mt-4">
-                                        <label>
-                                            Last name
-                                        </label>
-                                        <input class="form-control" type="text" placeholder="Kc" name="name" required="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>
-                                            Mobile
-                                        </label>
-                                        <input class="form-control" type="text" placeholder="xxxx xxxxx" name="email"
-                                            required="">
-                                    </div>
-                                    <div class="col-md-6 mt-md-0 mt-4">
-                                        <label>
-                                            Email
-                                        </label>
-                                        <input class="form-control" type="email" placeholder="example@email.com" name="email"
-                                            required="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>
-                                            Your message
-                                        </label>
-                                        <textarea placeholder="Type your message here" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-agile btn-block w-100 font-weight-bold text-uppercase bg-theme">Send</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <!--  //register form grid ends here -->
                     <div class="border-pos-wthree border-exp"></div>
                 </div>
@@ -198,24 +148,15 @@
         </div>
     </section>
     <!-- //contact -->
-    <!-- map -->
-    <div class="map px-2">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.9503398796587!2d-73.9940307!3d40.719109700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a27e2f24131%3A0x64ffc98d24069f02!2sCANADA!5e0!3m2!1sen!2sin!4v1441710758555"
-            allowfullscreen></iframe>
-    </div>
-    <!--// map-->
     <!-- Footer -->
     <footer id="footer" class="py-sm-5 py-4 bg-theme">
         <div class="container">
             <div class="footer-top-w3ls">
-                <h2><a href="index.html" class="navbar-brand">recruit</a></h2>
-                <p class="text-white">Lorem ipsum dolor sit amet,sed diam nonumy eirmod tempor invidunt
-                    ut labore et dolore magna aliquyam
-                    erat, At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, no sea
-                    takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus
-                    est
-                    Lorem ipsum dolor sit amet. no sea takimata sanctus est Lorem ipsum dolor sit amet. no sea takimata
-                    sanctus est Lorem ipsum dolor sit amet. sed diam voluptua. </p>
+                <h2><a href="index.html" class="navbar-brand">大学生勤工俭学网</a></h2>
+                <p class="text-white">为了改变目前大学生普遍存在的、不能方便有效地找到适合自己的兼职工作现状，
+                    并且同时满足在校求职者和招聘单位双向的需求，大学生勤工俭学平台收集大量招聘单位的招聘信息，
+                    并且展示了在校求职者的相关求职信息，使用人单位和校园求职者之间的交流更加及时和方便。
+                    该平台的建立旨在显著地提高学生寻找勤工俭学工作的效率，并且大幅度地减轻高校学生管理者的工作负担。</p>
             </div>
             <div class="row  pt-5">
                 <div class="col-lg-3 col-sm-6 footer_grid1">
@@ -300,7 +241,7 @@
     </footer>
     <!-- /Footer -->
     <div class="cpy-right text-center py-4">
-        <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+        <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#">文一舟</a>
         </p>
     </div>
     <!-- login modal -->
