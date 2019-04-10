@@ -66,4 +66,27 @@ public class JobDaoImpl implements IJobDao {
             return 0;
         }
     }
+
+    @Override
+    public List<JobVO> findJob(String jobName) {
+        try {
+            return jobMapping.selectJobByName(jobName);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<JobVO> findJob(String jobName, String jobTypeName) {
+        try {
+            Map m =new HashMap();
+            m.put("jobName",jobName);
+            m.put("jobTypeName",jobTypeName);
+            return jobMapping.selectJobByNameAndType(m);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

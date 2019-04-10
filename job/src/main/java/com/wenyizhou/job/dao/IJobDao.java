@@ -16,4 +16,7 @@ public interface IJobDao {
     List<JobVO> jobListByJobType(String type);
 
     int getMaxPage();
+
+    List<JobVO> findJob(String jobName);
+    List<JobVO> findJob(String jobName,String jobTypeName);
 }

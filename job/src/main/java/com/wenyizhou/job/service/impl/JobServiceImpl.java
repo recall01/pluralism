@@ -1,5 +1,6 @@
 package com.wenyizhou.job.service.impl;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.model.Job;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -94,6 +96,32 @@ public class JobServiceImpl implements IJobService {
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(result);
         response.setMsg("获取最大页数成功");
+        return response;
+    }
+
+    @Override
+    public Response findJob() {
+        Response response = new Response();
+        String jobName = (String)httpServletRequest.getSession().getAttribute("jobName");
+        String jobTypeName = (String)httpServletRequest.getSession().getAttribute("jobTypeName");
+        if(StringUtils.isEmpty(jobName)||StringUtils.isEmpty(jobTypeName)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        List<JobVO> jobs;
+        if(jobTypeName.contains("请选择")){
+            jobs = jobDao.findJob(jobName);
+        }else {
+            jobs = jobDao.findJob(jobName,jobTypeName);
+        }
+        if(jobs != null){
+            if(jobs.size()>0){
+                httpServletRequest.getSession().setAttribute("findJobs",jobs);
+            }
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(jobs);
+        response.setMsg("查询工作成功");
         return response;
     }
 

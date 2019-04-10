@@ -77,55 +77,32 @@
     <section class="employ-sec">
         <div class="container">
             <div class="row pt-lg-5">
-                <div class="col-lg-4">
-                    <div class="left_widget">
-                        <h3 class="left-widget-job">
-                            发布时间</h3>
-                        <ul>
-                            <li>
-                                <input type="radio" class="checked" name="cat1" id="cat1">
-                                <label for="cat1">一天之内</label>
-                            </li>
-                            <li>
-                                <input type="radio" class="checked" name="cat1" id="cat2">
-                                <label for="cat2">三天之内</label>
-                            </li>
-                            <li>
-                                <input type="radio" class="checked" name="cat1" id="cat3">
-                                <label for="cat3">一周之内</label>
-                            </li>
-                            <li>
-                                <input type="radio" class="checked" name="cat1" id="cat4">
-                                <label for="cat4">一月之内</label>
-                            </li>
-                            <li>
-                                <input type="radio" class="checked" name="cat1" id="cat5">
-                                <label for="cat5">三月之内</label>
-                            </li>
-                            <li>
-                                <input type="radio" class="checked" name="cat1" id="cat6">
-                                <label for="cat6">所有</label>
-                            </li>
-                            <input type="submit" value="筛选" class="form-control bg-theme text-uppercase" onclick="getRadioTime()">
-                        </ul>
-                    </div>
-                    <div class="left_widget">
-                        <h3 class="left-widget-job">
-                            工作类型</h3>
-                        <ul id="jobType">
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-8" id="test">
+                <div class="col-lg-12" id="findJobTest">
 
+                    <!--<div class='row'>
+                        <div class='col-sm-4 e-left'>
+                            <div class='e-desc'>
+                                <h6><a>我需要一个熟悉编程的助手</a></h6>
+                                <p class='testP'>我是简介我是简介我是简介</p>
+                                <hr>
+                                <ul class='e-tags'>
+                                    <li>导师项目</li>
+                                    <li>综合办公</li>
+                                </ul>
+                                <hr>
+                                <ul class='desc-list'>
+                                    <li><span>地点:</span>教学楼三教1102教室</li>
+                                    <li><span>薪资:</span>10元/小时</li>
+                                    <li><span>经验:</span>无需任何经验</li>
+                                    <li><span>发布者: </span>张三</li>
+                                    <li><span>发布时间: </span>2019-04-08 14:45:59</li>
+                                </ul>
+                                <input type='submit' value='申请职位' class='form-control bg-theme text-uppercase'>
+                            </div>
+                        </div>
+                    </div>-->
 
                 </div>
-
-            </div>
-            <div class="d-flex justify-content-center">
-                <ul class="pagination pt-4" id="pagination">
-
-                </ul>
             </div>
         </div>
     </section>
@@ -342,57 +319,6 @@
                 document.getElementById("password2").setCustomValidity('');
             //empty string means no validation error
         }
-//根据时间筛选工作列表按钮点击事件
-        function getRadioTime() {
-            var radios = document.getElementsByName("cat1");
-            for (var i=0;i<radios.length;i++){
-                if(radios[i].checked){
-                    $.ajax({
-                        type:"GET",
-                        url:"http://localhost:8080/job/jobListByTime?time="+i,
-                        success:function (data) {
-                            if(data.status == 200){
-                                //先移除之前填充的html代码
-                                $("#test").children().remove();
-                                changeJobList(data);
-                            }else {
-                                alert("获取工作类型失败");
-                            }
-                        },
-                        error:function (data) {
-                            alert("请求失败");
-                        }
-                    });
-                }
-            }
-        }
-        //根据工作类型筛选工作列表按钮点击事件
-        function getRadioJob() {
-            var radios = document.getElementsByName("jobType");
-            for (var i=0;i<radios.length;i++){
-                if(radios[i].checked){
-                    var jobTypeLabel = "jobTypeLabel"+i;
-                    var label = document.getElementById(jobTypeLabel);
-                    var typeName = label.innerText;
-                    $.ajax({
-                        type:"GET",
-                        url:"http://localhost:8080/job/jobListByJobType?type="+typeName,
-                        success:function (data) {
-                            if(data.status == 200){
-                                //先移除之前填充的html代码
-                                $("#test").children().remove();
-                                changeJobList(data);
-                            }else {
-                                alert("获取工作类型失败");
-                            }
-                        },
-                        error:function (data) {
-                            alert("请求失败");
-                        }
-                    });
-                }
-            }
-        }
     </script>
     <!-- script for password match -->
     <script src="js/move-top.js"></script>
@@ -408,56 +334,15 @@
                 }, 1000);
             });
         });
-//获取工作类型
+
         $.ajax({
             type:"GET",
-            url:"http://localhost:8080/user/jobType",
+            url:"http://localhost:8080/job/findJob",
             success:function (data) {
                 if(data.status == 200){
-                    var jobList = data.data;
-                    for (var i=0;i<jobList.length;i++){
-                        var job = jobList[i];
-                        $("#jobType").append("<li><input type='radio' class='checked' name='jobType' id='c"+job.jobId+"'><label id='jobTypeLabel"+i+"' for='c"+job.jobId+"'>"+job.typeName+"</label></li>");
-                    }
-                    $("#jobType").append("<input type='submit' class='form-control bg-theme text-uppercase' onclick='getRadioJob()' value='筛选'>");
+                    changeJobListInFindJob(data);
                 }else {
                     alert("获取工作类型失败");
-                }
-            },
-            error:function (data) {
-                alert("请求失败");
-            }
-        });
-//获取工作列表
-        var currentPage = document.getElementById("active");
-        if(currentPage == null){
-            currentPage = 1 ;
-        }else {
-            currentPage = currentPage.innerText;
-        }
-        $.ajax({
-            type:"GET",
-            url:"http://localhost:8080/job/jobList?page="+currentPage,
-            success:function (data) {
-                if(data.status == 200){
-                    changeJobList(data);
-                }else {
-                    alert("获取工作列表失败");
-                }
-            },
-            error:function (data) {
-                alert("请求失败");
-            }
-        });
-//获取最大页数,显示分页
-        $.ajax({
-            type:"GET",
-            url:"http://localhost:8080/job/getMaxPage",
-            success:function (data) {
-                if(data.status == 200){
-                    changePage(data,currentPage);
-                }else {
-                    alert("获取最大页数失败");
                 }
             },
             error:function (data) {

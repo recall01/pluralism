@@ -17,10 +17,10 @@ public class JobController {
     @Autowired
     private IJobService iJobService;
     @RequestMapping("/findJob")
-    public ModelAndView findJob(@RequestParam String jobName,@RequestParam String jobPlace){
-        //return new ModelAndView("index");
-        System.out.println(jobName+"  "+jobPlace);
-        return new ModelAndView("redirect:/index");
+    public Response findJob(){
+        Response job = iJobService.findJob();
+        System.out.println(new Gson().toJson(job));
+        return job;
     }
     @GetMapping("/jobList")
     public Response jobList(Integer page){

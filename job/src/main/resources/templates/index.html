@@ -106,15 +106,15 @@
                                     <form action=""  method="post" class="bnr-field">
                                         <div class="row">
                                             <div class="col-md-5 form-group mb-md-0">
-                                                <input class="form-control" type="text" name="jobName" required=""
+                                                <input class="form-control" type="text" id="jobName" name="jobName" required=""
                                                     placeholder="工作名称">
                                             </div>
                                             <div class="col-md-5 mb-md-0 form-group">
                                                 <select class="form-control" id="jobType"></select>
                                             </div>
                                             <div class="col-md-2 d-flex align-items-end">
-                                                <button type="submit" class="btn btn-w3ltd btn-block w-100 bg-theme font-weight-bold text-uppercase"><span
-                                                        class="fa fa-search" onclick="findJob()"></span></button>
+                                                <button type="submit" id="findJob" class="btn btn-w3ltd btn-block w-100 bg-theme font-weight-bold text-uppercase"><span
+                                                        class="fa fa-search" ></span></button>
                                             </div>
                                         </div>
                                     </form>
@@ -315,7 +315,7 @@
             //empty string means no validation error
         }
         function findJob() {
-            location.href = "http://localhost:8080/findJob";
+            location.href="http://localhost:8080/findJob";
         }
     </script>
     <!-- script for password match -->
@@ -352,7 +352,17 @@
                 alert("请求失败");
             }
         });
-
+        //找工作按钮点击事件
+        $("#findJob").on("click",function () {
+            var jobName = $("#jobName").val();
+            var jobTypeName = $("#jobType option:selected").val();
+            if (jobName == null||""==jobName){
+                alert("工作名称不能为空");
+                return false;
+            }
+            location.href="http://localhost:8080/findJob?jobName="+jobName+"&jobTypeName="+jobTypeName;
+            return false;
+        });
     </script>
     <!-- //end-smooth-scrolling -->
     <!-- smooth-scrolling-of-move-up -->

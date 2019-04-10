@@ -11,4 +11,6 @@ public interface IJobService {
     Response jobListByJobType(String type);
 
     Response getMaxPage();
+
+    Response findJob();
 }

@@ -1,13 +1,15 @@
 package com.wenyizhou.job.controller;
 
-import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +21,7 @@ public class PageController {
     @Autowired
     private IUserService userService;
     @RequestMapping("/index")
-    public String index(Model model){
+    public String index(){
         return "index";
     }
     @RequestMapping("/studentInfo")
@@ -61,8 +63,14 @@ public class PageController {
     public String joblist(){
         return "job_list";
     }
-    @RequestMapping("/findJob")
-    public String findJob(){
-        return "find_job";
+    @GetMapping("/findJob")
+    public String findJob(@RequestParam String jobName, @RequestParam String jobTypeName){
+        System.out.println(jobName+"  "+jobTypeName);
+        if (StringUtils.isEmpty(jobName)||StringUtils.isEmpty(jobTypeName)){
+            return "/index";
+        }
+        httpServletRequest.getSession().setAttribute("jobName",jobName);
+        httpServletRequest.getSession().setAttribute("jobTypeName",jobTypeName);
+        return "/find_job";
     }
 }

@@ -57,4 +57,19 @@
     <select id="selectMaxPage" resultType="int">
         SELECT count(*) FROM Job
     </select>
+    <select id="selectJobByName" resultMap="jobVOResult">
+        SELECT * FROM Job
+        LEFT JOIN User
+        ON Job.UserId = User.UserId
+        WHERE Job.JobName LIKE CONCAT('%',#{jobName},'%')
+        LIMIT 9
+    </select>
+    <select id="selectJobByNameAndType" resultMap="jobVOResult">
+        SELECT * FROM Job
+        LEFT JOIN User
+        ON Job.UserId = User.UserId
+        WHERE Job.JobName LIKE CONCAT('%',#{jobName},'%')
+        AND Job.JobType LIKE CONCAT('%',#{jobTypeName},'%')
+        LIMIT 9
+    </select>
 </mapper>
