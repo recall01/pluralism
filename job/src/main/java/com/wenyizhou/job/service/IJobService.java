@@ -9,4 +9,6 @@ public interface IJobService {
     Response jobListByTime(Integer time);
 
     Response jobListByJobType(String type);
+
+    Response getMaxPage();
 }

@@ -123,13 +123,8 @@
 
             </div>
             <div class="d-flex justify-content-center">
-                <ul class="pagination pt-4">
-                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                    <li class="active"><a href="#" class="text-white bg-theme">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li> <a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a>
-                    </li>
+                <ul class="pagination pt-4" id="pagination">
+
                 </ul>
             </div>
         </div>
@@ -401,6 +396,7 @@
     </script>
     <!-- script for password match -->
     <script src="js/move-top.js"></script>
+    <script src="js/myResponse.js"></script>
     <script src="js/easing.js"></script>
     <script>
         jQuery(document).ready(function ($) {
@@ -433,9 +429,15 @@
             }
         });
 //获取工作列表
+        var currentPage = document.getElementById("active");
+        if(currentPage == null){
+            currentPage = 1 ;
+        }else {
+            currentPage = currentPage.innerText;
+        }
         $.ajax({
             type:"GET",
-            url:"http://localhost:8080/job/jobList",
+            url:"http://localhost:8080/job/jobList?page="+currentPage,
             success:function (data) {
                 if(data.status == 200){
                     changeJobList(data);
@@ -447,7 +449,21 @@
                 alert("请求失败");
             }
         });
-
+//获取最大页数,显示分页
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/job/getMaxPage",
+            success:function (data) {
+                if(data.status == 200){
+                    changePage(data,currentPage);
+                }else {
+                    alert("获取最大页数失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
     </script>
     <!-- //end-smooth-scrolling -->
     <!-- smooth-scrolling-of-move-up -->
@@ -474,7 +490,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/myResponse.js"></script>
+
 </body>
 
 </html>

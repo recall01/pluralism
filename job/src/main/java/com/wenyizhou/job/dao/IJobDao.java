@@ -14,4 +14,6 @@ public interface IJobDao {
     List<JobVO> jobListByTime(String startTime, String endTime);
 
     List<JobVO> jobListByJobType(String type);
+
+    int getMaxPage();
 }

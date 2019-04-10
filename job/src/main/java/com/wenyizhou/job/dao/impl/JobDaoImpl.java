@@ -30,6 +30,7 @@ public class JobDaoImpl implements IJobDao {
 
     @Override
     public List<JobVO> jobList(Integer page) {
+        page = page * 6;
         return jobMapping.selectJobList(page);
     }
 
@@ -53,6 +54,16 @@ public class JobDaoImpl implements IJobDao {
         }catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public int getMaxPage() {
+        try {
+            return jobMapping.selectMaxPage();
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
         }
     }
 }

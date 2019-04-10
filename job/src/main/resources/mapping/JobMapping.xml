@@ -54,4 +54,7 @@
         WHERE Job.JobType LIKE CONCAT('%',#{type},'%')
         LIMIT 6
     </select>
+    <select id="selectMaxPage" resultType="int">
+        SELECT count(*) FROM Job
+    </select>
 </mapper>

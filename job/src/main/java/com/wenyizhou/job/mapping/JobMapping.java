@@ -15,4 +15,6 @@ public interface JobMapping {
     List<JobVO> selectjobListByTime(Map m);
 
     List<JobVO> selectjobListByJobType(String type);
+
+    int selectMaxPage();
 }
