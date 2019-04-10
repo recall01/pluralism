@@ -37,6 +37,8 @@ public class JobServiceImpl implements IJobService {
         if(page == null){
             page = 0;
         }
+        page--;
+        httpServletRequest.getSession().setAttribute("currentPage",page+1);
         List<JobVO> jobs = jobDao.jobList(page);
         httpServletRequest.getSession().setAttribute("jobs",jobs);
         response.setStatus(RESPONSE_SUCCESS);
@@ -65,12 +67,37 @@ public class JobServiceImpl implements IJobService {
             return this.jobList(0);
         }
         String endTime = TimeUtil.getTime(date);
-        System.out.println(startTime+"   "+endTime);
         List<JobVO> jobs = jobDao.jobListByTime(startTime,endTime);
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(jobs);
-        response.setMsg("成功");
+        response.setMsg("获取工作列表成功");
         return response;
     }
+
+    @Override
+    public Response jobListByJobType(String type) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(type)){
+            return this.jobList(0);
+        }
+        List<JobVO> jobs = jobDao.jobListByJobType(type);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(jobs);
+        response.setMsg("获取工作列表成功");
+        return response;
+    }
+    //获取最大页数
+    @Override
+    public Response getMaxPage(){
+        Response response = new Response();
+        double v = 1.0 * jobDao.getMaxPage();
+        int result = (int)Math.ceil(v/6);
+        response.setStatus(RESPONSE_SUCCESS);
+        //response.setData(result);
+        response.setData(6);
+        response.setMsg("获取最大页数成功");
+        return response;
+    }
+
 
 }

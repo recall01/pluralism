@@ -1,5 +1,6 @@
 package com.wenyizhou.job.controller;
 
+import com.google.gson.Gson;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.service.IJobService;
@@ -23,10 +24,21 @@ public class JobController {
     }
     @GetMapping("/jobList")
     public Response jobList(Integer page){
-        return iJobService.jobList(page);
+        System.out.println(page);
+        Response response = iJobService.jobList(page);
+        System.out.println(new Gson().toJson(response));
+        return response;
     }
     @GetMapping("/jobListByTime")
     public Response jobListByTime(Integer time){
         return iJobService.jobListByTime(time);
+    }
+    @GetMapping("/jobListByJobType")
+    public Response jobListByJobType(String type){
+        return iJobService.jobListByJobType(type);
+    }
+    @GetMapping("/getMaxPage")
+    public Response getMaxPage(){
+        return iJobService.getMaxPage();
     }
 }

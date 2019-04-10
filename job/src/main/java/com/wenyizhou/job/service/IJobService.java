@@ -7,4 +7,8 @@ public interface IJobService {
     Response jobList(Integer page);
 
     Response jobListByTime(Integer time);
+
+    Response jobListByJobType(String type);
+
+    Response getMaxPage();
 }

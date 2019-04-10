@@ -123,13 +123,8 @@
 
             </div>
             <div class="d-flex justify-content-center">
-                <ul class="pagination pt-4">
-                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                    <li class="active"><a href="#" class="text-white bg-theme">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li> <a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a>
-                    </li>
+                <ul class="pagination pt-4" id="pagination">
+
                 </ul>
             </div>
         </div>
@@ -265,7 +260,7 @@
                 document.getElementById("password2").setCustomValidity('');
             //empty string means no validation error
         }
-
+//根据时间筛选工作列表按钮点击事件
         function getRadioTime() {
             var radios = document.getElementsByName("cat1");
             for (var i=0;i<radios.length;i++){
@@ -289,9 +284,37 @@
                 }
             }
         }
+        //根据工作类型筛选工作列表按钮点击事件
+        function getRadioJob() {
+            var radios = document.getElementsByName("jobType");
+            for (var i=0;i<radios.length;i++){
+                if(radios[i].checked){
+                    var jobTypeLabel = "jobTypeLabel"+i;
+                    var label = document.getElementById(jobTypeLabel);
+                    var typeName = label.innerText;
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:8080/job/jobListByJobType?type="+typeName,
+                        success:function (data) {
+                            if(data.status == 200){
+                                //先移除之前填充的html代码
+                                $("#test").children().remove();
+                                changeJobList(data);
+                            }else {
+                                alert("获取工作类型失败");
+                            }
+                        },
+                        error:function (data) {
+                            alert("请求失败");
+                        }
+                    });
+                }
+            }
+        }
     </script>
     <!-- script for password match -->
     <script src="js/move-top.js"></script>
+    <script src="js/myResponse.js"></script>
     <script src="js/easing.js"></script>
     <script>
         jQuery(document).ready(function ($) {
@@ -312,9 +335,9 @@
                     var jobList = data.data;
                     for (var i=0;i<jobList.length;i++){
                         var job = jobList[i];
-                        $("#jobType").append("<li><input type='checkbox' class='checked' name='jobType"+job.jobId+"' id='c"+job.jobId+"'><label for='c"+job.jobId+"'>"+job.typeName+"</label></li>");
+                        $("#jobType").append("<li><input type='radio' class='checked' name='jobType' id='c"+job.jobId+"'><label id='jobTypeLabel"+i+"' for='c"+job.jobId+"'>"+job.typeName+"</label></li>");
                     }
-                        $("#jobType").append("<input type='submit' class='form-control bg-theme text-uppercase' value='筛选'>");
+                    $("#jobType").append("<input type='submit' class='form-control bg-theme text-uppercase' onclick='getRadioJob()' value='筛选'>");
                 }else {
                     alert("获取工作类型失败");
                 }
@@ -324,9 +347,15 @@
             }
         });
 //获取工作列表
+        var currentPage = document.getElementById("active");
+        if(currentPage == null){
+            currentPage = 1 ;
+        }else {
+            currentPage = currentPage.innerText;
+        }
         $.ajax({
             type:"GET",
-            url:"http://localhost:8080/job/jobList",
+            url:"http://localhost:8080/job/jobList?page="+currentPage,
             success:function (data) {
                 if(data.status == 200){
                     changeJobList(data);
@@ -338,7 +367,21 @@
                 alert("请求失败");
             }
         });
-
+//获取最大页数,显示分页
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/job/getMaxPage",
+            success:function (data) {
+                if(data.status == 200){
+                    changePage(data,currentPage);
+                }else {
+                    alert("获取最大页数失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
     </script>
     <!-- //end-smooth-scrolling -->
     <!-- smooth-scrolling-of-move-up -->
@@ -365,7 +408,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/myResponse.js"></script>
+
 </body>
 
 </html>
