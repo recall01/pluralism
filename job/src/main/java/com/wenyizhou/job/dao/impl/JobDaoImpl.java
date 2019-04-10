@@ -45,4 +45,14 @@ public class JobDaoImpl implements IJobDao {
             return null;
         }
     }
+
+    @Override
+    public List<JobVO> jobListByJobType(String type) {
+        try {
+            return jobMapping.selectjobListByJobType(type);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

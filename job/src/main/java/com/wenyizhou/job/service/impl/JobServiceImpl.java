@@ -65,11 +65,23 @@ public class JobServiceImpl implements IJobService {
             return this.jobList(0);
         }
         String endTime = TimeUtil.getTime(date);
-        System.out.println(startTime+"   "+endTime);
         List<JobVO> jobs = jobDao.jobListByTime(startTime,endTime);
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(jobs);
-        response.setMsg("成功");
+        response.setMsg("获取工作列表成功");
+        return response;
+    }
+
+    @Override
+    public Response jobListByJobType(String type) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(type)){
+            return this.jobList(0);
+        }
+        List<JobVO> jobs = jobDao.jobListByJobType(type);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(jobs);
+        response.setMsg("获取工作列表成功");
         return response;
     }
 

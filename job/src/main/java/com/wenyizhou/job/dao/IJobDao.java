@@ -12,4 +12,6 @@ public interface IJobDao {
     List<JobVO> jobList(Integer page);
 
     List<JobVO> jobListByTime(String startTime, String endTime);
+
+    List<JobVO> jobListByJobType(String type);
 }

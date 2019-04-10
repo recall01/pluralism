@@ -29,4 +29,8 @@ public class JobController {
     public Response jobListByTime(Integer time){
         return iJobService.jobListByTime(time);
     }
+    @GetMapping("/jobListByJobType")
+    public Response jobListByJobType(String type){
+        return iJobService.jobListByJobType(type);
+    }
 }

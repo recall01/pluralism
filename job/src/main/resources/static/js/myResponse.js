@@ -123,3 +123,30 @@ function changeJobList(data) {
     console.log(dom);
     $("#test").append(dom);
 }
+/*//根据工作类型筛选工作列表按钮点击事件
+function getRadioJob() {
+    var radios = document.getElementsByName("jobType");
+    for (var i=0;i<radios.length;i++){
+        if(radios[i].checked){
+            var jobTypeLabel = "jobTypeLabel"+i;
+            var label = document.getElementById(jobTypeLabel);
+            var typeName = label.innerText;
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:8080/job/jobListByJobType?type="+typeName,
+                success:function (data) {
+                    if(data.status == 200){
+                        //先移除之前填充的html代码
+                        $("#test").children().remove();
+                        changeJobList(data);
+                    }else {
+                        alert("获取工作类型失败");
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+        }
+    }
+}*/

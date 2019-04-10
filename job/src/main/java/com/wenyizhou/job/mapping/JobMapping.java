@@ -13,4 +13,6 @@ public interface JobMapping {
     List<JobVO> selectJobList(Integer page);
 
     List<JobVO> selectjobListByTime(Map m);
+
+    List<JobVO> selectjobListByJobType(String type);
 }

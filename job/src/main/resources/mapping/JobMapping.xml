@@ -47,4 +47,11 @@
         AND Job.PubTime &lt; #{endTime}
         LIMIT 6
     </select>
+    <select id="selectjobListByJobType" resultMap="jobVOResult">
+        SELECT * FROM Job
+        LEFT JOIN User
+        ON Job.UserId = User.UserId
+        WHERE Job.JobType LIKE CONCAT('%',#{type},'%')
+        LIMIT 6
+    </select>
 </mapper>
