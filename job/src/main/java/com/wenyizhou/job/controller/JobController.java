@@ -24,10 +24,7 @@ public class JobController {
     }
     @GetMapping("/jobList")
     public Response jobList(Integer page){
-        System.out.println(page);
-        Response response = iJobService.jobList(page);
-        System.out.println(new Gson().toJson(response));
-        return response;
+        return iJobService.jobList(page);
     }
     @GetMapping("/jobListByTime")
     public Response jobListByTime(Integer time){

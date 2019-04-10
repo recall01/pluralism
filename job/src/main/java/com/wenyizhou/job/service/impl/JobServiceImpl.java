@@ -38,7 +38,6 @@ public class JobServiceImpl implements IJobService {
             page = 0;
         }
         page--;
-        httpServletRequest.getSession().setAttribute("currentPage",page+1);
         List<JobVO> jobs = jobDao.jobList(page);
         httpServletRequest.getSession().setAttribute("jobs",jobs);
         response.setStatus(RESPONSE_SUCCESS);
@@ -93,8 +92,7 @@ public class JobServiceImpl implements IJobService {
         double v = 1.0 * jobDao.getMaxPage();
         int result = (int)Math.ceil(v/6);
         response.setStatus(RESPONSE_SUCCESS);
-        //response.setData(result);
-        response.setData(6);
+        response.setData(result);
         response.setMsg("获取最大页数成功");
         return response;
     }

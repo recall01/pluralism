@@ -132,14 +132,14 @@ function changePage(data,currentPage) {
         return false;
     }
     if(currentPage == 1){
-        dom = dom + "<li><a href='#'><i class='fa fa-angle-left'></i></a></li><li class='active'><a id='active' class='text-white bg-theme'>1</a></li>";
+        dom = dom + "<li class='active'><a id='active' class='text-white bg-theme'>1</a></li>";
         if(maxPage - currentPage == 1){
             dom = dom + "<li><a>2</a></li><li> <a href='#' aria-label='Next'><i class='fa fa-angle-right'></i></a></li>";
         }else if(maxPage - currentPage >1){
             dom = dom + "<li><a>2</a></li><li><a>3</a></li><li> <a onclick='nextPage()' href='#' aria-label='Next'><i class='fa fa-angle-right'></i></a></li>";
         }
     }else {
-        dom = dom + "<li><a href='#'><i class='fa fa-angle-left'></i></a></li><li><a>"+(currentPage-1)+"</a></li><li class='active'><a id='active' class='text-white bg-theme'>"+currentPage+"</a></li>";
+        dom = dom + "<li><a href='#' onclick='lastPage()'><i class='fa fa-angle-left'></i></a></li><li><a>"+(currentPage-1)+"</a></li><li class='active'><a id='active' class='text-white bg-theme'>"+currentPage+"</a></li>";
         if(maxPage - currentPage>0){
             dom = dom + "<li><a>"+(currentPage+1)+"</a></li><li> <a onclick='nextPage()' href='#' aria-label='Next'><i class='fa fa-angle-right'></i></a></li>";
         }
@@ -177,7 +177,38 @@ function nextPage() {
     changePage(pageData,currentPage);
 //    changePage(Jobdata,currentPage);
 }
-
+function lastPage() {
+    //获取当前页码数
+    var currentPage = document.getElementById("active");
+    if(currentPage == null){
+        currentPage = 1 ;
+    }else {
+        currentPage = currentPage.innerText;
+    }
+    //当前页码数-1
+    if(currentPage > 1){
+        currentPage--;
+    }
+    //获取下一页工作列表,并更新试图
+    var Jobdata = getJobListData(currentPage);
+    if(Jobdata == null){
+        alert("获取工作列表失败");
+        return false;
+    }
+    //先移除之前填充的html代码
+    $("#test").children().remove();
+    changeJobList(Jobdata);
+    //获取最大页码
+    var pageData = getMaxPage();
+    if(pageData == null){
+        alert("获取最大页码数据失败");
+        return false;
+    }
+    //先移除之前填充的html代码
+    $("#pagination").children().remove();
+    changePage(pageData,currentPage);
+//    changePage(Jobdata,currentPage);
+}
 function getJobListData(currentPage) {
     var jobData = null;
     $.ajax({

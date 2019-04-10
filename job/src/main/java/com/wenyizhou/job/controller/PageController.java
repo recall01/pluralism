@@ -61,4 +61,8 @@ public class PageController {
     public String joblist(){
         return "job_list";
     }
+    @RequestMapping("/findJob")
+    public String findJob(){
+        return "find_job";
+    }
 }
