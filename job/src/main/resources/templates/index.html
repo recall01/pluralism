@@ -398,6 +398,32 @@
             location.href="http://localhost:8080/improveInfo";
             return false;
         });
+        //申请成为老师按钮点击事件
+        $("#becomeTeacher").on("click",function () {
+            var userId = $("#userId").html();
+            if(userId == null||""==userId){
+                alert("获取用户信息失败,重新登录再试试");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/user/apply",
+                data:{
+                    "userId":userId,
+                },
+                success:function (data) {
+                    alert(data.msg);
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/index";
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+            return false;
+        });
     </script>
     <!-- //end-smooth-scrolling -->
     <!-- smooth-scrolling-of-move-up -->

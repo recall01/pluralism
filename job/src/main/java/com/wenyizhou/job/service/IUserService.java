@@ -15,4 +15,6 @@ public interface IUserService {
     Response exit();
 
     Response jobType();
+
+    Response apply(String userId);
 }

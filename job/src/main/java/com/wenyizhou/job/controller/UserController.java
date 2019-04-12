@@ -44,7 +44,6 @@ public class UserController {
         return userService.changeInfo(user);
     }
 
-
     @GetMapping(value = "/exit",consumes = "application/x-www-form-urlencoded")
     public Response exit(){
         return userService.exit();
@@ -52,5 +51,10 @@ public class UserController {
     @GetMapping(value = "/jobType")
     public Response jobType(){
         return userService.jobType();
+    }
+
+    @PostMapping(value = "/apply",consumes = "application/x-www-form-urlencoded")
+    public Response apply(@RequestParam String userId){
+        return userService.apply(userId);
     }
 }

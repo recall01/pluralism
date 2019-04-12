@@ -175,6 +175,26 @@ public class UserServiceImpl implements IUserService {
         return response;
     }
 
+    @Override
+    public Response apply(String userId) {
+        Response response = new Response();
+        Apply apply = new Apply();
+        if(StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        apply.setAppTime(TimeUtil.getTime());
+        apply.setUserId(userId);
+        apply.setAppType(0);
+        if(!userDao.apply(apply)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("发送申请成功,等待审核");
+        return response;
+    }
+
     //获得学生信息
     private Response getStudentInfo(String userId){
         Response response = new Response();

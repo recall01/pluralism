@@ -1,5 +1,6 @@
 package com.wenyizhou.job.dao;
 
+import com.wenyizhou.job.model.Apply;
 import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
@@ -19,4 +20,6 @@ public interface IUserDao {
     boolean changeInfo(User user);
 
     List<JobType> getJobType();
+
+    boolean apply(Apply apply);
 }

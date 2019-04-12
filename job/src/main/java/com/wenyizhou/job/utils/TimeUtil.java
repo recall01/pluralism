@@ -68,4 +68,14 @@ public class TimeUtil {
         String time = simpleDateFormat.format(date);
         return time;
     }
+    public static String handTimeForm(String time){
+        if(time != null){
+            if(time.length()>20){
+                return time.substring(0,19);
+            }else {
+                return time;
+            }
+        }
+        return time;
+    }
 }

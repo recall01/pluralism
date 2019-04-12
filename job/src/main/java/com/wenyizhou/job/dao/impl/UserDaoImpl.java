@@ -2,9 +2,11 @@ package com.wenyizhou.job.dao.impl;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.wenyizhou.job.dao.IUserDao;
+import com.wenyizhou.job.mapping.ApplyMapping;
 import com.wenyizhou.job.mapping.JobTypeMapping;
 import com.wenyizhou.job.mapping.StudentMapping;
 import com.wenyizhou.job.mapping.UserMapping;
+import com.wenyizhou.job.model.Apply;
 import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
@@ -24,6 +26,8 @@ public class UserDaoImpl implements IUserDao {
     StudentMapping studentMapping;
     @Resource
     JobTypeMapping jobTypeMapping;
+    @Resource
+    ApplyMapping applyMapping;
 
     @Override
     public String register(User user) throws Exception{
@@ -75,6 +79,17 @@ public class UserDaoImpl implements IUserDao {
         }catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public boolean apply(Apply apply) {
+        try {
+            applyMapping.insertApply(apply);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
         }
     }
 }
