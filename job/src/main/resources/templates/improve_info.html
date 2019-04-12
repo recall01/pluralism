@@ -48,16 +48,6 @@
                             <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                                 <a th:href="@{~/about}">勤工通告</a>
                             </li>
-                            <!--<li class="nav-item dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
-                                <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                   aria-expanded="false">
-                                    Pages
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a href="job_list.html">Job List</a>
-                                    <a href="jobSingle.html">Job Single</a>
-                                </div>
-                            </li>-->
                             <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
                                 <a th:href="@{~/contact}">兼职须知</a>
                             </li>
@@ -82,7 +72,6 @@
                                 <a href="#" data-toggle="modal" data-target="#introductionModal">个人简介</a>
                             </div>
                         </div>
-
                     </div>
                 </nav>
             </div>
@@ -103,33 +92,12 @@
                                         <li>用户编号: <strong th:if="${session.user}" th:text="${session.user.userId}"></strong></li>
                                         <li>姓名: <strong th:if="${session.user}" th:text="${session.user.userName}"></strong></li>
                                         <li>联系方式: <strong th:if="${session.user}" th:text="${session.user.userPhone}"></strong><strong>&nbsp;&nbsp;</strong><strong th:if="${session.user}" th:text="${session.user.userEmail}"></strong></li>
-                                        <li>特长: <strong th:if="${session.student}" th:text="${session.student.specialty}"></strong></li>
-                                        <li>期待薪水: <strong th:if="${session.student}" th:text="${session.student.salary}"></strong></li>
-                                        <li>空闲时间:<br>
-                                            <strong th:if="${session.student}" th:each="freeTime:${session.student.freeTimes}" th:utext="${freeTime.startTime}+'~'+${freeTime.endTime}+'<br>'"></strong>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <hr>
-                                <div class="tech-job">
-                                    <h5 class="w3layouts_pvt-head" id="jobType" data-toggle="modal" data-target="#jobTypeModal" title="点击添加兼职类型">想从事兼职类型.</h5>
-                                    <p hidden th:if="${session.student}" th:text="${session.student.jobType}"></p>
-                                    <ul class="e-tags">
-                                        <li th:if="${session.student}" th:each="job:${session.student.jobList}" th:text="${job}"></li>
                                     </ul>
                                 </div>
                                 <hr>
                             </div>
                         </div>
-
-                        <div class="job-role">
-                            <h5 class="w3layouts_pvt-head">个人简介.</h5>
-                            <p th:if="${session.student}" th:text="${session.student.introduction}"></p>
-                        </div>
-                        <a href="#introductionModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal" aria-pressed="false"
-                           data-target="#introductionModal" role="button">完善个人简介</a>
                     </div>
-
                 </div>
 
             </div>
@@ -166,7 +134,8 @@
                     <div class="modal-body">
                         <form action="#" method="post" class="p-3">
                             <div class="form-group">
-                                <textarea class="form-control" th:if="${session.student}" th:text="${session.student.introduction}" id="introduction"></textarea>
+                                <!--<textarea class="form-control" th:if="${session.student}" th:text="${session.student.introduction}" id="introduction"></textarea>-->
+                                <textarea class="form-control" id="introduction"></textarea>
                             </div>
                             <div class="right-w3l">
                                 <input type="submit" class="form-control bg-theme" value="修改" id="changeIntroduction" >
@@ -191,7 +160,7 @@
                     <div class="modal-body">
                         <form action="#" method="post" class="p-3">
                             <div class="form-group">
-                                <input class="form-control" th:if="${session.student}" th:value="${session.student.jobType}" id="input_jobType"></input>
+                                <input class="form-control" id="input_jobType">
                             </div>
                             <div class="right-w3l">
                                 <input type="submit" class="form-control bg-theme" value="修改" id="changeJobType">
@@ -215,9 +184,6 @@
                     </div>
                     <div class="modal-body">
                         <form action="#" method="post" class="p-3">
-                            <div class="form-group" th:if="${session.student.freeTimes}" th:each="freeTime:${session.student.freeTimes}">
-                                <a th:onclick="|javascript:delectFreeTime(${freeTime.freId})|" class="form-control" th:utext="${freeTime.startTime}+'~'+${freeTime.endTime}+'<br>'" th:id="freeTimeId+${freeTime.freId}"></a>
-                            </div>
                             <div class="right-w3l">
                                 <label for="startTime" class="col-form-label">开始时间段</label>
                                 <input type="datetime-local" class="form-control" placeholder=" " name="userName" id="startTime"
@@ -270,12 +236,12 @@
                             <div class="form-group">
                                 <label for="recipient-specialty" class="col-form-label">Specialty</label>
                                 <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-specialty"
-                                       required="" th:if="${session.student}" th:value="${session.student.specialty}">
+                                       required="">
                             </div>
                             <div class="form-group">
                                 <label for="recipient-salary" class="col-form-label">Salary</label>
                                 <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-salary"
-                                       required="" th:if="${session.student}" th:value="${session.student.salary}">
+                                       required="">
                             </div>
                             <div class="right-w3l">
                                 <input type="submit" class="form-control bg-theme" value="Change" id="changeBaseInfo">
@@ -347,6 +313,35 @@
                 }, 1000);
             });
         });
+        //初始化学生数据
+        var userId = $("#userId").html();
+        if(userId!=null&&""!=userId){
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/student/initStudentInfo",
+                data:{
+                    "userId":userId,
+                },
+                success:function (data) {
+/*                    if(data.status == 200){
+                        alert(data.msg);
+                    }else {
+                        alert("修改个人简介失败");
+                    }*/
+                    alert(data.msg);
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+        }else {
+            alert("获取用户信息失败");
+        }
+
+
+
+
         //添加空闲时间段按钮
         $("#addFreeTime").on("click",function () {
             var startTime = $("#startTime").val();

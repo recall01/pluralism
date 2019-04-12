@@ -2,8 +2,8 @@ package com.wenyizhou.job.model;
 
 public class FreeTime {
     private int freId;
-    private String startTime;
-    private String endTime;
+    private String startTime = "";
+    private String endTime = "";
     private String stuId;
 
     public int getFreId() {

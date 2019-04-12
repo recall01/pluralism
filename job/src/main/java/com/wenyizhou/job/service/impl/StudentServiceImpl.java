@@ -1,8 +1,11 @@
 package com.wenyizhou.job.service.impl;
 
 import com.wenyizhou.job.dao.IStudentDao;
+import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.Student;
+import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.VO.StudentVO;
 import com.wenyizhou.job.service.IStudentService;
 import com.wenyizhou.job.service.IUserService;
 import com.wenyizhou.job.utils.ErrorCode;
@@ -10,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
+import java.beans.Transient;
 
 @Service
 public class StudentServiceImpl implements IStudentService {
@@ -20,6 +24,8 @@ public class StudentServiceImpl implements IStudentService {
     private IUserService userService;
     @Autowired
     private IStudentDao studentDao;
+    @Autowired
+    private IUserDao userDao;
     private final static int RESPONSE_SUCCESS = 200;
 
 
@@ -146,6 +152,47 @@ public class StudentServiceImpl implements IStudentService {
             response.setError(ErrorCode.DATA_NOT_EXIST);
         }else {
             response.setMsg("添加空闲时间段成功");
+        }
+        return response;
+    }
+
+    @Override
+    @Transient
+    public Response initStudentInfo(String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //先根据uerId去学生表查询该用户信息是否已存在
+        StudentVO student = userDao.selectStudentById(userId);
+        if(student != null){
+            response.setError(ErrorCode.DATA_ALREADY_EXIST);
+            return response;
+        }
+        //如果学生表无该用户信息,则初始化数据
+        Student stu = new Student();
+        stu.setIntroduction("");
+        stu.setSpecialty("");
+        stu.setSalary("");
+        stu.setJobType("");
+        stu.setUserId(userId);
+        //向学生表中插入数据
+        if(!studentDao.initStudentInfo(stu)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //移除缓存
+        if(httpServletRequest.getSession().getAttribute("student") != null){
+            httpServletRequest.getSession().removeAttribute("student");
+        }
+        //修改user表用户状态
+        User user = new User();
+        user.setUserId(userId);
+        user.setRoleType(1);
+        response = userService.changeInfo(user);
+        if(response.getStatus() == 200){
+            response.setMsg("初始化学生表成功");
         }
         return response;
     }

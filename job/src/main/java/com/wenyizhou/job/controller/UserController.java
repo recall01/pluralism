@@ -1,5 +1,6 @@
 package com.wenyizhou.job.controller;
 
+import com.google.gson.Gson;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.service.IUserService;
@@ -34,7 +35,9 @@ public class UserController {
     }
     @PostMapping(value = "/userInfo",consumes = "application/x-www-form-urlencoded")
     public Response userInfo(@RequestParam String userId){
-        return userService.userInfo(userId);
+        Response response = userService.userInfo(userId);
+        System.out.println(new Gson().toJson(response));
+        return response;
     }
     @PostMapping(value = "/changeInfo",consumes = "application/x-www-form-urlencoded")
     public Response changeInfo(User user){

@@ -40,14 +40,14 @@ public class PageController {
     }
     @RequestMapping("/exit")
     public String exit(){
-        System.out.println("---exit---");
         if(httpServletRequest.getSession().getAttribute("user") != null){
-            System.out.println("---user---");
             httpServletRequest.getSession().removeAttribute("user");
         }
         if(httpServletRequest.getSession().getAttribute("student") != null){
-            System.out.println("---student---");
             httpServletRequest.getSession().removeAttribute("student");
+        }
+        if(httpServletRequest.getSession().getAttribute("verify") != null){
+            httpServletRequest.getSession().removeAttribute("verify");
         }
         return "/index";
     }
@@ -65,12 +65,20 @@ public class PageController {
     }
     @GetMapping("/findJob")
     public String findJob(@RequestParam String jobName, @RequestParam String jobTypeName){
-        System.out.println(jobName+"  "+jobTypeName);
         if (StringUtils.isEmpty(jobName)||StringUtils.isEmpty(jobTypeName)){
             return "/index";
         }
         httpServletRequest.getSession().setAttribute("jobName",jobName);
         httpServletRequest.getSession().setAttribute("jobTypeName",jobTypeName);
         return "/find_job";
+    }
+    @GetMapping("/improveInfo")
+    public String improveInfo(){
+        //从session中拿用户登录凭证
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            return "/index";
+        }
+        return "/improve_info";
     }
 }

@@ -9,6 +9,7 @@ public enum ErrorCode {
     //3000开头的与数据库查询数据有关
     DATA_NOT_EXIST(30001,"数据不存在"),
     SQL_OPERATING_FAIL(30002,"SQL执行失败"),
+    DATA_ALREADY_EXIST(30003,"数据已经存在"),
     //9999开头的与系统有关
     SYSTEM_EXCEPTION(99999,"系统异常");
     private int errCode;

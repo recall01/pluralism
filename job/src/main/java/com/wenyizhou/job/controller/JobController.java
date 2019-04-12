@@ -18,9 +18,7 @@ public class JobController {
     private IJobService iJobService;
     @RequestMapping("/findJob")
     public Response findJob(){
-        Response job = iJobService.findJob();
-        System.out.println(new Gson().toJson(job));
-        return job;
+        return iJobService.findJob();
     }
     @GetMapping("/jobList")
     public Response jobList(Integer page){

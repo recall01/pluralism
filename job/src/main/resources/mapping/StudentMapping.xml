@@ -60,5 +60,9 @@
         insert into FreeTime (StartTime,EndTime,StuId)
         values (#{startTime},#{endTime},#{stuId})
     </insert>
+    <insert id="insertStudentInfo">
+        insert into Student (Introduction,Specialty,Salary,JobType,UserId)
+        values (#{introduction},#{specialty},#{salary},#{jobType},#{userId})
+    </insert>
 
 </mapper>

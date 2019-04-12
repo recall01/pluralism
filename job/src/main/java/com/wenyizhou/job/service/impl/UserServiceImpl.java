@@ -1,10 +1,7 @@
 package com.wenyizhou.job.service.impl;
 
 import com.wenyizhou.job.dao.IUserDao;
-import com.wenyizhou.job.model.JobType;
-import com.wenyizhou.job.model.Response;
-import com.wenyizhou.job.model.Student;
-import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.StudentVO;
 import com.wenyizhou.job.service.IUserService;
 import com.wenyizhou.job.utils.ErrorCode;
@@ -36,6 +33,14 @@ public class UserServiceImpl implements IUserService {
             response.setError(ErrorCode.PARAMETER_ERROR);
         }else {
             User user = userDao.login(userPhone,userPassword);
+            //先移除verify缓存
+            String verfy = (String) httpServletRequest.getSession().getAttribute("verify");
+            if(verfy != null){
+                httpServletRequest.getSession().removeAttribute("verify");
+            }
+            if (user.getRoleType() == 0){ //未验证
+                httpServletRequest.getSession().setAttribute("verify","还未验证");
+            }
             //将数据存入session
             if(user != null){
                 httpServletRequest.getSession().setAttribute("user",user);
@@ -97,19 +102,19 @@ public class UserServiceImpl implements IUserService {
         if(httpServletRequest.getSession().getAttribute("user") == null){
             httpServletRequest.getSession().setAttribute("user",user);
         }
+        /*//先移除verify缓存
+        String verfy = (String) httpServletRequest.getSession().getAttribute("verify");
+        if(verfy != null){
+            httpServletRequest.getSession().removeAttribute("verify");
+        }*/
         switch (user.getRoleType()){
-            case 0:
-                StudentVO student = userDao.selectStudentById(userId);
-                if(student == null){
-                    response.setError(ErrorCode.DATA_NOT_EXIST);
-                    return response;
-                }
-                response.setStatus(RESPONSE_SUCCESS);
-                response.setData(student);
-                response.setMsg("查询成功");
-                httpServletRequest.getSession().setAttribute("student",student);
+            case 0: //未验证
+                response.setError(ErrorCode.DATA_NOT_EXIST);
+                httpServletRequest.getSession().setAttribute("verify","还未验证");
+                return response;
+            case 1: //学生
+                response = this.getStudentInfo(userId);
                 break;
-            case 1:break;
             case 2:break;
             default:break;
         }
@@ -170,5 +175,25 @@ public class UserServiceImpl implements IUserService {
         return response;
     }
 
-
+    //获得学生信息
+    private Response getStudentInfo(String userId){
+        Response response = new Response();
+        StudentVO student = userDao.selectStudentById(userId);
+        if(student == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        //循环遍历查询的freeTime结果，startTime或endTime为""将其移除
+        List<FreeTime> times = student.getFreeTimes();
+        for (int i=0;i<times.size();i++){
+            if(StringUtils.isEmpty(times.get(i).getStartTime())||StringUtils.isEmpty(times.get(i).getEndTime())){
+                student.getFreeTimes().remove(i);
+            }
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(student);
+        response.setMsg("查询成功");
+        httpServletRequest.getSession().setAttribute("student",student);
+        return response;
+    }
 }

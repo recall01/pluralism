@@ -40,4 +40,9 @@ public class StudentController {
         System.out.println(startTime+" "+endTime+" "+stuId+" "+userId);
         return studentService.addFreeTime(startTime,endTime,stuId,userId);
     }
+    @PostMapping(value = "/initStudentInfo",consumes = "application/x-www-form-urlencoded")
+    public Response initStudentInfo(@RequestParam String userId){
+        System.out.println(userId);
+        return studentService.initStudentInfo(userId);
+    }
 }

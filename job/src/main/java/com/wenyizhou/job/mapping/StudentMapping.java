@@ -21,4 +21,6 @@ public interface StudentMapping {
     void delectFreeTime(String freId);
 
     void addFreeTime(Map m);
+
+    void insertStudentInfo(Student stu);
 }

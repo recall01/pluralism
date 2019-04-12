@@ -78,4 +78,15 @@ public class StudentDaoImpl implements IStudentDao {
             return false;
         }
     }
+
+    @Override
+    public boolean initStudentInfo(Student stu) {
+        try {
+            studentMapping.insertStudentInfo(stu);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

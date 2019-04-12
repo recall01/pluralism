@@ -28,6 +28,7 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="userName!=null">UserName=#{userName},</if>
             <if test="userEmail!=null">UserEmail=#{userEmail}</if>
+            <if test="roleType!=0">RoleType=#{roleType}</if>
         </trim>
         where UserId=#{userId}
     </update>

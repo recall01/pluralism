@@ -48,7 +48,7 @@ $("#login").on("click",function () {
         },
         success:function (data) {
             if(data != null){
-                location.href="index.html";
+                location.href="http://localhost:8080/index";
             }else {
                 alert("登录失败");
             }
@@ -83,6 +83,7 @@ $("#userInfo").on("click",function () {
             alert("请求失败");
         }
     });
+    return false;
 });
 //退出系统按钮
 $("#exit").on("click",function () {

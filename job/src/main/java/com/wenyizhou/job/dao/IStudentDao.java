@@ -14,4 +14,6 @@ public interface IStudentDao {
     boolean delectFreeTime(String freId);
 
     boolean addFreeTime(String startTime, String endTime, String stuId);
+
+    boolean initStudentInfo(Student stu);
 }

@@ -1,10 +1,12 @@
 package com.wenyizhou.job.model.VO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wenyizhou.job.model.FreeTime;
 import com.wenyizhou.job.model.Student;
 
 import java.util.List;
 
+@JsonIgnoreProperties
 public class StudentVO extends Student {
     private List<FreeTime> freeTimes;
 

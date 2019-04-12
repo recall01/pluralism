@@ -66,15 +66,18 @@
                             </li>
                         </ul>
                         <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
-                            aria-pressed="false" data-target="#exampleModal1" th:unless="${session.user}">
+                            aria-pressed="false" data-target="#registerModal" th:unless="${session.user}">
                             注册
                         </button>
                         <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
-                            data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
+                            data-toggle="modal" aria-pressed="false" data-target="#loginModal" th:unless="${session.user}">
                             登录
                         </button>
                         <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
                                 th:if="${session.user}" th:text="${session.user.userName}" id="userInfo">
+                        </button>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" aria-pressed="false" data-target="#verifyModal" th:if="${session.verify}" id="verify">验证用户
                         </button>
                         <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
                         <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
@@ -198,7 +201,7 @@
         </p>
     </div>
     <!-- login modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -225,7 +228,7 @@
                             <input type="submit" class="form-control bg-theme" value="Login" id="login">
                         </div>
                         <p class="text-center dont-do">没有账号?
-                            <a href="#" data-toggle="modal" data-target="#exampleModal1" class="text-dark">
+                            <a href="#" data-toggle="modal" data-target="#registerModal" class="text-dark">
                                 <strong>点击注册</strong></a>
                         </p>
                     </form>
@@ -235,7 +238,7 @@
     </div>
     <!-- //login modal -->
     <!-- register modal -->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -282,6 +285,31 @@
         </div>
     </div>
     <!-- //register modal -->
+    <!-- verify modal -->
+    <div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-theme1">
+                    <h5 class="modal-title">验证</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="p-3">
+                        <div class="form-group">
+                            <input type="button" class="form-control" value="完善学生信息" id="improveInfo">
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="form-control" value="申请成为老师" id="becomeTeacher">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //verify modal -->
     <!-- js -->
     <script src="js/jquery-2.2.3.min.js"></script>
     <!-- Slider-JavaScript -->
@@ -313,9 +341,6 @@
             else
                 document.getElementById("password2").setCustomValidity('');
             //empty string means no validation error
-        }
-        function findJob() {
-            location.href="http://localhost:8080/findJob";
         }
     </script>
     <!-- script for password match -->
@@ -361,6 +386,16 @@
                 return false;
             }
             location.href="http://localhost:8080/findJob?jobName="+jobName+"&jobTypeName="+jobTypeName;
+            return false;
+        });
+        //找完善学生信息按钮点击事件
+        $("#improveInfo").on("click",function () {
+            var userId = $("#userId").html();
+            if(userId == null||""==userId){
+                alert("获取用户信息失败,重新登录再试试");
+                return false;
+            }
+            location.href="http://localhost:8080/improveInfo";
             return false;
         });
     </script>
