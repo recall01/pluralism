@@ -8,9 +8,7 @@ import com.wenyizhou.job.utils.ErrorCode;
 import com.wenyizhou.job.utils.IDUtil;
 import com.wenyizhou.job.utils.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
