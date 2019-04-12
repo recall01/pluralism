@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.service.IUserService;
+import com.wenyizhou.job.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,6 @@ public class UserController {
 
     @RequestMapping("/register")
     public Response register(User user){
-        System.out.println(user.toString());
         return userService.register(user);
     }
 

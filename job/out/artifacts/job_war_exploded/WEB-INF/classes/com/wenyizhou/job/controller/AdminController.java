@@ -1,19 +1,21 @@
 package com.wenyizhou.job.controller;
 
+import com.wenyizhou.job.model.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
+@RequestMapping()
 public class AdminController {
-    @RequestMapping("/index")
-    public String index(Model model){
-        return "index";
+    @RequestMapping("/jobType")
+    public Response index(){
+        return null;
     }
-    @RequestMapping("/test")
-    public ModelAndView test(){
-        return new ModelAndView("test");
+    @RequestMapping("/jobSingle")
+    public String jobSingle(){
+        System.out.println("---jobSingle---");
+        return "student_info";
     }
 }

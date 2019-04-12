@@ -6,8 +6,9 @@ public class User {
     private String userEmail;
     private String userPhone;
     private String userPassword;
-    //角色类型 0:学生 1:教师/家长 2:管理员
+    //角色类型 0:未验证状态 1:学生 2:教师/家长 3:管理员
     private int roleType;
+    private String registerTime;
 
 
     public String getUserId() {
@@ -56,6 +57,14 @@ public class User {
 
     public void setRoleType(int roleType) {
         this.roleType = roleType;
+    }
+
+    public String getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
     }
 
     @Override

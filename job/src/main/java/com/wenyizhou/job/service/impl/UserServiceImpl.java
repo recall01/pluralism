@@ -31,6 +31,7 @@ public class UserServiceImpl implements IUserService {
         Response response = new Response();
         if(StringUtils.isEmpty(userPhone)||StringUtils.isEmpty(userPassword)||userPhone.length() != 11){
             response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
         }else {
             User user = userDao.login(userPhone,userPassword);
             //先移除verify缓存

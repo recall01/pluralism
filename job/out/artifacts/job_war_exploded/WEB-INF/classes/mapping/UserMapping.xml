@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenyizhou.job.mapping.UserMapping">
+    <resultMap id="userResult" type="com.wenyizhou.job.model.User">
+        <result property="userId" column="UserId"/>
+        <result property="userName" column="UserName"/>
+        <result property="userEmail" column="UserEmail"/>
+        <result property="userPhone" column="UserPhone"/>
+        <result property="userPassword" column="UserPassword"/>
+        <result property="roleType" column="RoleType"/>
+        <result property="registerTime" column="RegisterTime"/>
+    </resultMap>
+    <insert id="insert">
+        insert into User
+        (UserId,UserName,UserEmail,UserPhone,UserPassword,RoleType,RegisterTime)
+        values (#{userId},#{userName},#{userEmail},#{userPhone},#{userPassword},0,#{registerTime})
+    </insert>
+    <select id="select" resultMap="userResult">
+        select * from User
+        where UserPhone = #{userPhone} and UserPassword = #{userPassword}
+    </select>
+    <select id="selectUserById" resultMap="userResult">
+        select * from User
+        where UserId = #{userId}
+    </select>
+    <update id="updateInfo">
+        update User
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userName!=null">UserName=#{userName},</if>
+            <if test="userEmail!=null">UserEmail=#{userEmail}</if>
+            <if test="roleType!=0">RoleType=#{roleType}</if>
+        </trim>
+        where UserId=#{userId}
+    </update>
+    <update id="changePassword">
+        update students set
+            StuPassword=#{password}
+        where StuPhone=#{phone}
+    </update>
+    <update id="removeStudent">
+        update students
+        set ClaID = 0
+        where StuNumber = #{stuNumber}
+        AND IsDelete = 0
+    </update>
+    <update id="changeClaID">
+        update students
+        set ClaID = #{claID}
+        where StuNumber = #{stuNumber}
+        AND IsDelete = 0
+    </update>
+</mapper>

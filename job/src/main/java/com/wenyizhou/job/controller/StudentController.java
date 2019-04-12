@@ -28,7 +28,6 @@ public class StudentController {
 
     @PostMapping(value = "/changeInfo",consumes = "application/x-www-form-urlencoded")
     public Response changeInfo(Student student){
-        System.out.println(new Gson().toJson(student));
         return studentService.changeInfo(student);
     }
     @PostMapping(value = "/delectFreeTime",consumes = "application/x-www-form-urlencoded")
@@ -37,12 +36,10 @@ public class StudentController {
     }
     @PostMapping(value = "/addFreeTime",consumes = "application/x-www-form-urlencoded")
     public Response addFreeTime(String startTime,String endTime,String stuId,String userId){
-        System.out.println(startTime+" "+endTime+" "+stuId+" "+userId);
         return studentService.addFreeTime(startTime,endTime,stuId,userId);
     }
     @PostMapping(value = "/initStudentInfo",consumes = "application/x-www-form-urlencoded")
     public Response initStudentInfo(@RequestParam String userId){
-        System.out.println(userId);
         return studentService.initStudentInfo(userId);
     }
 }

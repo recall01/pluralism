@@ -35,5 +35,9 @@ public class Response<T> {
         this.status = e.getErrCode();
         this.msg = e.getErrMsg();
     }
-
+    //当传递是异常信息时，包装数据
+    public void setError(int errorCode,String errMsg){
+        this.status = errorCode;
+        this.msg = errMsg;
+    }
 }

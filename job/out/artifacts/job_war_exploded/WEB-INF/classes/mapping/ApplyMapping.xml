@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenyizhou.job.mapping.ApplyMapping">
+    <resultMap id="applyResult" type="com.wenyizhou.job.model.Apply">
+        <id property="appId" column="AppId"/>
+        <result property="appType" column="AppType"/>
+        <result property="appTime" column="AppTime"/>
+        <result property="userId" column="UserId"/>
+    </resultMap>
+    <insert id="insertApply">
+        insert into Apply (AppType,AppTime,UserId)
+        values (#{appType},#{appTime},#{userId})
+    </insert>
+</mapper>

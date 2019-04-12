@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>Job List</title>
+    <title>工作列表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
     <meta name="keywords" content="" />
@@ -31,9 +30,7 @@
     <header>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
-                <h1><a class="navbar-brand" href="index.html">Recruit
-
-                    </a></h1>
+                <h1><a class="navbar-brand" href=" " th:href="@{~/index}">大学生勤工俭学网</a></h1>
                 <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -42,32 +39,32 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="ml-lg-5 navbar-nav mr-lg-auto">
                         <li class="nav-item mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                            <a href="index.html">Home</a>
+                            <a th:href="@{~/index}">首页</a>
+                        </li>
+                        <li class="nav-item active mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                            <a th:href="@{~/jobList}">工作列表</a>
                         </li>
                         <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
-                            <a href="about.html">about</a>
-                        </li>
-                        <li class="nav-item dropdown mr-lg-4 my-lg-0 my-sm-4 my-3  active ">
-                            <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Pages
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a href="job_list.html">Job List</a>
-                                <a href="job_single.html">Job Single</a>
-                            </div>
+                            <a th:href="@{~/about}">勤工通告</a>
                         </li>
                         <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
-                            <a href="contact.html">contact</a>
+                            <a th:href="@{~/contact}">兼职须知</a>
                         </li>
                     </ul>
                     <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
-                        aria-pressed="false" data-target="#exampleModal1">
-                        Register
+                            aria-pressed="false" data-target="#exampleModal1" th:unless="${session.user}">
+                        注册
                     </button>
-                    <button type="button" class="btn w3ls-btn btn-2 ml-lg-1 text-uppercase font-weight-bold d-block"
-                        data-toggle="modal" aria-pressed="false" data-target="#exampleModal">
-                        Sign in
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
+                        登录
+                    </button>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            th:if="${session.user}" th:text="${session.user.userName}" id="userInfo">
+                    </button>
+                    <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" aria-pressed="false" data-target="#userInfoModal" th:if="${session.user}" id="exit">退出系统
                     </button>
                 </div>
             </nav>
@@ -76,380 +73,58 @@
     <!-- //header -->
     <div class="inner-banner-w3ls">
     </div>
-    <!-- breadcrumbs -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb d-flex justify-content-center bg-theme">
-            <li class="breadcrumb-item">
-                <a href="index.html" class="text-white">Home</a>
-            </li>
-            <li class="breadcrumb-item active text-white font-weight-bold" aria-current="page">Job List</li>
-        </ol>
-    </nav>
-    <!-- //breadcrumbs -->
     <!-- jobs -->
     <section class="employ-sec">
         <div class="container">
-            <div class="title-sec-w3layouts_pvt text-center pb-4">
-                <span class="title-wthree">a world full of possibilities</span>
-                <h4 class="w3layouts_pvt-head">allowing you to expand quickly.</h4>
-            </div>
             <div class="row pt-lg-5">
                 <div class="col-lg-4">
                     <div class="left_widget">
                         <h3 class="left-widget-job">
-                           top employer</h3>
-                        <form action="#" class="widget-content" method="post">
-                            <input type="text" class="form-control my-3" placeholder="Location" required>
-                            <select class="form-control jb_1">
-                                <option value="0">sort by</option>
-                                <option value="">Relevant</option>
-                                <option value="">Date posted (newsest to oldest)</option>
-                                <option value="">Date posted (oldest to newsest)</option>
-                            </select>
-                            <select class="form-control my-3">
-                                <option value="0">Job Title</option>
-                                <option value="">java developer</option>
-                                <option value="">.net developer</option>
-                                <option value="">senior software engineer</option>
-                                <option value="">android developer</option>
-                                <option value="">ios developer</option>
-                            </select>
-                            <input type="submit" value="submit" class="form-control bg-theme text-uppercase">
-                        </form>
-                    </div>
-                    <div class="left_widget">
-                        <h3 class="left-widget-job">
-                            Last Activity</h3>
+                            发布时间</h3>
                         <ul>
                             <li>
-                                <input type="checkbox" class="checked" name="cat1" id="cat1">
-                                <label for="cat1">Last Hour</label>
+                                <input type="radio" class="checked" name="cat1" id="cat1">
+                                <label for="cat1">一天之内</label>
                             </li>
                             <li>
-                                <input type="checkbox" class="checked" name="cat2" id="cat2">
-                                <label for="cat2">Last 24 hours</label>
+                                <input type="radio" class="checked" name="cat1" id="cat2">
+                                <label for="cat2">三天之内</label>
                             </li>
                             <li>
-                                <input type="checkbox" class="checked" name="cat3" id="cat3">
-                                <label for="cat3">Last 7 days</label>
+                                <input type="radio" class="checked" name="cat1" id="cat3">
+                                <label for="cat3">一周之内</label>
                             </li>
                             <li>
-                                <input type="checkbox" class="checked" name="cat4" id="cat4">
-                                <label for="cat4">Last 14 days</label>
+                                <input type="radio" class="checked" name="cat1" id="cat4">
+                                <label for="cat4">一月之内</label>
                             </li>
                             <li>
-                                <input type="checkbox" class="checked" name="cat4" id="cat5">
-                                <label for="cat4">Last 30 days</label>
+                                <input type="radio" class="checked" name="cat1" id="cat5">
+                                <label for="cat5">三月之内</label>
                             </li>
                             <li>
-                                <input type="checkbox" class="checked" name="cat4" id="cat6">
-                                <label for="cat4">All</label>
+                                <input type="radio" class="checked" name="cat1" id="cat6">
+                                <label for="cat6">所有</label>
                             </li>
-
+                            <input type="submit" value="筛选" class="form-control bg-theme text-uppercase" onclick="getRadioTime()">
                         </ul>
                     </div>
                     <div class="left_widget">
                         <h3 class="left-widget-job">
-                            Categories</h3>
-                        <ul>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat2" id="c1">
-                                <label for="cat2">Digital & Creative</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat1" id="c2">
-                                <label for="cat1">Accountancy</label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" class="checked" name="cat3" id="c3">
-                                <label for="cat3">Estate Agency</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat4" id="c4">
-                                <label for="cat4">IT Contractor</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat4" id="c5">
-                                <label for="cat4">Banking</label>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <div class="left_widget">
-                        <h3 class="left-widget-job">
-                            More filters</h3>
-                        <ul>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat2" id="f1">
-                                <label for="cat2">Full time</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat1" id="f2">
-                                <label for="cat1">Part time</label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" class="checked" name="cat3" id="f3">
-                                <label for="cat3">freelance</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat4" id="f4">
-                                <label for="cat4">internship</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat4" id="f5">
-                                <label for="cat4">permanent</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked" name="cat4" id="f6">
-                                <label for="cat4">contact</label>
-                            </li>
-
+                            工作类型</h3>
+                        <ul id="jobType">
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-sm-6 e-left">
-                            <a href="#"><img src="images/b2.jpg" alt="" class="img-fluid"></a>
-                            <div class="e-desc">
-                                <h6><a href="job_single.html">Lead Android Developer </a></h6>
+                <div class="col-lg-8" id="test">
 
-                                <ul class="e-tags">
-                                    <li>
-                                        javascript</li>
 
-                                    <li>computer vision</li>
-                                    <li>angular js</li>
-                                    <li>c++</li>
-                                </ul>
-                                <hr>
-                                <ul class="desc-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        loremipsum, dolor
-                                    </li>
-                                    <li>
-                                        <span>Salary:</span>
-                                        Negotiable
-                                    </li>
-                                    <li>
-                                        <span>Experience</span>
-                                        Expert
-                                    </li>
-                                    <li>
-                                        <span>Posted: </span>
-                                        32 minutes ago
-                                    </li>
-                                </ul>
-                                <a href="#exampleModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal"
-                                    aria-pressed="false" data-target="#exampleModal" role="button">Apply
-                                    for job</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 e-left">
-                            <a href="#"><img src="images/b1.jpg" alt="" class="img-fluid"></a>
-                            <div class="e-desc">
-                                <h6><a href="job_single.html">Senior Front - End Engineer </a></h6>
-
-                                <ul class="e-tags">
-                                    <li>
-                                        javascript</li>
-
-                                    <li>computer vision</li>
-                                    <li>angular js</li>
-                                    <li>c++</li>
-                                </ul>
-                                <hr>
-                                <ul class="desc-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        loremipsum, dolor
-                                    </li>
-                                    <li>
-                                        <span>Salary:</span>
-                                        Negotiable
-                                    </li>
-                                    <li>
-                                        <span>Experience</span>
-                                        Expert
-                                    </li>
-                                    <li>
-                                        <span>Posted: </span>
-                                        5 hours ago
-                                    </li>
-                                </ul>
-                                <a href="#exampleModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal"
-                                    aria-pressed="false" data-target="#exampleModal" role="button">Apply
-                                    for job</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row my-4">
-                        <div class="col-sm-6 e-left">
-                            <a href="#"><img src="images/b3.jpg" alt="" class="img-fluid"></a>
-                            <div class="e-desc">
-                                <h6><a href="job_single.html">Senior Java Developer
-                                    </a></h6>
-
-                                <ul class="e-tags">
-                                    <li>
-                                        javascript</li>
-
-                                    <li>computer vision</li>
-                                    <li>angular js</li>
-                                    <li>c++</li>
-                                </ul>
-                                <hr>
-                                <ul class="desc-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        loremipsum, dolor
-                                    </li>
-                                    <li>
-                                        <span>Salary:</span>
-                                        Negotiable
-                                    </li>
-                                    <li>
-                                        <span>Experience</span>
-                                        Expert
-                                    </li>
-                                    <li>
-                                        <span>Posted: </span>
-                                        1 day ago
-                                    </li>
-                                </ul>
-                                <a href="#exampleModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal"
-                                    aria-pressed="false" data-target="#exampleModal" role="button">Apply
-                                    for job</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 e-left">
-                            <a href="#"><img src="images/b1.jpg" alt="" class="img-fluid"></a>
-                            <div class="e-desc">
-                                <h6><a href="job_single.html">Senior Front - End Engineer </a></h6>
-
-                                <ul class="e-tags">
-                                    <li>
-                                        javascript</li>
-
-                                    <li>computer vision</li>
-                                    <li>angular js</li>
-                                    <li>c++</li>
-                                </ul>
-                                <hr>
-                                <ul class="desc-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        loremipsum, dolor
-                                    </li>
-                                    <li>
-                                        <span>Salary:</span>
-                                        Negotiable
-                                    </li>
-                                    <li>
-                                        <span>Experience</span>
-                                        Expert
-                                    </li>
-                                    <li>
-                                        <span>Posted: </span>
-                                        2 days ago
-                                    </li>
-                                </ul>
-                                <a href="#exampleModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal"
-                                    aria-pressed="false" data-target="#exampleModal" role="button">Apply
-                                    for job</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 e-left">
-                            <a href="#"><img src="images/b2.jpg" alt="" class="img-fluid"></a>
-                            <div class="e-desc">
-                                <h6><a href="job_single.html">Lead Android Developer </a></h6>
-
-                                <ul class="e-tags">
-                                    <li>
-                                        javascript</li>
-
-                                    <li>computer vision</li>
-                                    <li>angular js</li>
-                                    <li>c++</li>
-                                </ul>
-                                <hr>
-                                <ul class="desc-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        loremipsum, dolor
-                                    </li>
-                                    <li>
-                                        <span>Salary:</span>
-                                        Negotiable
-                                    </li>
-                                    <li>
-                                        <span>Experience</span>
-                                        Expert
-                                    </li>
-                                    <li>
-                                        <span>Posted: </span>
-                                        5 days ago
-                                    </li>
-                                </ul>
-                                <a href="#exampleModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal"
-                                    aria-pressed="false" data-target="#exampleModal" role="button">Apply
-                                    for job</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 e-left">
-                            <a href="#"><img src="images/b3.jpg" alt="" class="img-fluid"></a>
-                            <div class="e-desc">
-                                <h6><a href="job_single.html">Web Designer </a></h6>
-
-                                <ul class="e-tags">
-                                    <li>
-                                        javascript</li>
-
-                                    <li>computer vision</li>
-                                    <li>angular js</li>
-                                    <li>c++</li>
-                                </ul>
-                                <hr>
-                                <ul class="desc-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        loremipsum, dolor
-                                    </li>
-                                    <li>
-                                        <span>Salary:</span>
-                                        Negotiable
-                                    </li>
-                                    <li>
-                                        <span>Experience</span>
-                                        Expert
-                                    </li>
-                                    <li>
-                                        <span>Posted: </span>
-                                        1 week ago
-                                    </li>
-                                </ul>
-                                <a href="#exampleModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal"
-                                    aria-pressed="false" data-target="#exampleModal" role="button">Apply
-                                    for job</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>
             <div class="d-flex justify-content-center">
-                <ul class="pagination pt-4">
-                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                    <li class="active"><a href="#" class="text-white bg-theme">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li> <a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a>
-                    </li>
+                <ul class="pagination pt-4" id="pagination">
+
                 </ul>
             </div>
         </div>
@@ -459,140 +134,59 @@
     <footer id="footer" class="py-sm-5 py-4 bg-theme">
         <div class="container">
             <div class="footer-top-w3ls">
-                <h2><a href="index.html" class="navbar-brand">recruit</a></h2>
-                <p class="text-white">Lorem ipsum dolor sit amet,sed diam nonumy eirmod tempor invidunt
-                    ut labore et dolore magna aliquyam
-                    erat, At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, no sea
-                    takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus
-                    est
-                    Lorem ipsum dolor sit amet. no sea takimata sanctus est Lorem ipsum dolor sit amet. no sea takimata
-                    sanctus est Lorem ipsum dolor sit amet. sed diam voluptua. </p>
-            </div>
-            <div class="row  pt-5">
-                <div class="col-lg-3 col-sm-6 footer_grid1">
-                    <h5>Address</h5>
-                    <div class="d-flex align-items-center">
-                        <span class="fa fa-building mr-4"></span>
-                        <p>90 Street, landmark
-                            <br>City State 34189.</p>
-                    </div>
-                    <div class="d-flex mt-3 align-items-center">
-                        <span class="fa fa-building mr-4"></span>
-                        <p>16 Street, landmark
-                            <br>City State 74789.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 mt-sm-0 mt-5">
-                    <h5>Quick links</h5>
-                    <ul class="list-unstyled quick-links">
-                        <li>
-                            <a href="index.html">
-                                <span class="fa fa-play"></span>Home</a>
-                        </li>
-                        <li>
-                            <a href="about.html">
-                                <span class="fa fa-play"></span>About</a>
-                        </li>
-                        <li>
-                            <a href="job_list.html">
-                                <span class="fa fa-play"></span>Job List</a>
-                        </li>
-                        <li>
-                            <a href="job_single.html">
-                                <span class="fa fa-play"></span>Job Single</a>
-                        </li>
-                        <li>
-                            <a href="contact.html">
-                                <span class="fa fa-play"></span>Contact</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-sm-6 mt-lg-0 mt-5">
-                    <h5>Quick links</h5>
-                    <ul class="list-unstyled quick-links">
-                        <li>
-                            <a href="index.html">
-                                <span class="fa fa-play"></span>Home</a>
-                        </li>
-                        <li>
-                            <a href="about.html">
-                                <span class="fa fa-play"></span>About</a>
-                        </li>
-                        <li>
-                            <a href="job_list.html">
-                                <span class="fa fa-play"></span>Job List</a>
-                        </li>
-                        <li>
-                            <a href="job_single.html">
-                                <span class="fa fa-play"></span>Job Single</a>
-                        </li>
-                        <li>
-                            <a href="contact.html">
-                                <span class="fa fa-play"></span>Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-sm-6 mt-lg-0 mt-5">
-                    <h5>subscribe to newsletter</h5>
-                    <form action="#" method="post">
-                        <div class="form-group">
-                            <input type="email" class="form-control  border-0 border-rounded" id="emailid" placeholder="Enter email"
-                                name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="Submit" class="form-control bg-light-theme  border-0 border-rounded" id="sub"
-                                value="Submit" name="sub">
-                        </div>
-                    </form>
-                </div>
+                <h2><a href="index.html" class="navbar-brand">大学生勤工俭学网</a></h2>
+                <p class="text-white">为了改变目前大学生普遍存在的、不能方便有效地找到适合自己的兼职工作现状，
+                    并且同时满足在校求职者和招聘单位双向的需求，大学生勤工俭学平台收集大量招聘单位的招聘信息，
+                    并且展示了在校求职者的相关求职信息，使用人单位和校园求职者之间的交流更加及时和方便。
+                    该平台的建立旨在显著地提高学生寻找勤工俭学工作的效率，并且大幅度地减轻高校学生管理者的工作负担。</p>
             </div>
         </div>
     </footer>
     <!-- /Footer -->
     <div class="cpy-right text-center py-4">
-        <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+        <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#">文一舟</a>
         </p>
     </div>
     <!-- login modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-theme1">
-                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">登录</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post" class="p-3">
+                    <!--<form action="" th:action="@{~/user/login}" method="post" class="p-3">-->
+                    <form method="post" class="p-3">
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Username</label>
-                            <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name"
-                                required="">
+                            <label for="userPhone" class="col-form-label">手机号</label>
+                            <input type="text" class="form-control" placeholder=" " name="userName" id="userPhone"
+                                   required="">
                         </div>
                         <div class="form-group">
-                            <label for="password" class="col-form-label">Password</label>
-                            <input type="password" class="form-control" placeholder=" " name="Password" id="password"
-                                required="">
+                            <label for="userPassword" class="col-form-label">密码</label>
+                            <input type="password" class="form-control" placeholder=" " name="userPassword" id="userPassword"
+                                   required="">
                         </div>
                         <div class="right-w3l">
-                            <input type="submit" class="form-control bg-theme" value="Login">
+                            <input type="submit" class="form-control bg-theme" value="Login" id="login">
                         </div>
                         <div class="row sub-w3l my-3">
                             <div class="col sub-w3ltd">
                                 <input type="checkbox" id="brand1" value="">
                                 <label for="brand1" class="text-dark">
-                                    <span></span>Remember me?</label>
+                                    <span></span>记住密码?</label>
                             </div>
                             <div class="col forgot-w3l text-right">
-                                <a href="#" class="text-dark">Forgot Password?</a>
+                                <a href="#" class="text-dark">忘记密码?</a>
                             </div>
                         </div>
-                        <p class="text-center dont-do">Don't have an account?
+                        <p class="text-center dont-do">没有账号?
                             <a href="#" data-toggle="modal" data-target="#exampleModal1" class="text-dark">
-                                <strong>Register Now</strong></a>
+                                <strong>点击注册</strong></a>
                         </p>
                     </form>
                 </div>
@@ -602,46 +196,45 @@
     <!-- //login modal -->
     <!-- register modal -->
     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-theme1">
-                    <h5 class="modal-title" id="exampleModalLabel1">Register</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">注册</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post" class="p-3">
+                    <!--th:action="@{~/register}"-->
+                    <form action="#"  method="post" class="p-3" enctype="application/x-www-form-urlencoded">
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Username</label>
-                            <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-rname"
-                                required="">
+                            <label for="userName" class="col-form-label">用户名</label>
+                            <input type="text" class="form-control" placeholder="" name="userName" id="userName"
+                                   required="">
                         </div>
                         <div class="form-group">
-                            <label for="recipient-email" class="col-form-label">Email</label>
-                            <input type="email" class="form-control" placeholder=" " name="Email" id="recipient-email"
-                                required="">
+                            <label for="recipient-email" class="col-form-label">邮箱</label>
+                            <input type="email" class="form-control" placeholder="" name="userEmail" id="recipient-email"
+                                   required="">
                         </div>
                         <div class="form-group">
-                            <label for="password1" class="col-form-label">Password</label>
-                            <input type="password" class="form-control" placeholder=" " name="Password" id="password1"
-                                required="">
+                            <label for="recipient-phone" class="col-form-label">手机号</label>
+                            <input type="text" class="form-control" placeholder="" name="userPhone" id="recipient-phone"
+                                   required="">
                         </div>
                         <div class="form-group">
-                            <label for="password2" class="col-form-label">Confirm Password</label>
-                            <input type="password" class="form-control" placeholder=" " name="Confirm Password" id="password2"
-                                required="">
+                            <label for="password1" class="col-form-label">密码</label>
+                            <input type="password" class="form-control" placeholder="" name="userPassword" id="password1"
+                                   required="">
                         </div>
-                        <div class="sub-w3l">
-                            <div class="sub-w3ltd">
-                                <input type="checkbox" id="brand2" value="">
-                                <label for="brand2" class="mb-3 text-dark">
-                                    <span></span>I Accept to the Terms & Conditions</label>
-                            </div>
+                        <div class="form-group">
+                            <label for="password2" class="col-form-label">重复密码</label>
+                            <input type="password" class="form-control" placeholder="" name="Confirm Password" id="password2"
+                                   required="">
                         </div>
                         <div class="right-w3l">
-                            <input type="submit" class="form-control bg-theme" value="Register">
+                            <input type="submit" class="form-control bg-theme" value="Register" id="register">
                         </div>
                     </form>
                 </div>
@@ -667,9 +260,61 @@
                 document.getElementById("password2").setCustomValidity('');
             //empty string means no validation error
         }
+//根据时间筛选工作列表按钮点击事件
+        function getRadioTime() {
+            var radios = document.getElementsByName("cat1");
+            for (var i=0;i<radios.length;i++){
+                if(radios[i].checked){
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:8080/job/jobListByTime?time="+i,
+                        success:function (data) {
+                            if(data.status == 200){
+                                //先移除之前填充的html代码
+                                $("#test").children().remove();
+                                changeJobList(data);
+                            }else {
+                                alert("获取工作类型失败");
+                            }
+                        },
+                        error:function (data) {
+                            alert("请求失败");
+                        }
+                    });
+                }
+            }
+        }
+        //根据工作类型筛选工作列表按钮点击事件
+        function getRadioJob() {
+            var radios = document.getElementsByName("jobType");
+            for (var i=0;i<radios.length;i++){
+                if(radios[i].checked){
+                    var jobTypeLabel = "jobTypeLabel"+i;
+                    var label = document.getElementById(jobTypeLabel);
+                    var typeName = label.innerText;
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:8080/job/jobListByJobType?type="+typeName,
+                        success:function (data) {
+                            if(data.status == 200){
+                                //先移除之前填充的html代码
+                                $("#test").children().remove();
+                                changeJobList(data);
+                            }else {
+                                alert("获取工作类型失败");
+                            }
+                        },
+                        error:function (data) {
+                            alert("请求失败");
+                        }
+                    });
+                }
+            }
+        }
     </script>
     <!-- script for password match -->
     <script src="js/move-top.js"></script>
+    <script src="js/myResponse.js"></script>
     <script src="js/easing.js"></script>
     <script>
         jQuery(document).ready(function ($) {
@@ -680,6 +325,62 @@
                     scrollTop: $(this.hash).offset().top
                 }, 1000);
             });
+        });
+//获取工作类型
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/user/jobType",
+            success:function (data) {
+                if(data.status == 200){
+                    var jobList = data.data;
+                    for (var i=0;i<jobList.length;i++){
+                        var job = jobList[i];
+                        $("#jobType").append("<li><input type='radio' class='checked' name='jobType' id='c"+job.jobId+"'><label id='jobTypeLabel"+i+"' for='c"+job.jobId+"'>"+job.typeName+"</label></li>");
+                    }
+                    $("#jobType").append("<input type='submit' class='form-control bg-theme text-uppercase' onclick='getRadioJob()' value='筛选'>");
+                }else {
+                    alert("获取工作类型失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
+//获取工作列表
+        var currentPage = document.getElementById("active");
+        if(currentPage == null){
+            currentPage = 1 ;
+        }else {
+            currentPage = currentPage.innerText;
+        }
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/job/jobList?page="+currentPage,
+            success:function (data) {
+                if(data.status == 200){
+                    changeJobList(data);
+                }else {
+                    alert("获取工作列表失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
+//获取最大页数,显示分页
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/job/getMaxPage",
+            success:function (data) {
+                if(data.status == 200){
+                    changePage(data,currentPage);
+                }else {
+                    alert("获取最大页数失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
         });
     </script>
     <!-- //end-smooth-scrolling -->
@@ -707,6 +408,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

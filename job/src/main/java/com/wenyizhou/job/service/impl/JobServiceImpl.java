@@ -37,7 +37,7 @@ public class JobServiceImpl implements IJobService {
     public Response jobList(Integer page) {
         Response response = new Response();
         if(page == null){
-            page = 0;
+            page = 1;
         }
         page--;
         List<JobVO> jobs = jobDao.jobList(page);
