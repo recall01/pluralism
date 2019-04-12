@@ -36,7 +36,6 @@ public class UserController {
     @PostMapping(value = "/userInfo",consumes = "application/x-www-form-urlencoded")
     public Response userInfo(@RequestParam String userId){
         Response response = userService.userInfo(userId);
-        System.out.println(new Gson().toJson(response));
         return response;
     }
     @PostMapping(value = "/changeInfo",consumes = "application/x-www-form-urlencoded")

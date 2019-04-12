@@ -1,14 +1,14 @@
 package com.wenyizhou.job.model;
 
 public class User {
-    private String userId;
-    private String userName;
-    private String userEmail;
-    private String userPhone;
-    private String userPassword;
+    protected String userId;
+    protected String userName;
+    protected String userEmail;
+    protected String userPhone;
+    protected String userPassword;
     //角色类型 0:未验证状态 1:学生 2:教师/家长 3:管理员
-    private int roleType;
-    private String registerTime;
+    protected int roleType;
+    protected String registerTime;
 
 
     public String getUserId() {

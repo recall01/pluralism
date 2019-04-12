@@ -114,7 +114,10 @@ public class UserServiceImpl implements IUserService {
             case 1: //学生
                 response = this.getStudentInfo(userId);
                 break;
-            case 2:break;
+            case 2: //老师
+                //查询老师发布的工作
+                response.setStatus(RESPONSE_SUCCESS);
+                break;
             default:break;
         }
         return response;

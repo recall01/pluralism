@@ -62,6 +62,21 @@ public class PageController {
     public String joblist(){
         return "job_list";
     }
+    @RequestMapping("/teacherInfo")
+    public String teacherInfo(){
+        //验证用户是否登录,并且是否为老师
+        User user = (User)httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            return "/index";
+        }
+        if(user.getRoleType() == 2){
+            return "/teacher_info";
+        }else if(user.getRoleType() == 1){
+            return "/student_info";
+        }else {
+            return "/index";
+        }
+    }
     @GetMapping("/findJob")
     public String findJob(@RequestParam String jobName, @RequestParam String jobTypeName){
         if (StringUtils.isEmpty(jobName)||StringUtils.isEmpty(jobTypeName)){

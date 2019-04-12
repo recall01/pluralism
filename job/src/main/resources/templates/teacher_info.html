@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Job Single</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="keywords" content="" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- Custom Theme files -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+    <!-- font-awesome icons -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- //Custom Theme files -->
+    <!-- online-fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i"
+          rel="stylesheet">
+</head>
+<body>
+    <!-- Slider -->
+    <div class="w3-banner-info-w3ltd position-relative">
+        <!-- header -->
+        <header>
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light p-0">
+                    <h1><a class="navbar-brand" href=" " th:href="@{~/index}">大学生勤工俭学网</a></h1>
+                    <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="ml-lg-5 navbar-nav mr-lg-auto">
+                            <li class="nav-item active  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a th:href="@{~/index}">首页</a>
+                            </li>
+                            <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a th:href="@{~/jobList}">工作列表</a>
+                            </li>
+                            <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a th:href="@{~/about}">勤工通告</a>
+                            </li>
+                            <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
+                                <a th:href="@{~/contact}">兼职须知</a>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
+                                aria-pressed="false" data-target="#exampleModal1" th:unless="${session.user}">
+                            注册
+                        </button>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
+                            登录
+                        </button>
+                        <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                        <div class="navbar-nav dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
+                            <button class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false" th:if="${session.user}" th:text="${session.user.userName}">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                <a href="#" data-toggle="modal" data-target="#baseInfoModal">发布招聘</a>
+                                <a href="#" data-toggle="modal" data-target="#freeTimeModal">我的招聘</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- //header -->
+        <div class="inner-banner-w3ls">
+        </div>
+        <!-- job description -->
+        <section class="employ-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9  mx-auto" id="job-desc">
+                        <div class="e-left pt-lg-5">
+                            <div>
+                                <div class="job-desc-w3ls">
+                                    <table class="table">
+                                        <tr>
+                                            <th>工作编号</th>
+                                            <th>工作名</th>
+                                            <th>发布时间</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>我是工作名称</td>
+                                            <td>2019-04-10 14:55:59</td>
+                                            <td>招聘中</td>
+                                            <td><a href="#" class="my-btn text-capitalize">编辑</a>|<a href="#" class="my-btn text-capitalize">删除</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>我是工作名称</td>
+                                            <td>2019-04-10 14:55:59</td>
+                                            <td>已接单</td>
+                                            <td><a href="#" class="my-btn text-capitalize">编辑</a>|<a href="#" class="my-btn text-capitalize">删除</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>我是工作名称</td>
+                                            <td>2019-04-10 14:55:59</td>
+                                            <td>已完成</td>
+                                            <td><a href="#" class="my-btn text-capitalize">编辑</a>|<a href="#" class="my-btn text-capitalize">删除</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- //job description -->
+        <!-- Footer -->
+        <footer id="footer" class="py-sm-5 py-4 bg-theme">
+            <div class="container">
+                <div class="footer-top-w3ls">
+                    <h2><a href="index.html" class="navbar-brand">大学生勤工俭学网</a></h2>
+                    <p class="text-white">为了改变目前大学生普遍存在的、不能方便有效地找到适合自己的兼职工作现状，
+                        并且同时满足在校求职者和招聘单位双向的需求，大学生勤工俭学平台收集大量招聘单位的招聘信息，
+                        并且展示了在校求职者的相关求职信息，使用人单位和校园求职者之间的交流更加及时和方便。
+                        该平台的建立旨在显著地提高学生寻找勤工俭学工作的效率，并且大幅度地减轻高校学生管理者的工作负担。</p>
+                </div>
+            </div>
+        </footer>
+        <!-- /Footer -->
+        <div class="cpy-right text-center py-4">
+            <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#">文一舟</a>
+            </p>
+        </div>
+        <!-- introduction Modal -->
+        <div class="modal fade" id="introductionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-theme1">
+                        <h5 class="modal-title" id="exampleModalLabel">个人简介</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="post" class="p-3">
+                            <div class="form-group">
+                                <textarea class="form-control" id="introduction"></textarea>
+                            </div>
+                            <div class="right-w3l">
+                                <input type="submit" class="form-control bg-theme" value="修改" id="changeIntroduction" >
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //introduction modal -->
+        <!-- jobType Modal -->
+        <div class="modal fade" id="jobTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-theme1">
+                        <h5 class="modal-title" id="jobTypeModalLabel">兼职类型</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="post" class="p-3">
+                            <div class="form-group">
+                                <input class="form-control" id="input_jobType"></input>
+                            </div>
+                            <div class="right-w3l">
+                                <input type="submit" class="form-control bg-theme" value="修改" id="changeJobType">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //jobType modal -->
+        <!-- freeTime Modal -->
+        <div class="modal fade" id="freeTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-theme1">
+                        <h5 class="modal-title">空闲时间</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="post" class="p-3">
+                            <div class="form-group">
+
+                            </div>
+                            <div class="right-w3l">
+                                <label for="startTime" class="col-form-label">开始时间段</label>
+                                <input type="datetime-local" class="form-control" placeholder=" " name="userName" id="startTime"
+                                       required="">
+                                <label for="endTime" class="col-form-label">结束时间段</label>
+                                <input type="datetime-local" class="form-control" placeholder=" " name="userName" id="endTime"
+                                       required="">
+                                <input type="submit" class="form-control bg-theme" value="添加" id="addFreeTime">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //jobType modal -->
+
+        <!-- baseInfo modal -->
+        <div class="modal fade" id="baseInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-theme1">
+                        <h5 class="modal-title" id="exampleModalLabel1">基本信息</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="post" class="p-3">
+                            <div class="form-group">
+                                <label for="recipient-id" class="col-form-label">UserId</label>
+                                <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-id"
+                                       required="" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Username</label>
+                                <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-phone" class="col-form-label">Phone</label>
+                                <input type="text" class="form-control" placeholder=" " name="Email" id="recipient-phone"
+                                       required="" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-email" class="col-form-label">Email</label>
+                                <input type="email" class="form-control" placeholder=" " name="Email" id="recipient-email"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-specialty" class="col-form-label">Specialty</label>
+                                <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-specialty"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-salary" class="col-form-label">Salary</label>
+                                <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-salary"
+                                       required="">
+                            </div>
+                            <div class="right-w3l">
+                                <input type="submit" class="form-control bg-theme" value="Change" id="changeBaseInfo">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //baseInfo modal -->
+    </div>
+    <!-- js -->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <!-- script for password match -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+
+    </script>
+    <!-- script for password match -->
+    <!-- //js -->
+    <script src="js/move-top.js"></script>
+    <script src="js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <script src="js/SmoothScroll.min.js"></script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -61,8 +61,13 @@ $("#login").on("click",function () {
 });
 $("#userInfo").on("click",function () {
     var userId = $("#userId").html();
+    var roleType = $("#roleType").html();
     if(userId == null||"" == userId){
         alert("请求参数出错,请重新登录");
+        return false;
+    }
+    if(roleType == null||"" == roleType){
+        alert("获取用户信息失败,请重新登录");
         return false;
     }
     $.ajax({
@@ -74,7 +79,13 @@ $("#userInfo").on("click",function () {
         },
         success:function (data) {
             if(data.status == 200){
-                location.href="http://localhost:8080/studentInfo";
+                if(roleType == 1){
+                    location.href="http://localhost:8080/studentInfo";
+                }else if(roleType == 2){
+                    location.href="http://localhost:8080/teacherInfo";
+                }else {
+                    location.href="http://localhost:8080/index";
+                }
             }else {
                 alert(data.msg);
             }

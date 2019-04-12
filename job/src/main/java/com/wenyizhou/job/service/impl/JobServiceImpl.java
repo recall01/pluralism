@@ -65,7 +65,7 @@ public class JobServiceImpl implements IJobService {
             default:break;
         }
         if("".equals(startTime)){
-            return this.jobList(0);
+            return this.jobList(1);
         }
         String endTime = TimeUtil.getTime(date);
         List<JobVO> jobs = jobDao.jobListByTime(startTime,endTime);
