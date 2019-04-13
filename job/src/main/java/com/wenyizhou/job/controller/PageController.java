@@ -62,6 +62,14 @@ public class PageController {
     public String joblist(){
         return "job_list";
     }
+    @RequestMapping("/detailsJob")
+    public String detailsJob(@RequestParam String jobId){
+        if(StringUtils.isEmpty(jobId)){
+            return "/index";
+        }
+        httpServletRequest.getSession().setAttribute("jobId",jobId);
+        return "details_job";
+    }
     @RequestMapping("/teacherInfo")
     public String teacherInfo(){
         //验证用户是否登录,并且是否为老师

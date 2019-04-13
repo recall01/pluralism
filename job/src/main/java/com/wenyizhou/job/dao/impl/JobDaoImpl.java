@@ -103,4 +103,14 @@ public class JobDaoImpl implements IJobDao {
             return false;
         }
     }
+
+    @Override
+    public JobVO getJobById(String jobId) {
+        try {
+            return jobMapping.selectJobById(jobId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

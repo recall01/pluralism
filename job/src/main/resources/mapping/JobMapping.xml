@@ -86,4 +86,10 @@
         delete from Job
         where JobId=#{jobId} and UserId=#{userId}
     </delete>
+    <select id="selectJobById" resultMap="jobVOResult">
+        SELECT * FROM Job
+        LEFT JOIN User
+        ON Job.UserId = User.UserId
+        WHERE Job.JobId =#{jobName}
+    </select>
 </mapper>

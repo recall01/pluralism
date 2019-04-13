@@ -24,4 +24,6 @@ public interface JobMapping {
     void insertJob(Job job);
 
     void delectJob(Map m);
+
+    JobVO selectJobById(String jobId);
 }

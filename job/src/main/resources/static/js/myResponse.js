@@ -297,3 +297,27 @@ function getMaxPage() {
     });
     return pageData;
 }
+//删除工作函数
+function delectJob(jobId) {
+    if(jobId == null||""==jobId){
+        alert("获取工作数据失败");
+        return false;
+    }
+    $.ajax({
+        type:"POST",
+        contentType:"application/x-www-form-urlencoded",
+        url:"http://localhost:8080/job/delectJob",
+        data:{
+            "jobId":jobId,
+        },
+        success:function (data) {
+            alert(data.msg);
+            if(data.status == 200){
+                location.href="http://localhost:8080/teacherInfo";
+            }
+        },
+        error:function (data) {
+            alert("请求失败");
+        }
+    });
+}

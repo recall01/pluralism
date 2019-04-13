@@ -162,5 +162,29 @@ public class JobServiceImpl implements IJobService {
         return response;
     }
 
+    @Override
+    public Response getJobById(String jobId) {
+        Response response = new Response();
+        //参数校验,如果为空,从session中拿jobId
+        if(StringUtils.isEmpty(jobId)){
+            jobId = (String) httpServletRequest.getSession().getAttribute("jobId");
+            if(StringUtils.isEmpty(jobId)){
+                response.setError(ErrorCode.PARAMETER_ERROR);
+                return response;
+            }
+        }
+        JobVO job = jobDao.getJobById(jobId);
+        if(job == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        //缓存Job
+        httpServletRequest.getSession().setAttribute("job",job);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(job);
+        response.setMsg("获取工作信息成功");
+        return response;
+    }
+
 
 }
