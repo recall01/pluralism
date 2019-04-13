@@ -9,6 +9,7 @@ import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.JobVO;
 import com.wenyizhou.job.model.VO.StudentVO;
+import com.wenyizhou.job.model.VO.TeacherVO;
 import com.wenyizhou.job.service.IJobService;
 import com.wenyizhou.job.service.IUserService;
 import com.wenyizhou.job.utils.ErrorCode;
@@ -28,6 +29,8 @@ public class JobServiceImpl implements IJobService {
 
     @Autowired
     private HttpServletRequest httpServletRequest;
+    @Autowired
+    private UserServiceImpl userService;
     @Autowired
     private IJobDao jobDao;
     private final static int RESPONSE_SUCCESS = 200;
@@ -122,6 +125,40 @@ public class JobServiceImpl implements IJobService {
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(jobs);
         response.setMsg("查询工作成功");
+        return response;
+    }
+
+    @Override
+    public Response delectJob(String jobId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(jobId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //校验登录信息
+        User user =(User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            response.setError(ErrorCode.ACCOUNT_NOT_LOGIN);
+            return response;
+        }
+        //获取userId
+        String userId = user.getUserId();
+        if(!jobDao.delectJob(jobId,userId)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //清除teacher缓存
+        TeacherVO teacher =(TeacherVO) httpServletRequest.getSession().getAttribute("teacher");
+        if(teacher != null){
+            httpServletRequest.getSession().removeAttribute("teacher");
+        }
+        //重新查询数据
+        response = userService.getTeacherInfo(userId);
+        if(response.getStatus() == 200){
+            response.setMsg("删除工作信息成功");
+        }else {
+            response.setError(ErrorCode.SYSTEM_EXCEPTION);
+        }
         return response;
     }
 

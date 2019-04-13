@@ -36,6 +36,7 @@
         SELECT * FROM Job
         LEFT JOIN User
         ON Job.UserId = User.UserId
+        order by Job.PubTime desc
         LIMIT #{page},6
     </select>
     <!--xml文件不支持"<"和"&"需要转义-->
@@ -45,6 +46,7 @@
         ON Job.UserId = User.UserId
         WHERE Job.PubTime &gt; #{startTime}
         AND Job.PubTime &lt; #{endTime}
+        order by Job.PubTime desc
         LIMIT 6
     </select>
     <select id="selectjobListByJobType" resultMap="jobVOResult">
@@ -52,6 +54,7 @@
         LEFT JOIN User
         ON Job.UserId = User.UserId
         WHERE Job.JobType LIKE CONCAT('%',#{type},'%')
+        order by Job.PubTime desc
         LIMIT 6
     </select>
     <select id="selectMaxPage" resultType="int">
@@ -62,6 +65,7 @@
         LEFT JOIN User
         ON Job.UserId = User.UserId
         WHERE Job.JobName LIKE CONCAT('%',#{jobName},'%')
+        order by Job.PubTime desc
         LIMIT 9
     </select>
     <select id="selectJobByNameAndType" resultMap="jobVOResult">
@@ -70,6 +74,16 @@
         ON Job.UserId = User.UserId
         WHERE Job.JobName LIKE CONCAT('%',#{jobName},'%')
         AND Job.JobType LIKE CONCAT('%',#{jobTypeName},'%')
+        order by Job.PubTime desc
         LIMIT 9
     </select>
+    <insert id="insertJob">
+        insert into Job
+        (JobName,Introduction,JobType,Location,Salary,Experience,UserId,PubTime)
+        values (#{jobName},#{introduction},#{stringJob},#{location},#{salary},#{experience},#{userId},#{pubTime})
+    </insert>
+    <delete id="delectJob">
+        delete from Job
+        where JobId=#{jobId} and UserId=#{userId}
+    </delete>
 </mapper>

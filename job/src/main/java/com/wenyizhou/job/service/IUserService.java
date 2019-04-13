@@ -1,5 +1,6 @@
 package com.wenyizhou.job.service;
 
+import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 
@@ -17,4 +18,6 @@ public interface IUserService {
     Response jobType();
 
     Response apply(String userId);
+
+    Response pubJob(Job job);
 }

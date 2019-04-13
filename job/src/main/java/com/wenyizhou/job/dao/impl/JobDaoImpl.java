@@ -89,4 +89,18 @@ public class JobDaoImpl implements IJobDao {
             return null;
         }
     }
+
+    @Override
+    public boolean delectJob(String jobId, String userId) {
+        try {
+            Map m =new HashMap();
+            m.put("jobId",jobId);
+            m.put("userId",userId);
+            jobMapping.delectJob(m);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

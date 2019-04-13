@@ -52,6 +52,10 @@ public class Job {
         }
         return null;
     }
+//测试
+    public String getStringJob() {
+        return jobType;
+    }
 
     public void setJobType(String jobType) {
         this.jobType = jobType;

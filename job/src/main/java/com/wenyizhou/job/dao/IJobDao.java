@@ -19,4 +19,6 @@ public interface IJobDao {
 
     List<JobVO> findJob(String jobName);
     List<JobVO> findJob(String jobName,String jobTypeName);
+
+    boolean delectJob(String jobId, String userId);
 }

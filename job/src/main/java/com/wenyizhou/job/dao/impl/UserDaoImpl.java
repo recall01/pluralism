@@ -2,15 +2,10 @@ package com.wenyizhou.job.dao.impl;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.wenyizhou.job.dao.IUserDao;
-import com.wenyizhou.job.mapping.ApplyMapping;
-import com.wenyizhou.job.mapping.JobTypeMapping;
-import com.wenyizhou.job.mapping.StudentMapping;
-import com.wenyizhou.job.mapping.UserMapping;
-import com.wenyizhou.job.model.Apply;
-import com.wenyizhou.job.model.JobType;
-import com.wenyizhou.job.model.Student;
-import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.mapping.*;
+import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.StudentVO;
+import com.wenyizhou.job.model.VO.TeacherVO;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
@@ -28,6 +23,8 @@ public class UserDaoImpl implements IUserDao {
     JobTypeMapping jobTypeMapping;
     @Resource
     ApplyMapping applyMapping;
+    @Resource
+    JobMapping jobMapping;
 
     @Override
     public String register(User user) throws Exception{
@@ -86,6 +83,27 @@ public class UserDaoImpl implements IUserDao {
     public boolean apply(Apply apply) {
         try {
             applyMapping.insertApply(apply);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public TeacherVO selectTeacherById(String userId) {
+        try {
+            return userMapping.selectTeacherById(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean pubJob(Job job) {
+        try {
+            jobMapping.insertJob(job);
             return true;
         }catch (Exception e){
             e.printStackTrace();

@@ -3,6 +3,7 @@ package com.wenyizhou.job.service.impl;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.StudentVO;
+import com.wenyizhou.job.model.VO.TeacherVO;
 import com.wenyizhou.job.service.IUserService;
 import com.wenyizhou.job.utils.ErrorCode;
 import com.wenyizhou.job.utils.IDUtil;
@@ -116,7 +117,7 @@ public class UserServiceImpl implements IUserService {
                 break;
             case 2: //老师
                 //查询老师发布的工作
-                response.setStatus(RESPONSE_SUCCESS);
+                response = this.getTeacherInfo(userId);
                 break;
             default:break;
         }
@@ -151,12 +152,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Response exit() {
-        System.out.println("---user--exit1---");
         if(httpServletRequest.getSession().getAttribute("user") != null){
-            httpServletRequest.getSession().removeAttribute("user");
         }
         if(httpServletRequest.getSession().getAttribute("student") != null){
-            httpServletRequest.getSession().removeAttribute("student");
         }
         Response response = new Response();
         response.setStatus(RESPONSE_SUCCESS);
@@ -197,6 +195,25 @@ public class UserServiceImpl implements IUserService {
         return response;
     }
 
+    @Override
+    public Response pubJob(Job job) {
+        Response response = new Response();
+        if(job == null){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //封装job发布时间
+        job.setPubTime(TimeUtil.getTime());
+        //插入Job表
+        if(!userDao.pubJob(job)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("发布成功");
+        return response;
+    }
+
     //获得学生信息
     private Response getStudentInfo(String userId){
         Response response = new Response();
@@ -216,6 +233,29 @@ public class UserServiceImpl implements IUserService {
         response.setData(student);
         response.setMsg("查询成功");
         httpServletRequest.getSession().setAttribute("student",student);
+        return response;
+    }
+    //获取教师信息
+    protected Response getTeacherInfo(String userId){
+        Response response = new Response();
+        TeacherVO teacher = userDao.selectTeacherById(userId);
+        if(teacher == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        //循环遍历查询的jobs结果，名字为空的将其移除
+        List<Job> jobs = teacher.getJobs();
+        for (int i=0;i<jobs.size();i++){
+            if(jobs.get(i).getJobName() == null){
+                jobs.remove(i);
+            }
+        }
+        if(jobs.size() == 0){
+            teacher.setJobs(null);
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(teacher);
+        httpServletRequest.getSession().setAttribute("teacher",teacher);
         return response;
     }
 }

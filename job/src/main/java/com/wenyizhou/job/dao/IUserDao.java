@@ -1,10 +1,8 @@
 package com.wenyizhou.job.dao;
 
-import com.wenyizhou.job.model.Apply;
-import com.wenyizhou.job.model.JobType;
-import com.wenyizhou.job.model.Student;
-import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.StudentVO;
+import com.wenyizhou.job.model.VO.TeacherVO;
 
 import java.util.List;
 
@@ -22,4 +20,8 @@ public interface IUserDao {
     List<JobType> getJobType();
 
     boolean apply(Apply apply);
+
+    TeacherVO selectTeacherById(String userId);
+
+    boolean pubJob(Job job);
 }

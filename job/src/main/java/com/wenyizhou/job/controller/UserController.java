@@ -1,6 +1,7 @@
 package com.wenyizhou.job.controller;
 
 import com.google.gson.Gson;
+import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.service.IUserService;
@@ -36,6 +37,7 @@ public class UserController {
     @PostMapping(value = "/userInfo",consumes = "application/x-www-form-urlencoded")
     public Response userInfo(@RequestParam String userId){
         Response response = userService.userInfo(userId);
+        System.out.println(new Gson().toJson(response));
         return response;
     }
     @PostMapping(value = "/changeInfo",consumes = "application/x-www-form-urlencoded")
@@ -55,5 +57,10 @@ public class UserController {
     @PostMapping(value = "/apply",consumes = "application/x-www-form-urlencoded")
     public Response apply(@RequestParam String userId){
         return userService.apply(userId);
+    }
+    @PostMapping(value = "/pubJob",consumes = "application/x-www-form-urlencoded")
+    public Response pubJob(Job job){
+        System.out.println(new Gson().toJson(job));
+        return userService.pubJob(job);
     }
 }

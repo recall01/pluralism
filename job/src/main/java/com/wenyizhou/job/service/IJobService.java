@@ -13,4 +13,6 @@ public interface IJobService {
     Response getMaxPage();
 
     Response findJob();
+
+    Response delectJob(String jobId);
 }

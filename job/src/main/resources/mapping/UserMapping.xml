@@ -10,6 +10,27 @@
         <result property="roleType" column="RoleType"/>
         <result property="registerTime" column="RegisterTime"/>
     </resultMap>
+    <resultMap id="teacherVOResult" type="com.wenyizhou.job.model.VO.TeacherVO">
+        <result property="userId" column="UserId"/>
+        <result property="userName" column="UserName"/>
+        <result property="userEmail" column="UserEmail"/>
+        <result property="userPhone" column="UserPhone"/>
+        <result property="userPassword" column="UserPassword"/>
+        <result property="roleType" column="RoleType"/>
+        <result property="registerTime" column="RegisterTime"/>
+        <collection property="jobs" ofType="Job">
+            <result property="jobId" column="JobId"/>
+            <result property="jobName" column="JobName"/>
+            <result property="introduction" column="Introduction"/>
+            <result property="jobType" column="JobType"/>
+            <result property="location" column="Location"/>
+            <result property="salary" column="Salary"/>
+            <result property="experience" column="Experience"/>
+            <result property="userId" column="UserId"/>
+            <result property="pubTime" column="PubTime"/>
+        </collection>
+    </resultMap>
+
     <insert id="insert">
         insert into User
         (UserId,UserName,UserEmail,UserPhone,UserPassword,RoleType,RegisterTime)
@@ -49,4 +70,10 @@
         where StuNumber = #{stuNumber}
         AND IsDelete = 0
     </update>
+    <select id="selectTeacherById" resultMap="teacherVOResult">
+        SELECT * FROM User
+        LEFT JOIN Job
+        ON User.UserId = Job.UserId
+        WHERE User.UserId = #{userId}
+    </select>
 </mapper>

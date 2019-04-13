@@ -60,13 +60,12 @@
                                 data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
                             登录
                         </button>
-                        <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
                         <div class="navbar-nav dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
-                            <button class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            <button class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block" role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false" th:if="${session.user}" th:text="${session.user.userName}">
                             </button>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                <a href="#" data-toggle="modal" data-target="#baseInfoModal">发布招聘</a>
+                                <a href="#" data-toggle="modal" data-target="#pubJobModal">发布招聘</a>
                                 <a href="#" data-toggle="modal" data-target="#freeTimeModal">我的招聘</a>
                             </div>
                         </div>
@@ -86,7 +85,7 @@
                         <div class="e-left pt-lg-5">
                             <div>
                                 <div class="job-desc-w3ls">
-                                    <table class="table">
+                                    <table class="table" th:if="${session.teacher.jobs}">
                                         <tr>
                                             <th>工作编号</th>
                                             <th>工作名</th>
@@ -94,28 +93,15 @@
                                             <th>状态</th>
                                             <th>操作</th>
                                         </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>我是工作名称</td>
-                                            <td>2019-04-10 14:55:59</td>
+                                        <tr th:each="job:${session.teacher.jobs}">
+                                            <td th:text="${job.jobId}"></td>
+                                            <td th:text="${job.jobName}"></td>
+                                            <td th:text="${job.pubTime}"></td>
                                             <td>招聘中</td>
-                                            <td><a href="#" class="my-btn text-capitalize">编辑</a>|<a href="#" class="my-btn text-capitalize">删除</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>我是工作名称</td>
-                                            <td>2019-04-10 14:55:59</td>
-                                            <td>已接单</td>
-                                            <td><a href="#" class="my-btn text-capitalize">编辑</a>|<a href="#" class="my-btn text-capitalize">删除</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>我是工作名称</td>
-                                            <td>2019-04-10 14:55:59</td>
-                                            <td>已完成</td>
-                                            <td><a href="#" class="my-btn text-capitalize">编辑</a>|<a href="#" class="my-btn text-capitalize">删除</a></td>
+                                            <td><a href="#" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
                                         </tr>
                                     </table>
+                                    <a href="#" class="btn text-capitalize" th:unless="${session.teacher.jobs}">还未发布招聘信息,点击进行发布</a>
                                 </div>
                             </div>
                         </div>
@@ -141,13 +127,13 @@
             <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#">文一舟</a>
             </p>
         </div>
-        <!-- introduction Modal -->
-        <div class="modal fade" id="introductionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <!-- pubJob Modal -->
+        <div class="modal fade" id="pubJobModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-theme1">
-                        <h5 class="modal-title" id="exampleModalLabel">个人简介</h5>
+                        <h5 class="modal-title">发布工作</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -155,73 +141,48 @@
                     <div class="modal-body">
                         <form action="#" method="post" class="p-3">
                             <div class="form-group">
-                                <textarea class="form-control" id="introduction"></textarea>
-                            </div>
-                            <div class="right-w3l">
-                                <input type="submit" class="form-control bg-theme" value="修改" id="changeIntroduction" >
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- //introduction modal -->
-        <!-- jobType Modal -->
-        <div class="modal fade" id="jobTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-theme1">
-                        <h5 class="modal-title" id="jobTypeModalLabel">兼职类型</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" method="post" class="p-3">
-                            <div class="form-group">
-                                <input class="form-control" id="input_jobType"></input>
-                            </div>
-                            <div class="right-w3l">
-                                <input type="submit" class="form-control bg-theme" value="修改" id="changeJobType">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- //jobType modal -->
-        <!-- freeTime Modal -->
-        <div class="modal fade" id="freeTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-theme1">
-                        <h5 class="modal-title">空闲时间</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" method="post" class="p-3">
-                            <div class="form-group">
-
-                            </div>
-                            <div class="right-w3l">
-                                <label for="startTime" class="col-form-label">开始时间段</label>
-                                <input type="datetime-local" class="form-control" placeholder=" " name="userName" id="startTime"
+                                <label for="recipient-id" class="col-form-label">工作标题</label>
+                                <input type="text" class="form-control" placeholder="不超过五十个字" name="jobName" id="job-name"
                                        required="">
-                                <label for="endTime" class="col-form-label">结束时间段</label>
-                                <input type="datetime-local" class="form-control" placeholder=" " name="userName" id="endTime"
+                            </div>
+                            <div class="form-group" hidden="hidden">
+                                <input type="text" class="form-control" name="userId" id="userId" th:if="${session.user}" th:value="${session.user.userId}"
                                        required="">
-                                <input type="submit" class="form-control bg-theme" value="添加" id="addFreeTime">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-id" class="col-form-label">工作简介</label>
+                                <textarea class="form-control" placeholder="不超过两百个字" name="introduction" id="job-introduction"
+                                          required=""></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-id" class="col-form-label">工作类型</label>
+                                <input type="text" class="form-control" placeholder="例如:导师项目,综合办公" name="jobType" id="job-type"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-id" class="col-form-label">工作地点</label>
+                                <input type="text" class="form-control" placeholder=" " name="location" id="job-location"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-id" class="col-form-label">工作薪资</label>
+                                <input type="text" class="form-control" placeholder="例如:50/次" name="salary" id="job-salary"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-id" class="col-form-label">工作要求</label>
+                                <input type="text" class="form-control" placeholder="例如:无需任何工作经验" name="experience" id="job-experience"
+                                       required="">
+                            </div>
+                            <div class="right-w3l">
+                                <input type="submit" class="form-control bg-theme" value="发布" id="pubJob">
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- //jobType modal -->
+        <!-- //pubJob modal -->
 
         <!-- baseInfo modal -->
         <div class="modal fade" id="baseInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
@@ -235,7 +196,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="post" class="p-3">
+                        <form action="#" method="post" class="p-3" id="jobForm">
                             <div class="form-group">
                                 <label for="recipient-id" class="col-form-label">UserId</label>
                                 <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-id"
@@ -294,7 +255,29 @@
                 document.getElementById("password2").setCustomValidity('');
             //empty string means no validation error
         }
-
+        function delectJob(jobId) {
+            if(jobId == null||""==jobId){
+                alert("获取工作数据失败");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/job/delectJob",
+                data:{
+                    "jobId":jobId,
+                },
+                success:function (data) {
+                    alert(data.msg);
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/teacherInfo";
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+        }
     </script>
     <!-- script for password match -->
     <!-- //js -->
@@ -312,6 +295,50 @@
             });
         });
 
+        $("#pubJob").on("click",function () {
+            var userId = $("#userId").val();
+            var jobName = $("#job-name").val();
+            var introduction = $("#job-introduction").val();
+            var jobType = $("#job-type").val();
+            var location = $("#job-location").val();
+            var salary = $("#job-salary").val();
+            var experience = $("#job-experience").val();
+            if(userId == null||"" ==userId){
+                alert("获取用户信息失败");
+                return false;
+            }
+            if(jobName==""||introduction==""||location==""||jobType==""||salary==""||experience==""){
+                alert("入参不能为空");
+                return false;
+            }
+
+
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/user/pubJob",
+                data: {
+                    "userId":userId,
+                    "jobName":jobName,
+                    "introduction":introduction,
+                    "jobType":jobType,
+                    "location":location,
+                    "salary":salary,
+                    "experience":experience,
+                },
+                success:function (data) {
+                    if(data.status == 200){
+                        alert(data.msg);
+                    }else {
+                        alert(data.msg);
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+            return false;
+        })
     </script>
     <!-- //end-smooth-scrolling -->
     <!-- smooth-scrolling-of-move-up -->

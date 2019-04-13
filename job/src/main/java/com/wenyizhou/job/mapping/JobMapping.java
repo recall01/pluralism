@@ -1,7 +1,6 @@
 package com.wenyizhou.job.mapping;
 
 import com.wenyizhou.job.model.Job;
-import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.VO.JobVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,4 +20,8 @@ public interface JobMapping {
     List<JobVO> selectJobByName(String jobName);
 
     List<JobVO> selectJobByNameAndType(Map m);
+
+    void insertJob(Job job);
+
+    void delectJob(Map m);
 }
