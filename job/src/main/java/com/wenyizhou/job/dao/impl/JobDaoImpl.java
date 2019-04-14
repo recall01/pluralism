@@ -3,6 +3,7 @@ package com.wenyizhou.job.dao.impl;
 import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.mapping.*;
+import com.wenyizhou.job.model.AppJob;
 import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.User;
@@ -115,5 +116,40 @@ public class JobDaoImpl implements IJobDao {
     @Override
     public AppJobVO getApplicantInfo(String jobId) {
         return appJobMapping.selectApplicant(jobId);
+    }
+
+    @Override
+    public AppJob getAppJobById(String userId, String jobId) {
+        try {
+            Map m =new HashMap();
+            m.put("userId",userId);
+            m.put("jobId",jobId);
+            return appJobMapping.selectAppJobById(m);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean applyJob(AppJob appJob) {
+        try {
+            appJobMapping.insertApplyJob(appJob);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delectAppJob(String jobId) {
+        try {
+            appJobMapping.delectAppJob(jobId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wenyizhou.job.mapping.AppJobMapping">
+    <resultMap id="appJobResult" type="com.wenyizhou.job.model.AppJob">
+        <id property="appId" column="AppId"/>
+        <result property="jobId" column="JobId"/>
+        <result property="userId" column="UserId"/>
+        <result property="appTime" column="AppTime"/>
+    </resultMap>
     <resultMap id="appJobVOResult" type="com.wenyizhou.job.model.VO.AppJobVO">
         <id property="appId" column="AppId"/>
         <result property="jobId" column="JobId"/>
@@ -23,4 +29,17 @@
         where AppJob.JobId = #{jobId}
         order by AppJob.AppTime desc
     </select>
+    <select id="selectAppJobById" resultMap="appJobResult">
+        SELECT * FROM AppJob
+        where JobId = #{jobId}
+        and UserId = #{userId}
+    </select>
+    <insert id="insertApplyJob">
+        insert into AppJob (JobId,UserId,AppTime)
+        values (#{jobId},#{userId},#{appTime})
+    </insert>
+    <delete id="delectAppJob">
+        delete from AppJob
+        where JobId = #{jobId}
+    </delete>
 </mapper>

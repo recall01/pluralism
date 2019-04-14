@@ -1,6 +1,7 @@
 package com.wenyizhou.job.service.impl;
 
 import com.wenyizhou.job.dao.IJobDao;
+import com.wenyizhou.job.model.AppJob;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.AppJobVO;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
+import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -133,9 +135,14 @@ public class JobServiceImpl implements IJobService {
             response.setError(ErrorCode.ACCOUNT_NOT_LOGIN);
             return response;
         }
-        //获取userId
+        //获取userId,删除数据
         String userId = user.getUserId();
         if(!jobDao.delectJob(jobId,userId)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //删除AppJob中的相关数据
+        if(!jobDao.delectAppJob(jobId)){
             response.setError(ErrorCode.SQL_OPERATING_FAIL);
             return response;
         }
@@ -194,6 +201,46 @@ public class JobServiceImpl implements IJobService {
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(appJobs);
         response.setMsg("获取数据成功");
+        return response;
+    }
+
+    @Override
+    @Transient
+    public Response applyJob(String userId, String jobId) {
+        Response response = new Response();
+        //1.校验数据
+        if(StringUtils.isEmpty(userId)||StringUtils.isEmpty(jobId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        User user =(User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            response.setError(ErrorCode.ACCOUNT_NOT_LOGIN);
+            return response;
+        }
+        if(!user.getUserId() .equals(userId)){
+            response.setError(ErrorCode.ACCOUNT_NOT_EXIST);
+            System.out.println(user.getUserId() +"---"+userId);
+            return response;
+        }
+        //2.在AppJob表中查询数据是否已经存在
+        AppJob job = jobDao.getAppJobById(userId,jobId);
+        if(job != null){
+            response.setError(ErrorCode.DATA_ALREADY_EXIST.getErrCode(),"申请失败,已经申请过了");
+            return response;
+        }
+        //3.封装数据
+        AppJob appJob = new AppJob();
+        appJob.setJobId(Integer.valueOf(jobId));
+        appJob.setUserId(userId);
+        appJob.setAppTime(TimeUtil.getTime());
+        //4.向AppJob表中插入数据
+        if(!jobDao.applyJob(appJob)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("申请工作成功");
         return response;
     }
 

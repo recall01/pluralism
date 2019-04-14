@@ -1,5 +1,6 @@
 package com.wenyizhou.job.dao;
 
+import com.wenyizhou.job.model.AppJob;
 import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.User;
@@ -26,4 +27,10 @@ public interface IJobDao {
     JobVO getJobById(String jobId);
 
     AppJobVO getApplicantInfo(String jobId);
+
+    AppJob getAppJobById(String userId, String jobId);
+
+    boolean applyJob(AppJob appJob);
+
+    boolean delectAppJob(String jobId);
 }

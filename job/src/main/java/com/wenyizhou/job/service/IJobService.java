@@ -19,4 +19,6 @@ public interface IJobService {
     Response getJobById(String jobId);
 
     Response getAppJobInfo(String jobId);
+
+    Response applyJob(String userId, String jobId);
 }

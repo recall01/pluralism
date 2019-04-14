@@ -1,5 +1,6 @@
 package com.wenyizhou.job.mapping;
 
+import com.wenyizhou.job.model.AppJob;
 import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.VO.AppJobVO;
 import com.wenyizhou.job.model.VO.JobVO;
@@ -11,4 +12,10 @@ import java.util.Map;
 @Mapper
 public interface AppJobMapping {
     AppJobVO selectApplicant(String jobId);
+
+    AppJob selectAppJobById(Map m);
+
+    void insertApplyJob(AppJob appJob);
+
+    void delectAppJob(String jobId);
 }

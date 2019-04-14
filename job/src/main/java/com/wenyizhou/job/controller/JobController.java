@@ -48,4 +48,9 @@ public class JobController {
     public Response getAppJobInfo(String jobId){
         return jobService.getAppJobInfo(jobId);
     }
+
+    @PostMapping("/applyJob")
+    public Response applyJob(@RequestParam String userId,@RequestParam String jobId){
+        return jobService.applyJob(userId,jobId);
+    }
 }
