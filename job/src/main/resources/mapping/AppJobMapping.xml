@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenyizhou.job.mapping.AppJobMapping">
+    <resultMap id="appJobVOResult" type="com.wenyizhou.job.model.VO.AppJobVO">
+        <id property="appId" column="AppId"/>
+        <result property="jobId" column="JobId"/>
+        <result property="userId" column="UserId"/>
+        <result property="appTime" column="AppTime"/>
+        <collection property="users" ofType="User">
+            <result property="userId" column="UserId"/>
+            <result property="userName" column="UserName"/>
+            <result property="userEmail" column="UserEmail"/>
+            <result property="userPhone" column="UserPhone"/>
+            <result property="userPassword" column="UserPassword"/>
+            <result property="roleType" column="RoleType"/>
+            <result property="registerTime" column="RegisterTime"/>
+        </collection>
+    </resultMap>
+    <select id="selectApplicant" resultMap="appJobVOResult">
+        SELECT * FROM AppJob
+        LEFT JOIN User
+        ON AppJob.UserId = User.UserId
+        where AppJob.JobId = #{jobId}
+        order by AppJob.AppTime desc
+    </select>
+</mapper>

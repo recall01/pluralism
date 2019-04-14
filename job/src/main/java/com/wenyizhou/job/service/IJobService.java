@@ -17,4 +17,6 @@ public interface IJobService {
     Response delectJob(String jobId);
 
     Response getJobById(String jobId);
+
+    Response getAppJobInfo(String jobId);
 }

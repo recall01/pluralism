@@ -3,6 +3,7 @@ package com.wenyizhou.job.dao;
 import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.VO.AppJobVO;
 import com.wenyizhou.job.model.VO.JobVO;
 import com.wenyizhou.job.model.VO.StudentVO;
 
@@ -23,4 +24,6 @@ public interface IJobDao {
     boolean delectJob(String jobId, String userId);
 
     JobVO getJobById(String jobId);
+
+    AppJobVO getApplicantInfo(String jobId);
 }

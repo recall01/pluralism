@@ -80,6 +80,9 @@
                 <div class="col-lg-12" id="detailJobTest">
 
                 </div>
+                <div class="col-lg-12" id="application">
+
+                </div>
             </div>
         </div>
     </section>
@@ -229,8 +232,29 @@
                 var jobType = jobTypes[j];
                 dom = dom+"<li>"+jobType+"</li>";
             }
-            dom = dom +"</ul><hr><ul class='desc-list'><li><span>地点:</span>"+job.location+"</li><li><span>薪资:</span>"+job.salary+"</li><li><span>经验:</span>"+job.experience+"</li><li><span>发布者: </span>"+job.user.userName+"</li><li><span>发布时间: </span>"+job.pubTime+"</li></ul></div></div></div><hr>"
+            dom = dom +"</ul><hr><ul class='desc-list'><li><span>地点:</span>"+job.location+"</li><li><span>薪资:</span>"+job.salary+"</li><li><span>经验:</span>"+job.experience+"</li><li><span>发布者: </span>"+job.user.userName+"</li><li><span>发布时间: </span>"+job.pubTime+"</li></ul></div></div></div>"
             $("#detailJobTest").append(dom);
+        }
+        //修改申请人列表视图
+        function changeApplication(data) {
+            var appJobs = data.data;
+            if(appJobs == null){
+                return false;
+            }
+            var users = appJobs.users;
+            if(users.length <1){
+                return false;
+            }
+            //奇数数列，加头部
+            var dom = "<div class='row'><div class='col-lg-12  mx-auto'><div class='e-left pt-lg-5'><div><div class='job-desc-w3ls'><table class='table'><tr><th>申请人</th><th>电话</th><th>邮箱</th><th>申请时间</th><th>操作</th></tr>";
+
+            for(var j=0;j<users.length;j++){
+                var user = users[j];
+                dom = dom+"<tr><td>"+user.userName+"</td><td>"+user.userPhone+"</td><td>"+user.userEmail+"</td><td>"+appJobs.appTime+"</td><td><a href='#' class='my-btn text-capitalize'>同意</a>|<a href='#' class='my-btn text-capitalize'>拒绝</a></td></tr>";
+            }
+            dom = dom +"</table></div></div></div></div></div>";
+            console.log(dom);
+            $("#application").append(dom);
         }
     </script>
     <!-- script for password match -->
@@ -256,6 +280,20 @@
                     alert("获取信息失败");
                 }else {
                     changeJobInDetail(data);
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/job/getAppJobInfo",
+            success:function (data) {
+                if(data.status != 200){
+                    alert("获取申请人员信息失败");
+                }else {
+                    changeApplication(data);
                 }
             },
             error:function (data) {

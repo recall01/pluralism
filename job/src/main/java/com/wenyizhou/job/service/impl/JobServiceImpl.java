@@ -1,26 +1,18 @@
 package com.wenyizhou.job.service.impl;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.wenyizhou.job.dao.IJobDao;
-import com.wenyizhou.job.dao.IUserDao;
-import com.wenyizhou.job.model.Job;
-import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.VO.AppJobVO;
 import com.wenyizhou.job.model.VO.JobVO;
-import com.wenyizhou.job.model.VO.StudentVO;
 import com.wenyizhou.job.model.VO.TeacherVO;
 import com.wenyizhou.job.service.IJobService;
-import com.wenyizhou.job.service.IUserService;
 import com.wenyizhou.job.utils.ErrorCode;
-import com.wenyizhou.job.utils.IDUtil;
 import com.wenyizhou.job.utils.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -183,6 +175,25 @@ public class JobServiceImpl implements IJobService {
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(job);
         response.setMsg("获取工作信息成功");
+        return response;
+    }
+
+    @Override
+    public Response getAppJobInfo(String jobId) {
+        Response response = new Response();
+        //参数校验,如果为空,从session中拿jobId
+        if(StringUtils.isEmpty(jobId)){
+            jobId = (String) httpServletRequest.getSession().getAttribute("jobId");
+            if(StringUtils.isEmpty(jobId)){
+                response.setError(ErrorCode.PARAMETER_ERROR);
+                return response;
+            }
+        }
+        //根据jobId查询申请人数
+        AppJobVO appJobs = jobDao.getApplicantInfo(jobId);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(appJobs);
+        response.setMsg("获取数据成功");
         return response;
     }
 

@@ -2,13 +2,11 @@ package com.wenyizhou.job.dao.impl;
 
 import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.dao.IUserDao;
-import com.wenyizhou.job.mapping.JobMapping;
-import com.wenyizhou.job.mapping.JobTypeMapping;
-import com.wenyizhou.job.mapping.StudentMapping;
-import com.wenyizhou.job.mapping.UserMapping;
+import com.wenyizhou.job.mapping.*;
 import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.JobType;
 import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.VO.AppJobVO;
 import com.wenyizhou.job.model.VO.JobVO;
 import com.wenyizhou.job.model.VO.StudentVO;
 import org.springframework.dao.DuplicateKeyException;
@@ -24,7 +22,7 @@ public class JobDaoImpl implements IJobDao {
     @Resource
     UserMapping userMapping;
     @Resource
-    StudentMapping studentMapping;
+    AppJobMapping appJobMapping;
     @Resource
     JobMapping jobMapping;
 
@@ -112,5 +110,10 @@ public class JobDaoImpl implements IJobDao {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public AppJobVO getApplicantInfo(String jobId) {
+        return appJobMapping.selectApplicant(jobId);
     }
 }

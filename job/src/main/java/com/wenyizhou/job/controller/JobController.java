@@ -43,4 +43,9 @@ public class JobController {
     public Response delectJob(@RequestParam String jobId){
         return jobService.delectJob(jobId);
     }
+
+    @GetMapping("/getAppJobInfo")
+    public Response getAppJobInfo(String jobId){
+        return jobService.getAppJobInfo(jobId);
+    }
 }
