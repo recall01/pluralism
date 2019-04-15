@@ -16,9 +16,7 @@ public class StudentController {
 
     @PostMapping(value = "/addIntroduction",consumes = "application/x-www-form-urlencoded")
     public Response addIntroduction(String introduction,String userId){
-        Response response = studentService.addIntroduction(introduction, userId);
-        System.out.println(new Gson().toJson(response));
-        return response;
+        return studentService.addIntroduction(introduction, userId);
     }
 
     @PostMapping(value = "/addJobType",consumes = "application/x-www-form-urlencoded")

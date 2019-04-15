@@ -36,9 +36,7 @@ public class UserController {
     }
     @PostMapping(value = "/userInfo",consumes = "application/x-www-form-urlencoded")
     public Response userInfo(@RequestParam String userId){
-        Response response = userService.userInfo(userId);
-        System.out.println(new Gson().toJson(response));
-        return response;
+        return userService.userInfo(userId);
     }
     @PostMapping(value = "/changeInfo",consumes = "application/x-www-form-urlencoded")
     public Response changeInfo(User user){
@@ -60,7 +58,10 @@ public class UserController {
     }
     @PostMapping(value = "/pubJob",consumes = "application/x-www-form-urlencoded")
     public Response pubJob(Job job){
-        System.out.println(new Gson().toJson(job));
         return userService.pubJob(job);
+    }
+    @GetMapping(value = "/getUserById")
+    public Response getUserById(String userId){
+        return userService.getUserById(userId);
     }
 }

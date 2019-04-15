@@ -299,7 +299,6 @@ function getMaxPage() {
 }
 
 function applyJob(s) {
-    alert(s);
     var userId = $("#userId").html();
     if(userId == null||""==userId){
         alert("获取用户信息失败,请重新登录");

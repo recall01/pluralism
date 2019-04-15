@@ -1,5 +1,6 @@
 package com.wenyizhou.job.service.impl;
 
+import com.google.gson.Gson;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.StudentVO;
@@ -209,13 +210,41 @@ public class UserServiceImpl implements IUserService {
             response.setError(ErrorCode.SQL_OPERATING_FAIL);
             return response;
         }
+        //重新获取teacher信息
+        this.getTeacherInfo(job.getUserId());
         response.setStatus(RESPONSE_SUCCESS);
         response.setMsg("发布成功");
         return response;
     }
 
+    @Override
+    public Response getUserById(String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(userId)){
+            userId = (String) httpServletRequest.getSession().getAttribute("applicantUserId");
+            if(StringUtils.isEmpty(userId)){
+                response.setError(ErrorCode.DATA_NOT_EXIST);
+                return response;
+            }
+        }
+        //根据userId查询user信息
+        User applicantUser = userDao.selectUserById(userId);
+        if(applicantUser == null){
+            response.setError(ErrorCode.ACCOUNT_NOT_EXIST);
+            return response;
+        }
+        //讲applicantUser对象存入session中
+        httpServletRequest.getSession().setAttribute("applicantUser",applicantUser);
+        response = this.getStudentInfo(userId);
+        System.out.println(new Gson().toJson(response));
+        return response;
+    }
+
     //获得学生信息
     private Response getStudentInfo(String userId){
+        if(httpServletRequest.getSession().getAttribute("student") != null){
+            httpServletRequest.getSession().removeAttribute("student");
+        }
         Response response = new Response();
         StudentVO student = userDao.selectStudentById(userId);
         if(student == null){
@@ -237,6 +266,9 @@ public class UserServiceImpl implements IUserService {
     }
     //获取教师信息
     protected Response getTeacherInfo(String userId){
+        if(httpServletRequest.getSession().getAttribute("teacher") != null){
+            httpServletRequest.getSession().removeAttribute("teacher");
+        }
         Response response = new Response();
         TeacherVO teacher = userDao.selectTeacherById(userId);
         if(teacher == null){

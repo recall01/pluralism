@@ -103,4 +103,13 @@ public class PageController {
         }
         return "/improve_info";
     }
+    @GetMapping("/applicantInfo")
+    public String applicantInfo(@RequestParam String userId){
+        if(StringUtils.isEmpty(userId)){
+            return "/index";
+        }
+        httpServletRequest.getSession().setAttribute("applicantUserId",userId);
+        userService.getUserById(userId);
+        return "/applicant_info";
+    }
 }

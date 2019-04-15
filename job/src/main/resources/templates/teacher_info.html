@@ -101,7 +101,7 @@
                                             <td><a th:onclick="|javascript:detailsJob(${job.jobId})|" href="#" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
                                         </tr>
                                     </table>
-                                    <a href="#" class="btn text-capitalize" th:unless="${session.teacher.jobs}">还未发布招聘信息,点击进行发布</a>
+                                    <a href="#" data-toggle="modal" data-target="#pubJobModal" class="btn text-capitalize" th:unless="${session.teacher.jobs}">还未发布招聘信息,点击进行发布</a>
                                 </div>
                             </div>
                         </div>
@@ -318,7 +318,6 @@
                 alert("入参不能为空");
                 return false;
             }
-
 
             $.ajax({
                 type:"POST",

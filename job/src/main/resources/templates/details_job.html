@@ -245,16 +245,19 @@
             if(users.length <1){
                 return false;
             }
-            //奇数数列，加头部
-            var dom = "<div class='row'><div class='col-lg-12  mx-auto'><div class='e-left pt-lg-5'><div><div class='job-desc-w3ls'><table class='table'><tr><th>申请人</th><th>电话</th><th>邮箱</th><th>申请时间</th><th>操作</th></tr>";
+            var dom = "<div class='row'><div class='col-lg-12  mx-auto'><div class='e-left pt-lg-5'><div><div class='job-desc-w3ls'><table class='table table-hover'><thead><tr><th>申请人</th><th>电话</th><th>邮箱</th><th>申请时间</th><th>操作</th></tr></thead>";
 
             for(var j=0;j<users.length;j++){
                 var user = users[j];
-                dom = dom+"<tr><td>"+user.userName+"</td><td>"+user.userPhone+"</td><td>"+user.userEmail+"</td><td>"+appJobs.appTime+"</td><td><a href='#' class='my-btn text-capitalize'>同意</a>|<a href='#' class='my-btn text-capitalize'>拒绝</a></td></tr>";
+                dom = dom+"<tr onclick='applicantInfo("+user.userId+")'><td>"+user.userName+"</td><td>"+user.userPhone+"</td><td>"+user.userEmail+"</td><td>"+appJobs.appTime+"</td><td><a href='#' class='my-btn text-capitalize'>同意</a>|<a href='#' class='my-btn text-capitalize'>拒绝</a></td></tr>";
             }
             dom = dom +"</table></div></div></div></div></div>";
             console.log(dom);
             $("#application").append(dom);
+        }
+        function applicantInfo(userId) {
+            //跳转至applicantInfo界面
+            location.href="http://localhost:8080/applicantInfo?userId="+userId;
         }
     </script>
     <!-- script for password match -->

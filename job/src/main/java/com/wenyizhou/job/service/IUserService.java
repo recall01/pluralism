@@ -20,4 +20,6 @@ public interface IUserService {
     Response apply(String userId);
 
     Response pubJob(Job job);
+
+    Response getUserById(String userId);
 }
