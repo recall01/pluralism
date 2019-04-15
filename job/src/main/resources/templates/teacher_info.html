@@ -85,20 +85,23 @@
                         <div class="e-left pt-lg-5">
                             <div>
                                 <div class="job-desc-w3ls">
-                                    <table class="table" th:if="${session.teacher.jobs}">
-                                        <tr>
-                                            <th>工作编号</th>
-                                            <th>工作名</th>
-                                            <th>发布时间</th>
-                                            <th>状态</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        <tr th:each="job:${session.teacher.jobs}">
+                                    <table class="table table-hover" th:if="${session.teacher.jobs}">
+                                        <thead>
+                                            <tr>
+                                                <th>工作编号</th>
+                                                <th>工作名</th>
+                                                <th>发布时间</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tr  th:each="job:${session.teacher.jobs}">
                                             <td th:text="${job.jobId}"></td>
                                             <td th:text="${job.jobName}"></td>
                                             <td th:text="${job.pubTime}"></td>
                                             <td>招聘中</td>
-                                            <td><a th:onclick="|javascript:detailsJob(${job.jobId})|" href="#" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
+                                            <td><a href="#" th:onclick="|javascript:detailsJob(${job.jobId})|" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
                                         </tr>
                                     </table>
                                     <a href="#" data-toggle="modal" data-target="#pubJobModal" class="btn text-capitalize" th:unless="${session.teacher.jobs}">还未发布招聘信息,点击进行发布</a>

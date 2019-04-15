@@ -226,13 +226,13 @@
                 return false;
             }
             //奇数数列，加头部
-            var dom = "<div class='row'><div class='col-sm-12 e-left'><div class='e-desc'><h6><a>"+job.jobName+"</a></h6><p class='testP'>"+job.introduction+"</p><hr><ul class='e-tags'>";
+            var dom = "<div class='row'><div class='col-sm-12 e-left'><div class='e-desc'><div class='form-group'><label for='recipient-specialty' class='col-form-label'>兼职标题</label><input id='jobName' type='text' class='form-control' value='"+job.jobName+"'></div><div class='form-group'><label for='recipient-specialty' class='col-form-label'>工作简介</label><textarea id='introduction' class='testP form-control'>"+job.introduction+"</textarea></div><hr><ul class='e-tags'>";
             var jobTypes = job.jobType;
             for(var j=0;j<jobTypes.length;j++){
                 var jobType = jobTypes[j];
                 dom = dom+"<li>"+jobType+"</li>";
             }
-            dom = dom +"</ul><hr><ul class='desc-list'><li><span>地点:</span>"+job.location+"</li><li><span>薪资:</span>"+job.salary+"</li><li><span>经验:</span>"+job.experience+"</li><li><span>发布者: </span>"+job.user.userName+"</li><li><span>发布时间: </span>"+job.pubTime+"</li></ul></div></div></div>"
+            dom = dom +"</ul><hr><ul class='desc-list'><div class='form-group'><li><span>地点:</span><input id='location' type='text' class='form-control' value='"+job.location+"'></li></div><div class='form-group'><li><span>薪资:</span><input id='salary' type='text' class='form-control' value='"+job.salary+"'></li></div><div class='form-group'><li><span>经验:</span><input id='experience' type='text' class='form-control' value='"+job.experience+"'></li></div><li><span>发布时间: </span>"+job.pubTime+"</li><div class='form-group'><li><button class='form-control bg-theme text-uppercase' onclick='changeJob()'>修改</button></li></div></ul></div></div></div>"
             $("#detailJobTest").append(dom);
         }
         //修改申请人列表视图
@@ -259,6 +259,37 @@
             //跳转至applicantInfo界面
             location.href="http://localhost:8080/applicantInfo?userId="+userId;
         }
+        function changeJob() {
+            var jobName = $("#jobName").val();
+            var introduction = $("#introduction").val();
+            var location = $("#location").val();
+            var salary = $("#salary").val();
+            var experience = $("#experience").val();
+            if(jobName == ""||introduction == ""||location == ""||salary == ""||experience == ""){
+                alert("数据不能为空");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/job/changeJob",
+                data:{
+                    "jobName":jobName,
+                    "introduction":introduction,
+                    "location":location,
+                    "salary":salary,
+                    "experience":experience,
+                },
+                success:function (data) {
+                    alert(data.msg);
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+            return false;
+        }
+
     </script>
     <!-- script for password match -->
     <script src="js/move-top.js"></script>

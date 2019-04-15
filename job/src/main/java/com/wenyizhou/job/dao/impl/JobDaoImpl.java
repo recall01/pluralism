@@ -152,4 +152,15 @@ public class JobDaoImpl implements IJobDao {
             return false;
         }
     }
+
+    @Override
+    public boolean changeJob(Job job) {
+        try {
+            jobMapping.updateJob(job);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

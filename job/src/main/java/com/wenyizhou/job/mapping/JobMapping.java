@@ -28,4 +28,5 @@ public interface JobMapping {
 
     JobVO selectJobById(String jobId);
 
+    void updateJob(Job job);
 }

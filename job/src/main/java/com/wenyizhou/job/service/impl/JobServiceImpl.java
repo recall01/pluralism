@@ -2,6 +2,7 @@ package com.wenyizhou.job.service.impl;
 
 import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.model.AppJob;
+import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.AppJobVO;
@@ -10,6 +11,7 @@ import com.wenyizhou.job.model.VO.TeacherVO;
 import com.wenyizhou.job.service.IJobService;
 import com.wenyizhou.job.utils.ErrorCode;
 import com.wenyizhou.job.utils.TimeUtil;
+import jdk.nashorn.internal.scripts.JO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -241,6 +243,24 @@ public class JobServiceImpl implements IJobService {
         }
         response.setStatus(RESPONSE_SUCCESS);
         response.setMsg("申请工作成功");
+        return response;
+    }
+
+    @Override
+    public Response changeJob(Job job) {
+        Response response = new Response();
+        String jobId = (String) httpServletRequest.getSession().getAttribute("jobId");
+        if(StringUtils.isEmpty(jobId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        job.setJobId(Integer.valueOf(jobId));
+        if(!jobDao.changeJob(job)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("修改成功");
         return response;
     }
 

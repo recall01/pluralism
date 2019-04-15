@@ -33,4 +33,6 @@ public interface IJobDao {
     boolean applyJob(AppJob appJob);
 
     boolean delectAppJob(String jobId);
+
+    boolean changeJob(Job job);
 }

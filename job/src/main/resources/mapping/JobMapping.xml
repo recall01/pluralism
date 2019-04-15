@@ -92,4 +92,16 @@
         ON Job.UserId = User.UserId
         WHERE Job.JobId =#{jobName}
     </select>
+
+    <update id="updateJob">
+        update Job
+        <trim prefix="set" suffixOverrides=",">
+            <if test="jobName!=null">JobName=#{jobName},</if>
+            <if test="introduction!=null">Introduction=#{introduction},</if>
+            <if test="location!=null">Location=#{location},</if>
+            <if test="salary!=null">Salary=#{salary},</if>
+            <if test="experience!=null">Experience=#{experience}</if>
+        </trim>
+        where JobId=#{jobId}
+    </update>
 </mapper>

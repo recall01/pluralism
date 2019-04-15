@@ -1,5 +1,6 @@
 package com.wenyizhou.job.service;
 
+import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 
@@ -21,4 +22,6 @@ public interface IJobService {
     Response getAppJobInfo(String jobId);
 
     Response applyJob(String userId, String jobId);
+
+    Response changeJob(Job job);
 }

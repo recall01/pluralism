@@ -49,9 +49,12 @@ public class JobController {
         return jobService.getAppJobInfo(jobId);
     }
 
-    @PostMapping("/applyJob")
+    @PostMapping(value = "/applyJob",consumes = "application/x-www-form-urlencoded")
     public Response applyJob(@RequestParam String userId,@RequestParam String jobId){
         return jobService.applyJob(userId,jobId);
     }
-
+    @PostMapping(value = "/changeJob",consumes = "application/x-www-form-urlencoded")
+    public Response changeJob(Job job){
+        return jobService.changeJob(job);
+    }
 }
