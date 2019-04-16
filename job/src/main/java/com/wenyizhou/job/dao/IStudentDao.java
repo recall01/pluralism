@@ -21,4 +21,6 @@ public interface IStudentDao {
     boolean initStudentInfo(Student stu);
 
     List<News> getMsg(String userId);
+
+    boolean delectMsg(String newsId);
 }

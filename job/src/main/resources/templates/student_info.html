@@ -80,7 +80,7 @@
                                 <a href="#" data-toggle="modal" data-target="#baseInfoModal">基本信息</a>
                                 <a href="#" data-toggle="modal" data-target="#freeTimeModal">空闲时间</a>
                                 <a href="#" data-toggle="modal" data-target="#introductionModal">个人简介</a>
-                                <a href="#" th:onclick="|javascript:studentMsg(${session.user.userId})|">消息中心</a>
+                                <a href="#" th:onclick="|javascript:studentMsg()|">消息中心</a>
                             </div>
                         </div>
 
@@ -332,7 +332,7 @@
                 });
             }
         }
-        function studentMsg(userId) {
+        function studentMsg() {
             location.href="http://localhost:8080/newsList";
         }
     </script>

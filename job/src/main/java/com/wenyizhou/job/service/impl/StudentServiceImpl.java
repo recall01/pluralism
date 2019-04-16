@@ -214,6 +214,31 @@ public class StudentServiceImpl implements IStudentService {
         return response;
     }
 
+    @Override
+    public Response delectMsg(String userId, String newsId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(userId)||StringUtils.isEmpty(newsId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            response.setError(ErrorCode.ACCOUNT_NOT_LOGIN);
+            return response;
+        }
+        if(!user.getUserId().equals(userId)){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        if(!studentDao.delectMsg(newsId)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("删除消息成功");
+        return response;
+    }
+
     //移除缓存
     private void removeAttribute(){
         if(httpServletRequest.getSession().getAttribute("student") != null){

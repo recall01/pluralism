@@ -102,4 +102,15 @@ public class StudentDaoImpl implements IStudentDao {
             return null;
         }
     }
+
+    @Override
+    public boolean delectMsg(String newsId) {
+        try {
+            newsMapping.delectMsg(newsId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

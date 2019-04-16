@@ -18,4 +18,6 @@ public interface IStudentService {
     Response initStudentInfo(String userId);
 
     Response getMsg(String userId);
+
+    Response delectMsg(String userId, String newsId);
 }

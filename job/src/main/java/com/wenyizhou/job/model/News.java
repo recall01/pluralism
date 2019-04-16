@@ -1,5 +1,7 @@
 package com.wenyizhou.job.model;
 
+import com.wenyizhou.job.utils.TimeUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ public class News {
     }
 
     public String getAddTime() {
-        return addTime;
+        return TimeUtil.handTimeForm(addTime);
     }
 
     public void setAddTime(String addTime) {

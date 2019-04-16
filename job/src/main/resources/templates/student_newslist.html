@@ -90,7 +90,7 @@
                                         <tr  th:each="news:${session.newsList}">
                                             <td th:text="${news.newsInfo}"></td>
                                             <td th:text="${news.addTime}"></td>
-                                            <td><a th:onclick="|javascript:delectNews(${news.newsId})|" href="#" class="my-btn text-capitalize">删除</a></td>
+                                            <td><a th:onclick="|javascript:delectNews(${news.newsId},${session.user.userId})|" href="#" class="my-btn text-capitalize">删除</a></td>
                                         </tr>
                                     </table>
                                     <p class="text-capitalize" th:unless="${session.newsList}">暂时还没有任何消息</p>
@@ -138,29 +138,29 @@
                 document.getElementById("password2").setCustomValidity('');
             //empty string means no validation error
         }
-        function delectNews(newsId) {
-            /*if(jobId == null||""==jobId){
-                alert("获取工作数据失败");
+        function delectNews(newsId,userId) {
+            if(newsId == null||""==newsId||userId == null||""==userId){
+                alert("获取数据失败");
                 return false;
             }
             $.ajax({
                 type:"POST",
                 contentType:"application/x-www-form-urlencoded",
-                url:"http://localhost:8080/job/delectJob",
+                url:"http://localhost:8080/student/delectMsg",
                 data:{
-                    "jobId":jobId,
+                    "newsId":newsId,
+                    "userId":userId,
                 },
                 success:function (data) {
                     alert(data.msg);
                     if(data.status == 200){
-                        location.href="http://localhost:8080/teacherInfo";
+                        location.href="http://localhost:8080/newsList";
                     }
                 },
                 error:function (data) {
                     alert("请求失败");
                 }
-            });*/
-            alert(newsId);
+            });
         }
         function detailsJob(jobId) {
             if(jobId == null||"" == jobId){
