@@ -1,10 +1,7 @@
 package com.wenyizhou.job.service.impl;
 
 import com.wenyizhou.job.dao.IJobDao;
-import com.wenyizhou.job.model.AppJob;
-import com.wenyizhou.job.model.Job;
-import com.wenyizhou.job.model.Response;
-import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.AppJobVO;
 import com.wenyizhou.job.model.VO.JobVO;
 import com.wenyizhou.job.model.VO.TeacherVO;
@@ -264,5 +261,54 @@ public class JobServiceImpl implements IJobService {
         return response;
     }
 
+    @Override
+    @Transient
+    public Response agreeJob(News news) {
+        return this.handJob(news,1);
+    }
+
+    @Override
+    public Response rejectJob(News news) {
+        return this.handJob(news,2);
+    }
+    //处理操作兼职申请信息
+    private Response handJob(News news,int type){
+        Response response = new Response();
+        if(news == null){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //先根据Id获取job信息
+        JobVO job = jobDao.getJobById(String.valueOf(news.getJobId()));
+        if(job == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        //封装数据
+        news.setAddTime(TimeUtil.getTime());
+        switch (type){
+            case 1:
+                news.setNewsType(1);
+                news.setNewsInfo("你申请的["+job.getJobName()+"]已经被同意");break;
+            case 2:
+                news.setNewsType(2);
+                news.setNewsInfo("你申请的["+job.getJobName()+"]已经被拒绝");break;
+            default:break;
+        }
+        //添加数据到数据库
+        if(!jobDao.agreeJob(news)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //干掉AppJob表中对应的数据
+        if(!jobDao.delectAppJob(String.valueOf(news.getJobId()),news.getAccId())){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("处理成功");
+        return response;
+
+    }
 
 }

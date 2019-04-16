@@ -249,7 +249,7 @@
 
             for(var j=0;j<users.length;j++){
                 var user = users[j];
-                dom = dom+"<tr onclick='applicantInfo("+user.userId+")'><td>"+user.userName+"</td><td>"+user.userPhone+"</td><td>"+user.userEmail+"</td><td>"+appJobs.appTime+"</td><td><a href='#' class='my-btn text-capitalize'>同意</a>|<a href='#' class='my-btn text-capitalize'>拒绝</a></td></tr>";
+                dom = dom+"<tr><td onclick='applicantInfo("+user.userId+")'>"+user.userName+"</td><td>"+user.userPhone+"</td><td>"+user.userEmail+"</td><td>"+appJobs.appTime+"</td><td><a href='#' onclick='agreeJob("+appJobs.jobId+","+user.userId+")' class='my-btn text-capitalize'>同意</a>|<a href='#' onclick='rejectJob("+appJobs.jobId+","+user.userId+")' class='my-btn text-capitalize'>拒绝</a></td></tr>";
             }
             dom = dom +"</table></div></div></div></div></div>";
             console.log(dom);
@@ -288,6 +288,66 @@
                 }
             });
             return false;
+        }
+        function agreeJob(jobId,accId) {
+            if(jobId==null||""==jobId||accId==null||""==accId){
+                alert("获取信息失败");
+                return false;
+            }
+            var userId = $("#userId").html();
+            if(userId==null||""==userId){
+                alert("获取用户信息失败");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/job/agreeJob",
+                data:{
+                    "sendId":userId,
+                    "jobId":jobId,
+                    "accId":accId,
+                },
+                success:function (data) {
+                    alert(data.msg);
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/detailsJob?jobId="+jobId;
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+        }
+        function rejectJob(jobId,accId) {
+            if(jobId==null||""==jobId||accId==null||""==accId){
+                alert("获取信息失败");
+                return false;
+            }
+            var userId = $("#userId").html();
+            if(userId==null||""==userId){
+                alert("获取用户信息失败");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/job/rejectJob",
+                data:{
+                    "sendId":userId,
+                    "jobId":jobId,
+                    "accId":accId,
+                },
+                success:function (data) {
+                    alert(data.msg);
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/detailsJob?jobId="+jobId;
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
         }
 
     </script>

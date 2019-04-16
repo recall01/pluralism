@@ -42,4 +42,9 @@
         delete from AppJob
         where JobId = #{jobId}
     </delete>
+    <delete id="delectAppJobById">
+        delete from AppJob
+        where JobId = #{jobId}
+        and UserId = #{userId}
+    </delete>
 </mapper>

@@ -18,4 +18,6 @@ public interface AppJobMapping {
     void insertApplyJob(AppJob appJob);
 
     void delectAppJob(String jobId);
+
+    void delectAppJobById(Map m);
 }

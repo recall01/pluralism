@@ -3,10 +3,7 @@ package com.wenyizhou.job.dao.impl;
 import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.mapping.*;
-import com.wenyizhou.job.model.AppJob;
-import com.wenyizhou.job.model.Job;
-import com.wenyizhou.job.model.JobType;
-import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.AppJobVO;
 import com.wenyizhou.job.model.VO.JobVO;
 import com.wenyizhou.job.model.VO.StudentVO;
@@ -21,7 +18,7 @@ import java.util.Map;
 @Component
 public class JobDaoImpl implements IJobDao {
     @Resource
-    UserMapping userMapping;
+    NewsMapping newsMapping;
     @Resource
     AppJobMapping appJobMapping;
     @Resource
@@ -152,11 +149,35 @@ public class JobDaoImpl implements IJobDao {
             return false;
         }
     }
+    @Override
+    public boolean delectAppJob(String jobId,String userId) {
+        try {
+            Map m =new HashMap();
+            m.put("jobId",jobId);
+            m.put("userId",userId);
+            appJobMapping.delectAppJobById(m);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public boolean changeJob(Job job) {
         try {
             jobMapping.updateJob(job);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean agreeJob(News news) {
+        try {
+            newsMapping.insertNews(news);
             return true;
         }catch (Exception e){
             e.printStackTrace();

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenyizhou.job.mapping.NewsMapping">
+    <resultMap id="newsResult" type="com.wenyizhou.job.model.News">
+        <result property="newsId" column="NewsId"/>
+        <result property="jobId" column="JobId"/>
+        <result property="sendId" column="SendId"/>
+        <result property="accId" column="AccId"/>
+        <result property="newsType" column="NewsType"/>
+        <result property="newsInfo" column="NewsInfo"/>
+        <result property="addTime" column="AddTime"/>
+    </resultMap>
+    <insert id="insertNews">
+        insert into News
+        (JobId,SendId,AccId,NewsType,NewsInfo,AddTime)
+        values (#{jobId},#{sendId},#{accId},#{newsType},#{newsInfo},#{addTime})
+    </insert>
+</mapper>

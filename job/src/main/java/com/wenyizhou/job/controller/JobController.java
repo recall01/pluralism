@@ -2,6 +2,7 @@ package com.wenyizhou.job.controller;
 
 import com.google.gson.Gson;
 import com.wenyizhou.job.model.Job;
+import com.wenyizhou.job.model.News;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.service.IJobService;
@@ -56,5 +57,14 @@ public class JobController {
     @PostMapping(value = "/changeJob",consumes = "application/x-www-form-urlencoded")
     public Response changeJob(Job job){
         return jobService.changeJob(job);
+    }
+
+    @PostMapping(value = "/agreeJob",consumes = "application/x-www-form-urlencoded")
+    public Response agreeJob(News news){
+        return jobService.agreeJob(news);
+    }
+    @PostMapping(value = "/rejectJob",consumes = "application/x-www-form-urlencoded")
+    public Response rejectJob(News news){
+        return jobService.rejectJob(news);
     }
 }
