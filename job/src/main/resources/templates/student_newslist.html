@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Job Single</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="keywords" content="" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- Custom Theme files -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+    <!-- font-awesome icons -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- //Custom Theme files -->
+    <!-- online-fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i"
+          rel="stylesheet">
+</head>
+<body>
+    <!-- Slider -->
+    <div class="w3-banner-info-w3ltd position-relative">
+        <!-- header -->
+        <header>
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light p-0">
+                    <h1><a class="navbar-brand" href=" " th:href="@{~/index}">大学生勤工俭学网</a></h1>
+                    <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="ml-lg-5 navbar-nav mr-lg-auto">
+                            <li class="nav-item active  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a th:href="@{~/index}">首页</a>
+                            </li>
+                            <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a th:href="@{~/jobList}">工作列表</a>
+                            </li>
+                            <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a th:href="@{~/about}">勤工通告</a>
+                            </li>
+                            <li class="nav-item mr-lg-4 my-lg-0 mb-sm-4 mb-3">
+                                <a th:href="@{~/contact}">兼职须知</a>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn w3ls-btn text-uppercase font-weight-bold d-block" data-toggle="modal"
+                                aria-pressed="false" data-target="#exampleModal1" th:unless="${session.user}">
+                            注册
+                        </button>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" aria-pressed="false" data-target="#exampleModal" th:unless="${session.user}">
+                            登录
+                        </button>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                th:if="${session.user}" th:text="${session.user.userName}" id="userInfo">
+                        </button>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" aria-pressed="false" data-target="#verifyModal" th:if="${session.verify}" id="verify">验证用户
+                        </button>
+                        <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                        <p hidden="hidden" th:if="${session.user}" th:text="${session.user.roleType}" id="roleType"></p>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" aria-pressed="false" data-target="#userInfoModal" th:if="${session.user}" id="exit">退出系统
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- //header -->
+        <div class="inner-banner-w3ls">
+        </div>
+        <!-- job description -->
+        <section class="employ-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9  mx-auto" id="job-desc">
+                        <div class="e-left pt-lg-5">
+                            <div>
+                                <div class="job-desc-w3ls">
+                                    <table class="table table-hover" th:if="${session.newsList}">
+                                        <tr  th:each="news:${session.newsList}">
+                                            <td th:text="${news.newsInfo}"></td>
+                                            <td th:text="${news.addTime}"></td>
+                                            <td><a th:onclick="|javascript:delectNews(${news.newsId})|" href="#" class="my-btn text-capitalize">删除</a></td>
+                                        </tr>
+                                    </table>
+                                    <p class="text-capitalize" th:unless="${session.newsList}">暂时还没有任何消息</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- //job description -->
+        <!-- Footer -->
+        <footer id="footer" class="py-sm-5 py-4 bg-theme">
+            <div class="container">
+                <div class="footer-top-w3ls">
+                    <h2><a href="index.html" class="navbar-brand">大学生勤工俭学网</a></h2>
+                    <p class="text-white">为了改变目前大学生普遍存在的、不能方便有效地找到适合自己的兼职工作现状，
+                        并且同时满足在校求职者和招聘单位双向的需求，大学生勤工俭学平台收集大量招聘单位的招聘信息，
+                        并且展示了在校求职者的相关求职信息，使用人单位和校园求职者之间的交流更加及时和方便。
+                        该平台的建立旨在显著地提高学生寻找勤工俭学工作的效率，并且大幅度地减轻高校学生管理者的工作负担。</p>
+                </div>
+            </div>
+        </footer>
+        <!-- /Footer -->
+        <div class="cpy-right text-center py-4">
+            <p class="text-dark">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="#">文一舟</a>
+            </p>
+        </div>
+    </div>
+    <!-- js -->
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <!-- script for password match -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+        function delectNews(newsId) {
+            /*if(jobId == null||""==jobId){
+                alert("获取工作数据失败");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/job/delectJob",
+                data:{
+                    "jobId":jobId,
+                },
+                success:function (data) {
+                    alert(data.msg);
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/teacherInfo";
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });*/
+            alert(newsId);
+        }
+        function detailsJob(jobId) {
+            if(jobId == null||"" == jobId){
+                alert("获取工作信息失败");
+                return false;
+            }
+            location.href="http://localhost:8080/detailsJob?jobId="+jobId;
+        }
+    </script>
+    <!-- script for password match -->
+    <!-- //js -->
+    <script src="js/move-top.js"></script>
+    <script src="js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+
+        $("#pubJob").on("click",function () {
+            var userId = $("#userId").val();
+            var jobName = $("#job-name").val();
+            var introduction = $("#job-introduction").val();
+            var jobType = $("#job-type").val();
+            var location = $("#job-location").val();
+            var salary = $("#job-salary").val();
+            var experience = $("#job-experience").val();
+            if(userId == null||"" ==userId){
+                alert("获取用户信息失败");
+                return false;
+            }
+            if(jobName==""||introduction==""||location==""||jobType==""||salary==""||experience==""){
+                alert("入参不能为空");
+                return false;
+            }
+
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/user/pubJob",
+                data: {
+                    "userId":userId,
+                    "jobName":jobName,
+                    "introduction":introduction,
+                    "jobType":jobType,
+                    "location":location,
+                    "salary":salary,
+                    "experience":experience,
+                },
+                success:function (data) {
+                    if(data.status == 200){
+                        alert(data.msg);
+                    }else {
+                        alert(data.msg);
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+            return false;
+        })
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <script src="js/SmoothScroll.min.js"></script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -15,4 +15,8 @@
         (JobId,SendId,AccId,NewsType,NewsInfo,AddTime)
         values (#{jobId},#{sendId},#{accId},#{newsType},#{newsInfo},#{addTime})
     </insert>
+    <select id="selectNews" resultMap="newsResult">
+        select * from News
+        where AccId = #{userId}
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.wenyizhou.job.service.impl;
 
 import com.wenyizhou.job.dao.IStudentDao;
 import com.wenyizhou.job.dao.IUserDao;
+import com.wenyizhou.job.model.News;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.beans.Transient;
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements IStudentService {
@@ -194,6 +196,21 @@ public class StudentServiceImpl implements IStudentService {
         if(response.getStatus() == 200){
             response.setMsg("初始化学生表成功");
         }
+        return response;
+    }
+
+    @Override
+    public Response getMsg(String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        List<News> newsList = studentDao.getMsg(userId);
+        httpServletRequest.getSession().setAttribute("newsList",newsList);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(newsList);
+        response.setMsg("获取消息列表成功");
         return response;
     }
 

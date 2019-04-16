@@ -1,6 +1,8 @@
 package com.wenyizhou.job.controller;
 
+import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.service.IStudentService;
 import com.wenyizhou.job.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class PageController {
     HttpServletRequest httpServletRequest;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IStudentService studentService;
+
     @RequestMapping("/index")
     public String index(){
         return "index";
@@ -111,5 +116,20 @@ public class PageController {
         httpServletRequest.getSession().setAttribute("applicantUserId",userId);
         userService.getUserById(userId);
         return "/applicant_info";
+    }
+    @GetMapping("/newsList")
+    public String newsList(){
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            return "/index";
+        }
+//        userService.getUserById(userId);
+        Response response = studentService.getMsg(user.getUserId());
+        if(response.getStatus()==200){
+            return "/student_newslist";
+        }else {
+            return "/index";
+        }
+
     }
 }

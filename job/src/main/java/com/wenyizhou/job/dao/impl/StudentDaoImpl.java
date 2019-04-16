@@ -2,8 +2,10 @@ package com.wenyizhou.job.dao.impl;
 
 import com.wenyizhou.job.dao.IStudentDao;
 import com.wenyizhou.job.dao.IUserDao;
+import com.wenyizhou.job.mapping.NewsMapping;
 import com.wenyizhou.job.mapping.StudentMapping;
 import com.wenyizhou.job.mapping.UserMapping;
+import com.wenyizhou.job.model.News;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.StudentVO;
@@ -11,12 +13,13 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
 public class StudentDaoImpl implements IStudentDao {
     @Resource
-    UserMapping userMapping;
+    NewsMapping newsMapping;
     @Resource
     StudentMapping studentMapping;
 
@@ -87,6 +90,16 @@ public class StudentDaoImpl implements IStudentDao {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<News> getMsg(String userId) {
+        try {
+            return newsMapping.selectNews(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }

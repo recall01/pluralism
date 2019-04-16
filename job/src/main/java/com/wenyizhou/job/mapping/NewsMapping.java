@@ -12,4 +12,6 @@ import java.util.Map;
 public interface NewsMapping {
 
     void insertNews(News news);
+
+    List<News> selectNews(String userId);
 }

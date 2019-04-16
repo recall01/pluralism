@@ -40,4 +40,10 @@ public class StudentController {
     public Response initStudentInfo(@RequestParam String userId){
         return studentService.initStudentInfo(userId);
     }
+    @PostMapping(value = "/getMsg",consumes = "application/x-www-form-urlencoded")
+    public Response getMsg(@RequestParam String userId){
+        Response response = studentService.getMsg(userId);
+        System.out.println(new Gson().toJson(response));
+        return response;
+    }
 }

@@ -16,4 +16,6 @@ public interface IStudentService {
     Response addFreeTime(String startTime, String endTime, String stuId,String userId);
 
     Response initStudentInfo(String userId);
+
+    Response getMsg(String userId);
 }

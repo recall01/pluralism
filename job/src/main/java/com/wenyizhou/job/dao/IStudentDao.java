@@ -1,8 +1,11 @@
 package com.wenyizhou.job.dao;
 
+import com.wenyizhou.job.model.News;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.StudentVO;
+
+import java.util.List;
 
 public interface IStudentDao {
     boolean addIntroduction(String introduction,String userId);
@@ -16,4 +19,6 @@ public interface IStudentDao {
     boolean addFreeTime(String startTime, String endTime, String stuId);
 
     boolean initStudentInfo(Student stu);
+
+    List<News> getMsg(String userId);
 }
