@@ -33,10 +33,6 @@ public class PageController {
     public String jobSingle(){
         return "student_info";
     }
-    @RequestMapping("/test")
-    public String test(){
-        return "test";
-    }
     @RequestMapping("/register")
     public String register(User user){
         userService.register(user);

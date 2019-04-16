@@ -48,9 +48,6 @@ public class StudentController {
     }
     @PostMapping(value = "/delectMsg",consumes = "application/x-www-form-urlencoded")
     public Response delectMsg(@RequestParam String userId,@RequestParam String newsId){
-        System.out.println(userId+"---"+newsId);
-        Response response = studentService.delectMsg(userId,newsId);
-        System.out.println(new Gson().toJson(response));
-        return response;
+        return studentService.delectMsg(userId,newsId);
     }
 }
