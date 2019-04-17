@@ -24,4 +24,6 @@ public interface IUserDao {
     TeacherVO selectTeacherById(String userId);
 
     boolean pubJob(Job job);
+
+    List<User> getUsersInfo(Integer page);
 }

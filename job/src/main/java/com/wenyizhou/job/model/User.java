@@ -1,5 +1,7 @@
 package com.wenyizhou.job.model;
 
+import com.wenyizhou.job.utils.TimeUtil;
+
 public class User {
     protected String userId;
     protected String userName;
@@ -60,7 +62,7 @@ public class User {
     }
 
     public String getRegisterTime() {
-        return registerTime;
+        return TimeUtil.handTimeForm(registerTime);
     }
 
     public void setRegisterTime(String registerTime) {

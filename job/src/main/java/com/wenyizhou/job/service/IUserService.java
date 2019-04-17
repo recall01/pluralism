@@ -22,4 +22,8 @@ public interface IUserService {
     Response pubJob(Job job);
 
     Response getUserById(String userId);
+
+    Response usersInfo(Integer page);
+
+    Response getUserInfoById(String userId);
 }

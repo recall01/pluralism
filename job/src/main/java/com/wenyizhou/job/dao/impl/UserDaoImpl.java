@@ -110,4 +110,14 @@ public class UserDaoImpl implements IUserDao {
             return false;
         }
     }
+
+    @Override
+    public List<User> getUsersInfo(Integer page) {
+        try {
+            return userMapping.selectUsersInfo(page);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

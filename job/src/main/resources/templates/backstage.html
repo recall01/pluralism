@@ -65,10 +65,10 @@
                     <span>管理后台</span>
                 </div>
                 <div id="personInfor" th:if="${session.user}">
-                    <p id="userName" th:text="${session.user.userName}+'(管理员)'" style="color: white"></p>
+                    <p th:text="${session.user.userName}+'(管理员)'" style="color: white"></p>
                 </div>
                 <div class="meun-title">人员管理</div>
-                <div class="meun-item meun-item-active" href="#sour" aria-controls="sour" role="tab" data-toggle="tab"><img src="images/icon_source.png">资源管理</div>
+                <div class="meun-item meun-item-active" onclick="userInfo()" href="#userInfo" aria-controls="userInfo" role="tab" data-toggle="tab"><img src="images/icon_source.png">用户账号</div>
                 <div class="meun-item" href="#char" aria-controls="char" role="tab" data-toggle="tab"><img src="images/icon_chara_grey.png">权限管理</div>
                 <div class="meun-item" href="#user" aria-controls="user" role="tab" data-toggle="tab"><img src="images/icon_user_grey.png">用户管理</div>
                 <div class="meun-item" href="#chan" aria-controls="chan" role="tab" data-toggle="tab"><img src="images/icon_change_grey.png">修改密码</div>
@@ -86,180 +86,43 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <!-- 资源管理模块 -->
-                    <div role="tabpanel" class="tab-pane active" id="sour">
+                    <div role="tabpanel" class="tab-pane active" id="userInfo">
                         <div class="check-div form-inline">
-                            <button class="btn btn-yellow btn-xs" data-toggle="modal" data-target="#addSource">添加资源</button>
+                            <button class="btn btn-yellow btn-xs" data-toggle="modal" data-target="#addSource">添加用户</button>
                         </div>
                         <div class="data-div">
                             <div class="row tableHeader">
-                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">
-                                    编码
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    名称
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                    链接
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
+                                    学号
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    姓名
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    手机号
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    邮箱
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    注册时间
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                    角色类型
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                     操作
                                 </div>
                             </div>
-                            <div class="tablebody">
-                                <div class="row">
-                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                        1
-                                    </div>
-                                    <div id="topAD" class="col-lg-4 col-md-4 col-sm-4 col-xs-4" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSystem" aria-expanded="true" aria-controls="collapseOne">
-                                        <span id="topA" class="glyphicon  glyphicon-triangle-bottom  "></span> <span>系统管理</span>
-                                    </div>
-                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                        /admin/system/userlist/software/
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                        <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                    </div>
-                                </div>
-
-                                <!--系统管理折叠狂-->
-
-                                <div id="collapseSystem" class="collapse in" aria-expanded="true">
-                                    <div class="row">
-                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 levl2 ">
-                                            2
-                                        </div>
-                                        <div id="topBD" onClick="changeA()" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 levl2" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseAccount" aria-expanded="true" aria-controls="collapseOne">
-                                            <span onClick="changeB()" id="topB" class="glyphicon glyphicon-triangle-bottom"></span> <span>账号管理</span>
-                                        </div>
-                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                            /rlist/
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                        </div>
-                                    </div>
-                                    <!--用户管理折叠狂-->
-                                    <div id="collapseAccount" class="collapse in" aria-expanded="true">
-                                        <div class="row">
-                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 levl3 ">
-                                                1
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  levl3">
-                                                <span class=""> &nbsp;</span><span>资源管理</span>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                                /admin/system/userlist/software/
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1  levl3 ">
-                                                2
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  levl3">
-                                                <span></span><span>权限管理</span>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                                /admin/system/userlist/software/
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 levl2 ">
-                                            3
-                                        </div>
-                                        <div id="topCD" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 levl2" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSchool" aria-expanded="true" aria-controls="collapseOne">
-                                            <span id="topC" onClick="changeC()" class="glyphicon glyphicon-triangle-bottom"></span><span> 地区管理</span>
-                                        </div>
-                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                            /admin/system
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                        </div>
-                                    </div>
-                                    <!--地区管理折叠狂-->
-                                    <div id="collapseSchool" class="collapse in" aria-expanded="true">
-                                        <div class="row">
-                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1  levl3">
-                                                1
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4   levl3">
-                                                <span></span><span>地区管理</span>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                                /admin/system/userlist/software/
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 levl3">
-                                                2
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  levl3">
-                                                <span></span><span>规则管理</span>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                                /admin/system/userlist/software/
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                                <button class="btn btn-success btn-xs " data-toggle="modal " data-target="#changeSource ">修改</button>
-                                                <button class="btn btn-danger btn-xs " data-toggle="modal " data-target="#deleteSource ">删除</button>
-                                            </div>
-                                        </div>
-                                        <div class="row ">
-                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 levl3 ">
-                                                3
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 levl3">
-                                                <span></span><span>人员信息</span>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                                /admin/system/userlist/software/
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1   levl3">
-                                                4
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  levl3">
-                                                <span></span><span>座位管理</span>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                                /admin/system/userlist/software/
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
-                                                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeSource">修改</button>
-                                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteSource">删除</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="tablebody" id="tablebody">
+                                <!--用户信息填充板块-->
                             </div>
                         </div>
                         <!--页码块-->
                         <footer class="footer">
                             <ul class="pagination">
                                 <li>
-                                    <select>
+                                    <select id="currentPage">
                                         <option>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -286,56 +149,40 @@
                                 </li>
                             </ul>
                         </footer>
-                        <!--弹出窗口 添加资源-->
+                        <!--弹出窗口 添加用户-->
                         <div class="modal fade" id="addSource" role="dialog" aria-labelledby="gridSystemModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="gridSystemModalLabel">添加资源</h4>
+                                        <h4 class="modal-title">添加用户</h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form class="form-horizontal">
                                                 <div class="form-group ">
-                                                    <label for="sName" class="col-xs-3 control-label">名称：</label>
+                                                    <label for="userName" class="col-xs-3 control-label">用户名字：</label>
                                                     <div class="col-xs-8 ">
-                                                        <input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+                                                        <input type="" class="form-control input-sm duiqi" id="userName" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sLink" class="col-xs-3 control-label">链接：</label>
+                                                    <label for="userPhone" class="col-xs-3 control-label">用户手机：</label>
                                                     <div class="col-xs-8 ">
-                                                        <input type="" class="form-control input-sm duiqi" id="sLink" placeholder="">
+                                                        <input type="" class="form-control input-sm duiqi" id="userPhone" placeholder="手机号为登录账号">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sOrd" class="col-xs-3 control-label">排序：</label>
+                                                    <label for="userEmail" class="col-xs-3 control-label">用户邮箱：</label>
                                                     <div class="col-xs-8">
-                                                        <input type="" class="form-control input-sm duiqi" id="sOrd" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sKnot" class="col-xs-3 control-label">父节点：</label>
-                                                    <div class="col-xs-8">
-                                                        <input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInput1" class="col-xs-3 control-label">资源类型：</label>
-                                                    <div class="col-xs-8">
-                                                        <label class="control-label" for="anniu">
-                                                            <input type="radio" name="leixing" id="anniu">菜单</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <label class="control-label" for="meun">
-                                                            <input type="radio" name="leixing" id="meun"> 按钮</label>
+                                                        <input type="email" class="form-control input-sm duiqi" id="userEmail" placeholder="">
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-xs btn-xs btn-white" data-dismiss="modal">取 消</button>
-                                        <button type="button" class="btn btn-xs btn-xs btn-green">保 存</button>
+                                        <button type="button" class="btn btn-xs btn-primary" onclick="addUser()">添 加</button>
                                     </div>
                                 </div>
                                 <!-- /.modal-content -->
@@ -344,56 +191,46 @@
                         </div>
                         <!-- /.modal -->
 
-                        <!--修改资源弹出窗口-->
+                        <!--修改用户弹出窗口-->
                         <div class="modal fade" id="changeSource" role="dialog" aria-labelledby="gridSystemModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="gridSystemModalLabel">修改资源</h4>
+                                        <h4 class="modal-title">修改用户信息</h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form class="form-horizontal">
                                                 <div class="form-group ">
-                                                    <label for="sName" class="col-xs-3 control-label">名称：</label>
+                                                    <label for="userId" class="col-xs-3 control-label">编号：</label>
                                                     <div class="col-xs-8 ">
-                                                        <input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+                                                        <input disabled type="text" class="form-control input-sm duiqi" id="userId" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sLink" class="col-xs-3 control-label">链接：</label>
+                                                    <label for="c_userName" class="col-xs-3 control-label">姓名：</label>
                                                     <div class="col-xs-8 ">
-                                                        <input type="" class="form-control input-sm duiqi" id="sLink" placeholder="">
+                                                        <input type="text" class="form-control input-sm duiqi" id="c_userName" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sOrd" class="col-xs-3 control-label">排序：</label>
+                                                    <label for="c_userPhone" class="col-xs-3 control-label">手机号：</label>
                                                     <div class="col-xs-8">
-                                                        <input type="" class="form-control input-sm duiqi" id="sOrd" placeholder="">
+                                                        <input type="" class="form-control input-sm duiqi" id="c_userPhone" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sKnot" class="col-xs-3 control-label">父节点：</label>
+                                                    <label for="c_userEmail" class="col-xs-3 control-label">邮箱：</label>
                                                     <div class="col-xs-8">
-                                                        <input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInput1" class="col-xs-3 control-label">资源类型：</label>
-                                                    <div class="col-xs-8">
-                                                        <label class="control-label" for="anniu">
-                                                            <input type="radio" name="leixing" id="anniu">菜单</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <label class="control-label" for="meun">
-                                                            <input type="radio" name="leixing" id="meun"> 按钮</label>
+                                                        <input type="" class="form-control input-sm duiqi" id="c_userEmail" placeholder="">
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-                                        <button type="button" class="btn btn-xs btn-green">保 存</button>
+                                        <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">修 改</button>
                                     </div>
                                 </div>
                                 <!-- /.modal-content -->
@@ -1916,9 +1753,112 @@
 </script>
 -->
 <script src="sjs/jquery.nouislider.js"></script>
-
 <!-- this page specific inline scripts -->
 <script>
+    function addUser() {
+        var userName = $("#userName").val();
+        var userPhone = $("#userPhone").val();
+        var userEmail = $("#userEmail").val();
+        if(userName ==null||userName.length<2){
+            alert("用户名不符合");
+            return false;
+        }
+        if(userPhone ==null||userPhone.length!=11){
+            alert("手机号不符合");
+            return false;
+        }
+        if(userEmail ==null||userEmail.length<6){
+            alert("邮箱不符合");
+            return false;
+        }
+        $.ajax({
+            type:"POST",
+            contentType:"application/x-www-form-urlencoded",
+            url:"http://localhost:8080/user/register",
+            data:{
+                "userName":userName,
+                "userPhone":userPhone,
+                "userEmail":userEmail,
+            },
+            success:function (data) {
+                if(data.status == 200){
+                    alert("注册成功");
+                    location.href="http://localhost:8080/backstage";
+                }else {
+                    alert("注册失败"+data.msg);
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
+    }
+    function userInfo() {
+        //获取当前页码
+        var currentPage = $("#currentPage option:selected").val();
+        if(currentPage == null){
+            currentPage =1;
+        }
+        getUsersInfo(currentPage);
+    }
+    function getUsersInfo(page) {
+        //ajax请求后台数据
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/user/usersInfo?page="+page,
+            success:function (data) {
+                if(data.status == 200){
+                    $("#tablebody").children().remove();
+                    var users = data.data;
+                    var dom ="";
+                    for (var i=0;i<users.length;i++){
+                        var user = users[i];
+                        dom = dom+"<div class='row'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userId+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userName+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userPhone+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userEmail+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.registerTime+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>"+user.roleType+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><button class='btn btn-success btn-xs' onclick='changeUser("+user.userId+")' data-toggle='modal' data-target='#changeSource'>修改</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteSource'>删除</button></div></div>";
+                    }
+                    console.log(dom);
+                    $("#tablebody").append(dom);
+                }else {
+                    alert("获取工作类型失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
+    }
+    function changeUser(userId) {
+        if(userId == null||""==userId){
+            alert("获取用户信息失败");
+            return false;
+        }
+        //ajax请求获取相关信息
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/user/getUserInfoById?userId="+userId,
+            success:function (data) {
+                if(data.status == 200){
+                    //填充数据
+                    var user = data.data;
+                    /*$("#tablebody").children().remove();
+                    var users = data.data;
+                    var dom ="";
+                    for (var i=0;i<users.length;i++){
+                        var user = users[i];
+                        dom = dom+"<div class='row'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userId+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userName+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userPhone+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userEmail+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.registerTime+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>"+user.roleType+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><button class='btn btn-success btn-xs' onclick='changeUser("+user.userId+")' data-toggle='modal' data-target='#changeSource'>修改</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteSource'>删除</button></div></div>";
+                    }
+                    console.log(dom);
+                    $("#tablebody").append(dom);*/
+                    document.getElementById("userId").value = user.userId;
+                }else {
+                    alert("获取工作类型失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
+
+    }
                                                 //min/max slider
                                                 function huadong(my, unit, def, max) {
                                                     $(my).noUiSlider({
@@ -1948,6 +1888,17 @@
                                                 huadong('.slider-minmax4', "次", "2", 10);
                                                 huadong('.slider-minmax5', "天", "3", 7);
                                                 huadong('.slider-minmax6', "天", "8", 10);
+</script>
+<script>
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 1000);
+        });
+    });
+    getUsersInfo(1);
 </script>
 </body>
 

@@ -44,6 +44,11 @@
         select * from User
         where UserId = #{userId}
     </select>
+    <select id="selectUsersInfo" resultMap="userResult">
+        select UserId,UserName,UserEmail,UserPhone,RoleType,RegisterTime from User
+        order by RegisterTime desc
+        LIMIT #{page},10
+    </select>
     <update id="updateInfo">
         update User
         <trim prefix="set" suffixOverrides=",">

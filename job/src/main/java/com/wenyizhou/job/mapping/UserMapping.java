@@ -4,6 +4,7 @@ import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.TeacherVO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -18,4 +19,6 @@ public interface UserMapping {
     boolean updateInfo(User user);
 
     TeacherVO selectTeacherById(String userId);
+
+    List<User> selectUsersInfo(Integer page);
 }

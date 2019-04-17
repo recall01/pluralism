@@ -64,4 +64,12 @@ public class UserController {
     public Response getUserById(String userId){
         return userService.getUserById(userId);
     }
+    @GetMapping(value = "/getUserInfoById")
+    public Response getUserInfoById(@RequestParam String userId){
+        return userService.getUserInfoById(userId);
+    }
+    @GetMapping(value = "/usersInfo")
+    public Response usersInfo(@RequestParam Integer page){
+        return userService.usersInfo(page);
+    }
 }

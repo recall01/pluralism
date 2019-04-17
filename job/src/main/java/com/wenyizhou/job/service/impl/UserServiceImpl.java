@@ -62,13 +62,16 @@ public class UserServiceImpl implements IUserService {
             response.setError(ErrorCode.PARAMETER_ERROR);
             return response;
         }
+        //封装id，registertime
+        user.setUserId(IDUtil.getUserId());
+        user.setRegisterTime(TimeUtil.getTime());
+        if(StringUtils.isEmpty(user.getUserPassword())){
+            user.setUserPassword("1234567a");
+        }
         if(StringUtils.isEmpty(user.getUserName())||StringUtils.isEmpty(user.getUserPhone())||StringUtils.isEmpty(user.getUserEmail())||StringUtils.isEmpty(user.getUserPassword())){
             response.setError(ErrorCode.PARAMETER_ERROR.getErrCode(),"入参字段不能为空");
             return response;
         }
-        //封装id，registertime
-        user.setUserId(IDUtil.getUserId());
-        user.setRegisterTime(TimeUtil.getTime());
         try {
             String result = userDao.register(user);
             if("注册成功".equals(result)){
@@ -236,7 +239,42 @@ public class UserServiceImpl implements IUserService {
         //讲applicantUser对象存入session中
         httpServletRequest.getSession().setAttribute("applicantUser",applicantUser);
         response = this.getStudentInfo(userId);
-        System.out.println(new Gson().toJson(response));
+        return response;
+    }
+
+    @Override
+    public Response usersInfo(Integer page) {
+        Response response = new Response();
+        if(page == 0){
+            page = 1;
+        }
+        page --;
+        page = page * 10;
+        List<User> users = userDao.getUsersInfo(page);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(users);
+        response.setMsg("获取用户信息成功");
+        return response;
+    }
+
+    @Override
+    public Response getUserInfoById(String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        User user = userDao.selectUserById(userId);
+        if(user == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        System.out.println(new Gson().toJson(user));
+        //处理密码数据
+        user.setUserPassword(null);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(user);
+        response.setMsg("获取用户信息成功");
         return response;
     }
 
