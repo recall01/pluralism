@@ -126,6 +126,18 @@ public class PageController {
         }else {
             return "/index";
         }
+    }
+    @GetMapping("/backstage")
+    public String backstage(){
+        User user =(User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            return "/index";
+        }
+        if(user.getRoleType() == 3){
+            return "backstage";
+        }else {
+            return "/index";
+        }
 
     }
 }

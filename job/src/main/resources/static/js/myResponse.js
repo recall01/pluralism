@@ -70,6 +70,9 @@ $("#userInfo").on("click",function () {
         alert("获取用户信息失败,请重新登录");
         return false;
     }
+    if(roleType == 3){
+        return false;
+    }
     $.ajax({
         type:"POST",
         contentType:"application/x-www-form-urlencoded",
@@ -99,6 +102,12 @@ $("#userInfo").on("click",function () {
 //退出系统按钮
 $("#exit").on("click",function () {
     location.href="http://localhost:8080/exit";
+    return false;
+});
+//退出系统按钮
+$("#backstage").on("click",function () {
+    location.href="http://localhost:8080/backstage";
+    return false;
 });
 //修改获取工作列表视图
 function changeJobList(data) {

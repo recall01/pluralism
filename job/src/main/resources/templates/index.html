@@ -15,14 +15,14 @@
         }
     </script>
     <!-- Custom Theme files -->
-    <!--<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">-->
-    <!--<link href="css/style.css" type="text/css" rel="stylesheet" media="all">-->
+    <!--<link href="scss/bootstrap.min.scss" type="text/scss" rel="stylesheet" media="all">-->
+    <!--<link href="scss/style.scss" type="text/scss" rel="stylesheet" media="all">-->
     <link href="" th:href="@{~/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="all">
     <link href="" th:href="@{~/css/style.css}" type="text/css" rel="stylesheet" media="all">
     <!-- font-awesome icons -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <!-- //Custom Theme files -->
-    <!-- online-fonts -->
+    <!-- online-sfonts -->
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i"
         rel="stylesheet">
 </head>
@@ -72,7 +72,10 @@
                         <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
                         <p hidden="hidden" th:if="${session.user}" th:text="${session.user.roleType}" id="roleType"></p>
                         <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
-                                data-toggle="modal" aria-pressed="false" data-target="#userInfoModal" th:if="${session.user}" id="exit">退出系统
+                                data-toggle="modal" th:if="${session.user}" id="exit">退出系统
+                        </button>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" th:if="${session.user} and ${session.user.roleType} eq 3" id="backstage">后台管理
                         </button>
                     </div>
                 </nav>
@@ -301,7 +304,7 @@
         </div>
     </div>
     <!-- //verify modal -->
-    <!-- js -->
+    <!-- sjs -->
     <script src="js/jquery-2.2.3.min.js"></script>
     <!-- Slider-JavaScript -->
     <script src="js/responsiveslides.min.js"></script>
@@ -335,7 +338,7 @@
         }
     </script>
     <!-- script for password match -->
-    <!-- //js -->
+    <!-- //sjs -->
     <script src="js/move-top.js"></script>
     <script src="js/easing.js"></script>
     <script>
