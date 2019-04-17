@@ -42,7 +42,15 @@ public class UserController {
     public Response changeInfo(User user){
         return userService.changeInfo(user);
     }
+    @PostMapping(value = "/changeUserInfo",consumes = "application/x-www-form-urlencoded")
+    public Response changeUserInfo(User user){
+        return userService.changeUserInfo(user);
+    }
 
+    @PostMapping(value = "/delectUser",consumes = "application/x-www-form-urlencoded")
+    public Response delectUser(@RequestParam String userId){
+        return userService.delectUser(userId);
+    }
     @GetMapping(value = "/exit",consumes = "application/x-www-form-urlencoded")
     public Response exit(){
         return userService.exit();

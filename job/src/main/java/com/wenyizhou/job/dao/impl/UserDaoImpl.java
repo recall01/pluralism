@@ -120,4 +120,15 @@ public class UserDaoImpl implements IUserDao {
             return null;
         }
     }
+
+    @Override
+    public boolean delectUser(String userId) {
+        try {
+            userMapping.delectUser(userId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

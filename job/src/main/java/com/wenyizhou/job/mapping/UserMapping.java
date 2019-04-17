@@ -21,4 +21,6 @@ public interface UserMapping {
     TeacherVO selectTeacherById(String userId);
 
     List<User> selectUsersInfo(Integer page);
+
+    void delectUser(String userId);
 }

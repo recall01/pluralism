@@ -26,4 +26,8 @@ public interface IUserService {
     Response usersInfo(Integer page);
 
     Response getUserInfoById(String userId);
+
+    Response changeUserInfo(User user);
+
+    Response delectUser(String userId);
 }

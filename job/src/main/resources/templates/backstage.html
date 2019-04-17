@@ -223,14 +223,20 @@
                                                 <div class="form-group">
                                                     <label for="c_userEmail" class="col-xs-3 control-label">邮箱：</label>
                                                     <div class="col-xs-8">
-                                                        <input type="" class="form-control input-sm duiqi" id="c_userEmail" placeholder="">
+                                                        <input type="email" class="form-control input-sm duiqi" id="c_userEmail" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="c_registerTime" class="col-xs-3 control-label">注册时间：</label>
+                                                    <div class="col-xs-8">
+                                                        <input disabled type="" class="form-control input-sm duiqi" id="c_registerTime" placeholder="">
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">修 改</button>
+                                        <button type="button" class="btn btn-xs btn-white" onclick="changeInfo()" data-dismiss="modal">修 改</button>
                                     </div>
                                 </div>
                                 <!-- /.modal-content -->
@@ -244,16 +250,17 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+                                        <h4 class="modal-title">提示</h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             确定要删除该资源？删除后不可恢复！
                                         </div>
+                                        <p hidden id="d_userId"></p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-                                        <button type="button" class="btn btn-xs btn-danger">保 存</button>
+                                        <button type="button" class="btn btn-xs btn-danger" onclick="deleteSource()">确 定</button>
                                     </div>
                                 </div>
                                 <!-- /.modal-content -->
@@ -1813,12 +1820,41 @@
                     var dom ="";
                     for (var i=0;i<users.length;i++){
                         var user = users[i];
-                        dom = dom+"<div class='row'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userId+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userName+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userPhone+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userEmail+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.registerTime+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>"+user.roleType+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><button class='btn btn-success btn-xs' onclick='changeUser("+user.userId+")' data-toggle='modal' data-target='#changeSource'>修改</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteSource'>删除</button></div></div>";
+                        dom = dom+"<div class='row'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userId+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userName+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userPhone+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.userEmail+"</div><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>"+user.registerTime+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>"+user.roleType+"</div><div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'><button class='btn btn-success btn-xs' onclick='changeUser("+user.userId+")' data-toggle='modal' data-target='#changeSource'>修改</button><button class='btn btn-danger btn-xs' data-toggle='modal' onclick='delectUser("+user.userId+")' data-target='#deleteSource'>删除</button></div></div>";
                     }
                     console.log(dom);
                     $("#tablebody").append(dom);
                 }else {
                     alert("获取工作类型失败");
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
+    }
+    function delectUser(userId) {
+        document.getElementById("d_userId").innerText = userId;
+    }
+    function deleteSource() {
+        var userId = $("#d_userId").html();
+        if(userId==null||""==userId){
+            alert("获取数据失败");
+            return false;
+        }
+        $.ajax({
+            type:"POST",
+            contentType:"application/x-www-form-urlencoded",
+            url:"http://localhost:8080/user/delectUser",
+            data:{
+                "userId":userId,
+            },
+            success:function (data) {
+                if(data.status == 200){
+                    alert("删除成功");
+                    location.href="http://localhost:8080/backstage";
+                }else {
+                    alert(data.msg);
                 }
             },
             error:function (data) {
@@ -1849,6 +1885,10 @@
                     console.log(dom);
                     $("#tablebody").append(dom);*/
                     document.getElementById("userId").value = user.userId;
+                    document.getElementById("c_userName").value = user.userName;
+                    document.getElementById("c_userPhone").value = user.userPhone;
+                    document.getElementById("c_userEmail").value = user.userEmail;
+                    document.getElementById("c_registerTime").value = user.registerTime;
                 }else {
                     alert("获取工作类型失败");
                 }
@@ -1857,7 +1897,37 @@
                 alert("请求失败");
             }
         });
-
+    }
+    function changeInfo() {
+        var userId = $("#userId").val();
+        var userName = $("#c_userName").val();
+        var userPhone = $("#c_userPhone").val();
+        var userEmail = $("#c_userEmail").val();
+        if(userId==null||""==userId||userName==null||""==userName||userPhone==null||""==userPhone||userEmail==null||""==userEmail){
+            alert("数据不能为空");
+            return false;
+        }
+        $.ajax({
+            type:"POST",
+            contentType:"application/x-www-form-urlencoded",
+            url:"http://localhost:8080/user/changeUserInfo",
+            data:{
+                "userId":userId,
+                "userName":userName,
+                "userPhone":userPhone,
+                "userEmail":userEmail,
+            },
+            success:function (data) {
+                if(data.status == 200){
+                    location.href="http://localhost:8080/backstage";
+                }else {
+                    alert(data.msg);
+                }
+            },
+            error:function (data) {
+                alert("请求失败");
+            }
+        });
     }
                                                 //min/max slider
                                                 function huadong(my, unit, def, max) {

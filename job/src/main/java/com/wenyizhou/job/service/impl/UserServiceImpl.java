@@ -113,7 +113,9 @@ public class UserServiceImpl implements IUserService {
         }*/
         switch (user.getRoleType()){
             case 0: //未验证
-                response.setError(ErrorCode.DATA_NOT_EXIST);
+                //response.setError(ErrorCode.DATA_NOT_EXIST);
+                response.setStatus(RESPONSE_SUCCESS);
+                response.setMsg("该用户还未验证");
                 httpServletRequest.getSession().setAttribute("verify","还未验证");
                 return response;
             case 1: //学生
@@ -146,9 +148,8 @@ public class UserServiceImpl implements IUserService {
         }
         //查询数据
         response = this.userInfo(user.getUserId());
-        if(response.getData() == null){
-            response.setError(ErrorCode.DATA_NOT_EXIST);
-        }else {
+        if(response.getStatus() == 200){
+            response.setStatus(RESPONSE_SUCCESS);
             response.setMsg("修改用户基本成功");
         }
         return response;
@@ -275,6 +276,49 @@ public class UserServiceImpl implements IUserService {
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(user);
         response.setMsg("获取用户信息成功");
+        return response;
+    }
+
+    @Override
+    public Response changeUserInfo(User user) {
+        Response response = new Response();
+        if(user ==  null){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //修改信息
+        if(!userDao.changeInfo(user)){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("修改成功");
+        return response;
+    }
+
+    @Override
+    public Response delectUser(String userId) {
+        Response response = new Response();
+        //先判断user.roleType
+        if(StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        User user = userDao.selectUserById(userId);
+        if(user == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        if(user.getRoleType() !=2){
+            //只删除user表中的信息
+            if(!userDao.delectUser(userId)){
+                response.setError(ErrorCode.SQL_OPERATING_FAIL);
+                return response;
+            }
+        }
+        //删除关联表中的消息
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("删除成功");
         return response;
     }
 

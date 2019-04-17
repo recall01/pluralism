@@ -81,4 +81,8 @@
         ON User.UserId = Job.UserId
         WHERE User.UserId = #{userId}
     </select>
+    <delete id="delectUser">
+        delete from User
+        where UserId =#{userId}
+    </delete>
 </mapper>

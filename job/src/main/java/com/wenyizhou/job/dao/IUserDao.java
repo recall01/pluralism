@@ -26,4 +26,6 @@ public interface IUserDao {
     boolean pubJob(Job job);
 
     List<User> getUsersInfo(Integer page);
+
+    boolean delectUser(String userId);
 }
