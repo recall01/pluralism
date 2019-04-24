@@ -7,13 +7,13 @@ import com.wenyizhou.job.model.User;
 import java.util.List;
 
 public class AppJobVO extends AppJob {
-    private List<User> users;
+    private User user;
 
-    public List<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

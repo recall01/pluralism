@@ -218,7 +218,7 @@ public class JobServiceImpl implements IJobService {
             }
         }
         //根据jobId查询申请人数
-        AppJobVO appJobs = jobDao.getApplicantInfo(jobId);
+        List<AppJobVO> appJobs = jobDao.getApplicantInfo(jobId);
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(appJobs);
         response.setMsg("获取数据成功");

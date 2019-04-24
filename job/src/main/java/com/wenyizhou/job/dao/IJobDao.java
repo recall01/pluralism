@@ -24,7 +24,7 @@ public interface IJobDao {
 
     JobVO getJobById(String jobId);
 
-    AppJobVO getApplicantInfo(String jobId);
+    List<AppJobVO> getApplicantInfo(String jobId);
 
     AppJob getAppJobById(String userId, String jobId);
 

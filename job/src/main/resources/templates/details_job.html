@@ -241,15 +241,11 @@
             if(appJobs == null){
                 return false;
             }
-            var users = appJobs.users;
-            if(users.length <1){
-                return false;
-            }
             var dom = "<div class='row'><div class='col-lg-12  mx-auto'><div class='e-left pt-lg-5'><div><div class='job-desc-w3ls'><table class='table table-hover'><thead><tr><th>申请人</th><th>电话</th><th>邮箱</th><th>申请时间</th><th>操作</th></tr></thead>";
+            for (var i=0;i<appJobs.length;i++){
+                var user = appJobs[i].user;
+                dom = dom+"<tr><td onclick='applicantInfo("+user.userId+")'>"+user.userName+"</td><td>"+user.userPhone+"</td><td>"+user.userEmail+"</td><td>"+appJobs[i].appTime+"</td><td><a href='#' onclick='agreeJob("+appJobs.jobId+","+user.userId+")' class='my-btn text-capitalize'>同意</a>|<a href='#' onclick='rejectJob("+appJobs.jobId+","+user.userId+")' class='my-btn text-capitalize'>拒绝</a></td></tr>";
 
-            for(var j=0;j<users.length;j++){
-                var user = users[j];
-                dom = dom+"<tr><td onclick='applicantInfo("+user.userId+")'>"+user.userName+"</td><td>"+user.userPhone+"</td><td>"+user.userEmail+"</td><td>"+appJobs.appTime+"</td><td><a href='#' onclick='agreeJob("+appJobs.jobId+","+user.userId+")' class='my-btn text-capitalize'>同意</a>|<a href='#' onclick='rejectJob("+appJobs.jobId+","+user.userId+")' class='my-btn text-capitalize'>拒绝</a></td></tr>";
             }
             dom = dom +"</table></div></div></div></div></div>";
             console.log(dom);

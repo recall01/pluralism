@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Mapper
 public interface AppJobMapping {
-    AppJobVO selectApplicant(String jobId);
+    List<AppJobVO> selectApplicant(String jobId);
 
     AppJob selectAppJobById(Map m);
 

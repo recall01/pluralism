@@ -127,7 +127,7 @@ public class JobDaoImpl implements IJobDao {
     }
 
     @Override
-    public AppJobVO getApplicantInfo(String jobId) {
+    public List<AppJobVO> getApplicantInfo(String jobId) {
         return appJobMapping.selectApplicant(jobId);
     }
 

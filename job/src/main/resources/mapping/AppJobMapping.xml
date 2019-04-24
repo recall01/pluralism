@@ -12,7 +12,7 @@
         <result property="jobId" column="JobId"/>
         <result property="userId" column="UserId"/>
         <result property="appTime" column="AppTime"/>
-        <collection property="users" ofType="User">
+        <association property="user" javaType="com.wenyizhou.job.model.User">
             <result property="userId" column="UserId"/>
             <result property="userName" column="UserName"/>
             <result property="userEmail" column="UserEmail"/>
@@ -20,7 +20,7 @@
             <result property="userPassword" column="UserPassword"/>
             <result property="roleType" column="RoleType"/>
             <result property="registerTime" column="RegisterTime"/>
-        </collection>
+        </association>
     </resultMap>
     <select id="selectApplicant" resultMap="appJobVOResult">
         SELECT * FROM AppJob
