@@ -1,5 +1,6 @@
 package com.wenyizhou.job.service.impl;
 
+import com.google.gson.Gson;
 import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.AppJobVO;
@@ -311,6 +312,7 @@ public class JobServiceImpl implements IJobService {
     @Override
     @Transient
     public Response agreeJob(News news) {
+        System.out.println(new Gson().toJson(news));
         return this.handJob(news,1);
     }
 
