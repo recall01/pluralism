@@ -3,6 +3,7 @@ package com.wenyizhou.job.service.impl;
 import com.google.gson.Gson;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.model.*;
+import com.wenyizhou.job.model.VO.ApplyVO;
 import com.wenyizhou.job.model.VO.StudentVO;
 import com.wenyizhou.job.model.VO.TeacherVO;
 import com.wenyizhou.job.service.IUserService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.beans.Transient;
 import java.util.List;
 
 @Service
@@ -246,7 +248,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Response usersInfo(Integer page) {
         Response response = new Response();
-        if(page == 0){
+        if(page==null||page == 0){
             page = 1;
         }
         page --;
@@ -319,6 +321,86 @@ public class UserServiceImpl implements IUserService {
         //删除关联表中的消息
         response.setStatus(RESPONSE_SUCCESS);
         response.setMsg("删除成功");
+        return response;
+    }
+
+    @Override
+    public Response getApplies(Integer page) {
+        Response response = new Response();
+        if(page == null||page == 0){
+            page = 1;
+        }
+        page -- ;
+        List<ApplyVO> applies = userDao.getApplies(page);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(applies);
+        response.setMsg("获取消息列表成功");
+        return response;
+    }
+
+    @Override
+    @Transient
+    public Response agreeApply(String appId, String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(appId)||StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //删除apply表对应的数据
+        if(!userDao.delectApply(appId)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //修改user表中用户的信息
+        User user = userDao.selectUserById(userId);
+        if(user == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        user.setRoleType(2);
+        if(!userDao.changeInfo(user)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("执行成功");
+        return response;
+    }
+
+    @Override
+    public Response deleteApply(String appId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(appId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //删除apply表对应的数据
+        if(!userDao.delectApply(appId)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("删除消息成功");
+        return response;
+    }
+
+    @Override
+    public Response getUserPage() {
+        Response response = new Response();
+        int count = userDao.getUserPage();
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(count);
+        response.setMsg("获取数据成功");
+        return response;
+    }
+
+    @Override
+    public Response getApplyPage() {
+        Response response = new Response();
+        int count = userDao.getApplyPage();
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(count);
+        response.setMsg("获取数据成功");
         return response;
     }
 

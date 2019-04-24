@@ -53,7 +53,7 @@
         update User
         <trim prefix="set" suffixOverrides=",">
             <if test="userName!=null">UserName=#{userName},</if>
-            <if test="userEmail!=null">UserEmail=#{userEmail}</if>
+            <if test="userEmail!=null">UserEmail=#{userEmail},</if>
             <if test="roleType!=0">RoleType=#{roleType}</if>
         </trim>
         where UserId=#{userId}
@@ -85,4 +85,7 @@
         delete from User
         where UserId =#{userId}
     </delete>
+    <select id="selectUserTotal" resultType="int">
+        select count(*) from User
+    </select>
 </mapper>

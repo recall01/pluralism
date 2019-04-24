@@ -15,6 +15,15 @@
         <result property="salary" column="Salary"/>
         <result property="jobType" column="JobType"/>
         <result property="userId" column="UserId"/>
+        <association property="user" javaType="com.wenyizhou.job.model.User">
+            <result property="userId" column="UserId"/>
+            <result property="userName" column="UserName"/>
+            <result property="userEmail" column="UserEmail"/>
+            <result property="userPhone" column="UserPhone"/>
+            <result property="userPassword" column="UserPassword"/>
+            <result property="roleType" column="RoleType"/>
+            <result property="registerTime" column="RegisterTime"/>
+        </association>
         <collection property="freeTimes" ofType="FreeTime">
             <result property="freId" column="FreId"/>
             <result property="startTime" column="StartTime"/>
@@ -31,6 +40,12 @@
         LEFT JOIN FreeTime
         ON Student.StuId = FreeTime.StuId
         WHERE Student.UserId = #{userId}
+    </select>
+    <select id="selectStudents" resultMap="studentVOResult">
+        SELECT Student.StuId,Student.Introduction,Student.Specialty,Student.Salary,Student.JobType,Student.UserId,User.UserName FROM Student
+        LEFT JOIN User
+        on Student.UserId = User.UserId
+        limit #{page},10
     </select>
 
     <update id="updateIntroduction">
@@ -65,4 +80,17 @@
         values (#{introduction},#{specialty},#{salary},#{jobType},#{userId})
     </insert>
 
+    <update id="updateStudentInfo">
+        update Student
+        <trim prefix="set" suffixOverrides=",">
+            <if test="introduction!=null">Introduction=#{introduction},</if>
+            <if test="salary!=null">Salary=#{salary},</if>
+            <if test="specialty!=null">Specialty=#{specialty},</if>
+            <if test="jobType!=null">JobType=#{jobType}</if>
+        </trim>
+        where UserId=#{userId}
+    </update>
+    <select id="selectStudentPage" resultType="int">
+        select count(*) from Student
+    </select>
 </mapper>

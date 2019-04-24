@@ -23,11 +23,16 @@ public class JobDaoImpl implements IJobDao {
     AppJobMapping appJobMapping;
     @Resource
     JobMapping jobMapping;
+    @Resource
+    JobTypeMapping jobTypeMapping;
 
     @Override
-    public List<JobVO> jobList(Integer page) {
+    public List<JobVO> jobList(Integer page,Integer count) {
         page = page * 6;
-        return jobMapping.selectJobList(page);
+        Map m = new HashMap();
+        m.put("page",page);
+        m.put("count",count);
+        return jobMapping.selectJobList(m);
     }
 
     @Override
@@ -93,6 +98,17 @@ public class JobDaoImpl implements IJobDao {
             m.put("jobId",jobId);
             m.put("userId",userId);
             jobMapping.delectJob(m);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delectJob(String jobId) {
+        try {
+            jobMapping.delectJobById(jobId);
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -182,6 +198,37 @@ public class JobDaoImpl implements IJobDao {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public boolean addJobType(String jobType) {
+        try {
+            jobTypeMapping.insertJobType(jobType);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Job getJobInfoById(String jobId) {
+        try {
+            return jobMapping.selectJobInfoById(jobId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public int getJobPage() {
+        try {
+            return jobMapping.selectJobPage();
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
         }
     }
 }

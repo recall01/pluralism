@@ -37,7 +37,7 @@
         LEFT JOIN User
         ON Job.UserId = User.UserId
         order by Job.PubTime desc
-        LIMIT #{page},6
+        LIMIT #{page},#{count}
     </select>
     <!--xml文件不支持"<"和"&"需要转义-->
     <select id="selectjobListByTime" resultMap="jobVOResult">
@@ -86,11 +86,20 @@
         delete from Job
         where JobId=#{jobId} and UserId=#{userId}
     </delete>
+    <delete id="delectJobById">
+        delete from Job
+        where JobId=#{jobId}
+    </delete>
     <select id="selectJobById" resultMap="jobVOResult">
         SELECT * FROM Job
         LEFT JOIN User
         ON Job.UserId = User.UserId
         WHERE Job.JobId =#{jobName}
+    </select>
+
+    <select id="selectJobInfoById" resultMap="jobResult">
+        SELECT * FROM Job
+        WHERE JobId =#{jobName}
     </select>
 
     <update id="updateJob">
@@ -100,8 +109,12 @@
             <if test="introduction!=null">Introduction=#{introduction},</if>
             <if test="location!=null">Location=#{location},</if>
             <if test="salary!=null">Salary=#{salary},</if>
+            <if test="stringJob!=null">JobType=#{stringJob},</if>
             <if test="experience!=null">Experience=#{experience}</if>
         </trim>
         where JobId=#{jobId}
     </update>
+    <select id="selectJobPage" resultType="int">
+        select count(*) from Job
+    </select>
 </mapper>

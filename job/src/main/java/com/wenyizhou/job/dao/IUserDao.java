@@ -1,6 +1,7 @@
 package com.wenyizhou.job.dao;
 
 import com.wenyizhou.job.model.*;
+import com.wenyizhou.job.model.VO.ApplyVO;
 import com.wenyizhou.job.model.VO.StudentVO;
 import com.wenyizhou.job.model.VO.TeacherVO;
 
@@ -28,4 +29,12 @@ public interface IUserDao {
     List<User> getUsersInfo(Integer page);
 
     boolean delectUser(String userId);
+
+    List<ApplyVO> getApplies(Integer page);
+
+    boolean delectApply(String appId);
+
+    int getUserPage();
+
+    int getApplyPage();
 }

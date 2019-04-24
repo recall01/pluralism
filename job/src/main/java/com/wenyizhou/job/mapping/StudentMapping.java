@@ -5,6 +5,7 @@ import com.wenyizhou.job.model.User;
 import com.wenyizhou.job.model.VO.StudentVO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -23,4 +24,12 @@ public interface StudentMapping {
     void addFreeTime(Map m);
 
     void insertStudentInfo(Student stu);
+
+    List<StudentVO> selectStudents(Integer page);
+
+    Student getUserInfoById(String stuId);
+
+    void updateStudentInfo(Student student);
+
+    int selectStudentPage();
 }

@@ -11,4 +11,6 @@ import java.util.Map;
 public interface JobTypeMapping {
 
     List<JobType> selectJobType();
+
+    void insertJobType(String jobType);
 }

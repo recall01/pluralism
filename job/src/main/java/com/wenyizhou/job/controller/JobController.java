@@ -20,8 +20,8 @@ public class JobController {
         return jobService.findJob();
     }
     @GetMapping("/jobList")
-    public Response jobList(Integer page){
-        return jobService.jobList(page);
+    public Response jobList(Integer page,Integer count){
+        return jobService.jobList(page,count);
     }
     @GetMapping("/jobListByTime")
     public Response jobListByTime(Integer time){
@@ -30,6 +30,10 @@ public class JobController {
     @GetMapping("/getJobById")
     public Response getJobById(String jobId){
         return jobService.getJobById(jobId);
+    }
+    @GetMapping("/getJobInfoById")
+    public Response getJobInfoById(@RequestParam String jobId){
+        return jobService.getJobInfoById(jobId);
     }
     @GetMapping("/jobListByJobType")
     public Response jobListByJobType(String type){
@@ -43,6 +47,10 @@ public class JobController {
     @PostMapping(value = "/delectJob",consumes = "application/x-www-form-urlencoded")
     public Response delectJob(@RequestParam String jobId){
         return jobService.delectJob(jobId);
+    }
+    @PostMapping(value = "/delectJobById",consumes = "application/x-www-form-urlencoded")
+    public Response delectJobById(@RequestParam String jobId){
+        return jobService.delectJobById(jobId);
     }
 
     @GetMapping("/getAppJobInfo")
@@ -58,6 +66,10 @@ public class JobController {
     public Response changeJob(Job job){
         return jobService.changeJob(job);
     }
+    @PostMapping(value = "/changeJobInfo",consumes = "application/x-www-form-urlencoded")
+    public Response changeJobInfo(Job job){
+        return jobService.changeJobInfo(job);
+    }
 
     @PostMapping(value = "/agreeJob",consumes = "application/x-www-form-urlencoded")
     public Response agreeJob(News news){
@@ -66,5 +78,19 @@ public class JobController {
     @PostMapping(value = "/rejectJob",consumes = "application/x-www-form-urlencoded")
     public Response rejectJob(News news){
         return jobService.rejectJob(news);
+    }
+    @GetMapping("/getJobsInfo")
+    public Response getJobsInfo(@RequestParam Integer page){
+        return jobService.getJobsInfo(page);
+    }
+
+    @PostMapping(value = "/addJobType",consumes = "application/x-www-form-urlencoded")
+    public Response addJobType(@RequestParam String jobType){
+        return jobService.addJobType(jobType);
+    }
+
+    @GetMapping(value = "/getJobPage")
+    public Response getJobPage(){
+        return jobService.getJobPage();
     }
 }

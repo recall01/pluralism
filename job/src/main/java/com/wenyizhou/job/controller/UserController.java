@@ -51,7 +51,7 @@ public class UserController {
     public Response delectUser(@RequestParam String userId){
         return userService.delectUser(userId);
     }
-    @GetMapping(value = "/exit",consumes = "application/x-www-form-urlencoded")
+    @GetMapping(value = "/exit")
     public Response exit(){
         return userService.exit();
     }
@@ -79,5 +79,25 @@ public class UserController {
     @GetMapping(value = "/usersInfo")
     public Response usersInfo(@RequestParam Integer page){
         return userService.usersInfo(page);
+    }
+    @GetMapping(value = "/getApplies")
+    public Response getApplies(@RequestParam Integer page){
+        return userService.getApplies(page);
+    }
+    @PostMapping(value = "/agreeApply",consumes = "application/x-www-form-urlencoded")
+    public Response agreeApply(@RequestParam String appId,@RequestParam String userId){
+        return userService.agreeApply(appId,userId);
+    }
+    @PostMapping(value = "/deleteApply",consumes = "application/x-www-form-urlencoded")
+    public Response deleteApply(@RequestParam String appId){
+        return userService.deleteApply(appId);
+    }
+    @GetMapping(value = "/getUserPage")
+    public Response getUserPage(){
+        return userService.getUserPage();
+    }
+    @GetMapping(value = "/getApplyPage")
+    public Response getApplyPage(){
+        return userService.getApplyPage();
     }
 }

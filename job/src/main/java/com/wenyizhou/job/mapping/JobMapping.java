@@ -2,6 +2,7 @@ package com.wenyizhou.job.mapping;
 
 import com.wenyizhou.job.model.AppJob;
 import com.wenyizhou.job.model.Job;
+import com.wenyizhou.job.model.VO.ApplyVO;
 import com.wenyizhou.job.model.VO.JobVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 
 @Mapper
 public interface JobMapping {
-    List<JobVO> selectJobList(Integer page);
+    List<JobVO> selectJobList(Map m);
 
     List<JobVO> selectjobListByTime(Map m);
 
@@ -29,4 +30,10 @@ public interface JobMapping {
     JobVO selectJobById(String jobId);
 
     void updateJob(Job job);
+
+    void delectJobById(String jobId);
+
+    Job selectJobInfoById(String jobId);
+
+    int selectJobPage();
 }

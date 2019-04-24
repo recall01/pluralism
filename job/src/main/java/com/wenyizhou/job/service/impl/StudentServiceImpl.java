@@ -11,6 +11,7 @@ import com.wenyizhou.job.service.IStudentService;
 import com.wenyizhou.job.service.IUserService;
 import com.wenyizhou.job.utils.ErrorCode;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
@@ -238,6 +239,74 @@ public class StudentServiceImpl implements IStudentService {
         response.setMsg("删除消息成功");
         return response;
     }
+
+    @Override
+    public Response getStudentsInfo(Integer page) {
+        Response response = new Response();
+        if(page == 0){
+            page = 1;
+        }
+        page --;
+        page = page * 10;
+        List<StudentVO> students = studentDao.getStudentsInfo(page);
+        //处理空闲时间
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(students);
+        response.setMsg("查询学生信息成功");
+        return response;
+    }
+
+    @Override
+    public Response getStudentInfoById(String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(userId.length()<10){
+            for (int i=0;i<(10-userId.length());i++){
+                userId = "0"+userId;
+            }
+        }
+        StudentVO studentVO = studentDao.getStudentInfoById(userId);
+        if(studentVO == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        Student student = new Student();
+        BeanUtils.copyProperties(studentVO,student);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(student);
+        response.setMsg("查询学生信息成功");
+        return response;
+    }
+
+    @Override
+    public Response changeStudentInfo(Student student) {
+        Response response = new Response();
+        if(student == null){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(!studentDao.changeStudentInfo(student)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("修改学生信息成功");
+        return response;
+    }
+
+    @Override
+    public Response getStudentPage() {
+        Response response = new Response();
+        int count = studentDao.getStudentPage();
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(count);
+        response.setMsg("获取数据成功");
+        return response;
+    }
+
 
     //移除缓存
     private void removeAttribute(){

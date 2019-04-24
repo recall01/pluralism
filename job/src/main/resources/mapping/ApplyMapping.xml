@@ -7,8 +7,37 @@
         <result property="appTime" column="AppTime"/>
         <result property="userId" column="UserId"/>
     </resultMap>
+    <resultMap id="applyVOResult" type="com.wenyizhou.job.model.VO.ApplyVO">
+        <id property="appId" column="AppId"/>
+        <result property="appType" column="AppType"/>
+        <result property="appTime" column="AppTime"/>
+        <result property="userId" column="UserId"/>
+        <association property="user" javaType="com.wenyizhou.job.model.User">
+            <result property="userId" column="UserId"/>
+            <result property="userName" column="UserName"/>
+            <result property="userEmail" column="UserEmail"/>
+            <result property="userPhone" column="UserPhone"/>
+            <result property="userPassword" column="UserPassword"/>
+            <result property="roleType" column="RoleType"/>
+            <result property="registerTime" column="RegisterTime"/>
+        </association>
+    </resultMap>
     <insert id="insertApply">
         insert into Apply (AppType,AppTime,UserId)
         values (#{appType},#{appTime},#{userId})
     </insert>
+    <select id="selectApplies" resultMap="applyVOResult">
+        SELECT * FROM Apply
+        LEFT JOIN User
+        ON Apply.UserId = User.UserId
+        order by Apply.AppTime desc
+        LIMIT #{page},10
+    </select>
+    <delete id="delectApply">
+        delete from Apply
+        where AppId = #{appId}
+    </delete>
+    <select id="selectApplyPage" resultType="int">
+        select count(*) from Apply
+    </select>
 </mapper>

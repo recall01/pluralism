@@ -42,12 +42,28 @@ public class StudentController {
     }
     @PostMapping(value = "/getMsg",consumes = "application/x-www-form-urlencoded")
     public Response getMsg(@RequestParam String userId){
-        Response response = studentService.getMsg(userId);
-        System.out.println(new Gson().toJson(response));
-        return response;
+        return studentService.getMsg(userId);
     }
     @PostMapping(value = "/delectMsg",consumes = "application/x-www-form-urlencoded")
     public Response delectMsg(@RequestParam String userId,@RequestParam String newsId){
         return studentService.delectMsg(userId,newsId);
+    }
+    @GetMapping(value = "/getStudentsInfo")
+    public Response getStudentsInfo(@RequestParam Integer page){
+        return studentService.getStudentsInfo(page);
+    }
+    @GetMapping(value = "/getStudentInfoById")
+    public Response getStudentInfoById(@RequestParam String userId){
+        return studentService.getStudentInfoById(userId);
+    }
+    @PostMapping(value = "/changeStudentInfo",consumes = "application/x-www-form-urlencoded")
+    public Response changeStudentInfo(Student student){
+        System.out.println(new Gson().toJson(student));
+        return studentService.changeStudentInfo(student);
+    }
+
+    @GetMapping(value = "/getStudentPage")
+    public Response getStudentPage(){
+        return studentService.getStudentPage();
     }
 }

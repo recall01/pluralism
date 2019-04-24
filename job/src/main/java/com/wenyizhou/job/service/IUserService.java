@@ -30,4 +30,14 @@ public interface IUserService {
     Response changeUserInfo(User user);
 
     Response delectUser(String userId);
+
+    Response getApplies(Integer page);
+
+    Response agreeApply(String appId, String userId);
+
+    Response deleteApply(String appId);
+
+    Response getUserPage();
+
+    Response getApplyPage();
 }

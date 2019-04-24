@@ -30,13 +30,16 @@ public class JobServiceImpl implements IJobService {
 
 
     @Override
-    public Response jobList(Integer page) {
+    public Response jobList(Integer page,Integer count) {
         Response response = new Response();
-        if(page == null){
+        if(page == null||page == 0){
             page = 1;
         }
+        if(count == null){
+            count = 6;
+        }
         page--;
-        List<JobVO> jobs = jobDao.jobList(page);
+        List<JobVO> jobs = jobDao.jobList(page,count);
         httpServletRequest.getSession().setAttribute("jobs",jobs);
         response.setStatus(RESPONSE_SUCCESS);
         response.setData(jobs);
@@ -61,7 +64,7 @@ public class JobServiceImpl implements IJobService {
             default:break;
         }
         if("".equals(startTime)){
-            return this.jobList(1);
+            return this.jobList(1,6);
         }
         String endTime = TimeUtil.getTime(date);
         List<JobVO> jobs = jobDao.jobListByTime(startTime,endTime);
@@ -75,7 +78,7 @@ public class JobServiceImpl implements IJobService {
     public Response jobListByJobType(String type) {
         Response response = new Response();
         if(StringUtils.isEmpty(type)){
-            return this.jobList(0);
+            return this.jobList(0,6);
         }
         List<JobVO> jobs = jobDao.jobListByJobType(type);
         response.setStatus(RESPONSE_SUCCESS);
@@ -183,6 +186,25 @@ public class JobServiceImpl implements IJobService {
         response.setMsg("获取工作信息成功");
         return response;
     }
+    @Override
+    public Response getJobInfoById(String jobId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(jobId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        Job job = jobDao.getJobInfoById(jobId);
+        if(job == null){
+            response.setError(ErrorCode.DATA_NOT_EXIST);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(job);
+        response.setMsg("获取兼职信息成功");
+        return response;
+    }
+
+
 
     @Override
     public Response getAppJobInfo(String jobId) {
@@ -260,6 +282,31 @@ public class JobServiceImpl implements IJobService {
         response.setMsg("修改成功");
         return response;
     }
+    @Override
+    public Response changeJobInfo(Job job) {
+        Response response = new Response();
+        if(job == null){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(!jobDao.changeJob(job)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("修改成功");
+        return response;
+    }
+
+    @Override
+    public Response getJobPage() {
+        Response response = new Response();
+        int count = jobDao.getJobPage();
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(count);
+        response.setMsg("获取数据成功");
+        return response;
+    }
 
     @Override
     @Transient
@@ -271,6 +318,67 @@ public class JobServiceImpl implements IJobService {
     public Response rejectJob(News news) {
         return this.handJob(news,2);
     }
+
+    @Override
+    public Response getJobsInfo(Integer page) {
+        Response response = new Response();
+        if(page == null){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        List<JobVO> jobs =jobDao.jobList(page,10);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(jobs);
+        response.setMsg("获取兼职信息成功");
+        return response;
+    }
+
+    @Override
+    public Response delectJobById(String jobId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(jobId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        //校验登录信息
+        User user =(User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            response.setError(ErrorCode.ACCOUNT_NOT_LOGIN);
+            return response;
+        }
+        //删除数据
+        if(!jobDao.delectJob(jobId)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //删除AppJob中的相关数据
+        if(!jobDao.delectAppJob(jobId)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("删除兼职成功");
+        return response;
+    }
+
+    @Override
+    public Response addJobType(String jobType) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(jobType)){
+            response.setStatus(RESPONSE_SUCCESS);
+            return response;
+        }
+        if(!jobDao.addJobType(jobType)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setMsg("添加工作类型成功");
+        return response;
+    }
+
+
+
     //处理操作兼职申请信息
     private Response handJob(News news,int type){
         Response response = new Response();

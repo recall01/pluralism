@@ -113,4 +113,45 @@ public class StudentDaoImpl implements IStudentDao {
             return false;
         }
     }
+
+    @Override
+    public List<StudentVO> getStudentsInfo(Integer page) {
+        try {
+            return studentMapping.selectStudents(page);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public StudentVO getStudentInfoById(String userId) {
+        try {
+            return studentMapping.selectStudentById(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean changeStudentInfo(Student student) {
+        try {
+            studentMapping.updateStudentInfo(student);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public int getStudentPage() {
+        try {
+            return studentMapping.selectStudentPage();
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

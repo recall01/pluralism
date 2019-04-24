@@ -8,7 +8,7 @@ import com.wenyizhou.job.model.VO.StudentVO;
 import java.util.List;
 
 public interface IJobDao {
-    List<JobVO> jobList(Integer page);
+    List<JobVO> jobList(Integer page,Integer count);
 
     List<JobVO> jobListByTime(String startTime, String endTime);
 
@@ -20,6 +20,7 @@ public interface IJobDao {
     List<JobVO> findJob(String jobName,String jobTypeName);
 
     boolean delectJob(String jobId, String userId);
+    boolean delectJob(String jobId);
 
     JobVO getJobById(String jobId);
 
@@ -36,4 +37,10 @@ public interface IJobDao {
     boolean changeJob(Job job);
 
     boolean agreeJob(News news);
+
+    boolean addJobType(String jobType);
+
+    Job getJobInfoById(String jobId);
+
+    int getJobPage();
 }

@@ -20,4 +20,12 @@ public interface IStudentService {
     Response getMsg(String userId);
 
     Response delectMsg(String userId, String newsId);
+
+    Response getStudentsInfo(Integer page);
+
+    Response getStudentInfoById(String userId);
+
+    Response changeStudentInfo(Student student);
+
+    Response getStudentPage();
 }

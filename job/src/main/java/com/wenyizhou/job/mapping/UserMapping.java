@@ -23,4 +23,6 @@ public interface UserMapping {
     List<User> selectUsersInfo(Integer page);
 
     void delectUser(String userId);
+
+    int selectUserTotal();
 }

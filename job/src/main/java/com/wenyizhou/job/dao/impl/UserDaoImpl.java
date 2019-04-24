@@ -4,6 +4,7 @@ import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.mapping.*;
 import com.wenyizhou.job.model.*;
+import com.wenyizhou.job.model.VO.ApplyVO;
 import com.wenyizhou.job.model.VO.StudentVO;
 import com.wenyizhou.job.model.VO.TeacherVO;
 import org.springframework.dao.DuplicateKeyException;
@@ -129,6 +130,47 @@ public class UserDaoImpl implements IUserDao {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<ApplyVO> getApplies(Integer page) {
+        try {
+            return applyMapping.selectApplies(page);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean delectApply(String appId) {
+        try {
+            applyMapping.delectApply(appId);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public int getUserPage() {
+        try {
+            return userMapping.selectUserTotal();
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public int getApplyPage() {
+        try {
+            return applyMapping.selectApplyPage();
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
         }
     }
 }

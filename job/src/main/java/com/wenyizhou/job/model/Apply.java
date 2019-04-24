@@ -3,11 +3,11 @@ package com.wenyizhou.job.model;
 import com.wenyizhou.job.utils.TimeUtil;
 
 public class Apply {
-    private int appId;
+    protected int appId;
     //0为申请成为老师/家长
-    private int appType;
-    private String appTime;
-    private String userId;
+    protected int appType;
+    protected String appTime;
+    protected String userId;
 
     public int getAppId() {
         return appId;

@@ -6,7 +6,7 @@ import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
 
 public interface IJobService {
-    Response jobList(Integer page);
+    Response jobList(Integer page,Integer count);
 
     Response jobListByTime(Integer time);
 
@@ -29,4 +29,16 @@ public interface IJobService {
     Response agreeJob(News news);
 
     Response rejectJob(News news);
+
+    Response getJobsInfo(Integer page);
+
+    Response delectJobById(String jobId);
+
+    Response addJobType(String jobType);
+
+    Response getJobInfoById(String jobId);
+
+    Response changeJobInfo(Job job);
+
+    Response getJobPage();
 }

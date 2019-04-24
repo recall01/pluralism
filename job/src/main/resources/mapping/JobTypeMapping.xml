@@ -8,4 +8,8 @@
     <select id="selectJobType" resultMap="jobTypeResult">
         select * from JobType
     </select>
+    <insert id="insertJobType">
+        insert into JobType(TypeName)
+        values (#{jobType})
+    </insert>
 </mapper>

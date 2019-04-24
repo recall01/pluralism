@@ -23,4 +23,12 @@ public interface IStudentDao {
     List<News> getMsg(String userId);
 
     boolean delectMsg(String newsId);
+
+    List<StudentVO> getStudentsInfo(Integer page);
+
+    StudentVO getStudentInfoById(String stuId);
+
+    boolean changeStudentInfo(Student student);
+
+    int getStudentPage();
 }
