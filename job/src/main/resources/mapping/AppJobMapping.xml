@@ -5,12 +5,14 @@
         <id property="appId" column="AppId"/>
         <result property="jobId" column="JobId"/>
         <result property="userId" column="UserId"/>
+        <result property="status" column="Status"/>
         <result property="appTime" column="AppTime"/>
     </resultMap>
     <resultMap id="appJobVOResult" type="com.wenyizhou.job.model.VO.AppJobVO">
         <id property="appId" column="AppId"/>
         <result property="jobId" column="JobId"/>
         <result property="userId" column="UserId"/>
+        <result property="status" column="Status"/>
         <result property="appTime" column="AppTime"/>
         <association property="user" javaType="com.wenyizhou.job.model.User">
             <result property="userId" column="UserId"/>
@@ -35,8 +37,8 @@
         and UserId = #{userId}
     </select>
     <insert id="insertApplyJob">
-        insert into AppJob (JobId,UserId,AppTime)
-        values (#{jobId},#{userId},#{appTime})
+        insert into AppJob (JobId,UserId,AppTime,Status)
+        values (#{jobId},#{userId},#{appTime},#{status})
     </insert>
     <delete id="delectAppJob">
         delete from AppJob

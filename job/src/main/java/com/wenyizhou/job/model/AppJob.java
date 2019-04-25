@@ -10,6 +10,15 @@ public class AppJob {
     protected int jobId;
     protected String userId;
     protected String appTime;
+    protected int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getAppId() {
         return appId;

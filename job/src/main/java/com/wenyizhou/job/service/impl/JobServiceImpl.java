@@ -254,6 +254,7 @@ public class JobServiceImpl implements IJobService {
         appJob.setJobId(Integer.valueOf(jobId));
         appJob.setUserId(userId);
         appJob.setAppTime(TimeUtil.getTime());
+        appJob.setStatus(1);
         //4.向AppJob表中插入数据
         if(!jobDao.applyJob(appJob)){
             response.setError(ErrorCode.SQL_OPERATING_FAIL);
