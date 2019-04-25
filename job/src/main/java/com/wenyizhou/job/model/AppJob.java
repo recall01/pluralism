@@ -10,6 +10,7 @@ public class AppJob {
     protected int jobId;
     protected String userId;
     protected String appTime;
+    //0:未知状态,1:未处理状态,2:已处理状态,3:同意,4:拒绝
     protected int status;
 
     public int getStatus() {

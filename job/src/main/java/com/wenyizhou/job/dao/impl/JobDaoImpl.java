@@ -246,4 +246,19 @@ public class JobDaoImpl implements IJobDao {
         }
     }
 
+    @Override
+    public boolean changeAppJobStatus(String jobId, String userId, int status) {
+        try {
+            Map m = new HashMap();
+            m.put("jobId",jobId);
+            m.put("userId",userId);
+            m.put("status",status);
+            appJobMapping.updateJobStatus(m);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

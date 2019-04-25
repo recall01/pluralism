@@ -20,4 +20,6 @@ public interface AppJobMapping {
     void delectAppJob(String jobId);
 
     void delectAppJobById(Map m);
+
+    void updateJobStatus(Map m);
 }

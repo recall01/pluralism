@@ -448,11 +448,14 @@ public class JobServiceImpl implements IJobService {
         }
         //封装数据
         news.setAddTime(TimeUtil.getTime());
+        int status = 0;
         switch (type){
             case 1:
+                status = 3;
                 news.setNewsType(1);
                 news.setNewsInfo("你申请的["+job.getJobName()+"]已经被同意");break;
             case 2:
+                status = 4;
                 news.setNewsType(2);
                 news.setNewsInfo("你申请的["+job.getJobName()+"]已经被拒绝");break;
             default:break;
@@ -462,11 +465,15 @@ public class JobServiceImpl implements IJobService {
             response.setError(ErrorCode.SQL_OPERATING_FAIL);
             return response;
         }
-        //干掉AppJob表中对应的数据
-        if(!jobDao.delectAppJob(String.valueOf(news.getJobId()),news.getAccId())){
+        //修改AppJob表中对应的数据
+        if(!jobDao.changeAppJobStatus(String.valueOf(news.getJobId()),news.getAccId(),status)){
             response.setError(ErrorCode.SQL_OPERATING_FAIL);
             return response;
         }
+/*        if(!jobDao.delectAppJob(String.valueOf(news.getJobId()),news.getAccId())){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }*/
         response.setStatus(RESPONSE_SUCCESS);
         response.setMsg("处理成功");
         return response;

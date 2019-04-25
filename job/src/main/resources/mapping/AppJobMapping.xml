@@ -29,6 +29,7 @@
         LEFT JOIN User
         ON AppJob.UserId = User.UserId
         where AppJob.JobId = #{jobId}
+        and AppJob.Status = 1
         order by AppJob.AppTime desc
     </select>
     <select id="selectAppJobById" resultMap="appJobResult">
@@ -49,4 +50,10 @@
         where JobId = #{jobId}
         and UserId = #{userId}
     </delete>
+    <update id="updateJobStatus">
+        update AppJob set
+        Status = #{status}
+        where JobId = #{jobId}
+        and UserId = #{userId}
+    </update>
 </mapper>

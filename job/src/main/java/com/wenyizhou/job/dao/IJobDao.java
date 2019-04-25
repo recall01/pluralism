@@ -45,4 +45,6 @@ public interface IJobDao {
     int getJobPage();
 
     boolean changeJobStatus(String jobId, int status);
+
+    boolean changeAppJobStatus(String jobId, String accId, int status);
 }
