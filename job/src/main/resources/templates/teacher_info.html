@@ -105,7 +105,7 @@
                                             <td th:if="${job.status} eq 1">招聘中</td>
                                             <td th:if="${job.status} eq 2">已关闭</td>
                                             <td>
-                                                <a class="my-btn text-capitalize" href="" th:if="${job.status} eq 1">关闭</a><a class="my-btn text-capitalize" href="" th:if="${job.status} eq 2">开启</a>|<a href="#" th:onclick="|javascript:detailsJob(${job.jobId})|" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
+                                                <a th:onclick="|javascript:closeJob(${job.jobId})|" class="my-btn text-capitalize" href="" th:if="${job.status} eq 1">关闭</a><a class="my-btn text-capitalize" href="" th:if="${job.status} eq 2" th:onclick="|javascript:openJob(${job.jobId})|">开启</a>|<a href="#" th:onclick="|javascript:detailsJob(${job.jobId})|" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
                                         </tr>
                                     </table>
                                     <a href="#" data-toggle="modal" data-target="#pubJobModal" class="btn text-capitalize" th:unless="${session.teacher.jobs}">还未发布招聘信息,点击进行发布</a>
@@ -248,20 +248,36 @@
     <script src="js/jquery-2.2.3.min.js"></script>
     <!-- script for password match -->
     <script>
-        window.onload = function () {
-            document.getElementById("password1").onchange = validatePassword;
-            document.getElementById("password2").onchange = validatePassword;
+        window.onload = function () {}
+
+        function openJob(jobId) {
+            if(jobId==null||""==jobId){
+                alert("获取工作数据失败");
+                return false;
+            }
+            alert(jobId);
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/job/changeJobStatus",
+                data:{
+                    "jobId":jobId,
+                    "status":1,
+                },
+                success:function (data) {
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/index";
+                    }else {
+                        alert("注册失败");
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
+            return false;
         }
 
-        function validatePassword() {
-            var pass2 = document.getElementById("password2").value;
-            var pass1 = document.getElementById("password1").value;
-            if (pass1 != pass2)
-                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-            else
-                document.getElementById("password2").setCustomValidity('');
-            //empty string means no validation error
-        }
         function delectJob(jobId) {
             if(jobId == null||""==jobId){
                 alert("获取工作数据失败");
@@ -275,7 +291,6 @@
                     "jobId":jobId,
                 },
                 success:function (data) {
-                    alert(data.msg);
                     if(data.status == 200){
                         location.href="http://localhost:8080/teacherInfo";
                     }
@@ -352,6 +367,31 @@
             });
             return false;
         })
+
+        function closeJob(jobId) {
+            if(jobId==null||""==jobId){
+                alert("获取工作数据失败");
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8080/job/closeJob",
+                data:{
+                    "jobId":jobId,
+                },
+                success:function (data) {
+                    alert("关闭成功");
+                    if(data.status == 200){
+                        location.href="http://localhost:8080/teacherInfo";
+                    }
+                },
+                error:function (data) {
+
+                    alert("请求失败");
+                }
+            });
+        }
     </script>
     <!-- //end-smooth-scrolling -->
     <!-- smooth-scrolling-of-move-up -->

@@ -43,4 +43,6 @@ public interface IJobDao {
     Job getJobInfoById(String jobId);
 
     int getJobPage();
+
+    boolean changeJobStatus(String jobId, int status);
 }

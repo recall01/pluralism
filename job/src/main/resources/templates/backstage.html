@@ -1694,7 +1694,7 @@
                         }else if(apply.appTime.length == 0){
                             apply.appTime = "无";
                         }
-                        dom = dom+"<div class='row'><div class='col-xs-1'>"+apply.appId+"</div><div class='col-xs-9'>"+content+"</div><div class='col-xs-1'>"+apply.appTime+"</div><div class='col-xs-1'><button class='btn btn-success btn-xs' data-toggle='modal' data-target='#changJobInfo' onclick='agreeApply("+apply.appId+","+apply.userId+")'>同意</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteJob' onclick='deleteApply("+apply.appId+")'>拒绝</button></div></div>";
+                        dom = dom+"<div class='row'><div class='col-xs-1'>"+apply.appId+"</div><div class='col-xs-9'>"+content+"</div><div class='col-xs-1'>"+apply.appTime+"</div><div class='col-xs-1'><button class='btn btn-success btn-xs' data-toggle='modal' data-target='#changJobInfo' onclick=\"agreeApply("+apply.appId+",'"+apply.userId+"')\">同意</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteJob' onclick='deleteApply("+apply.appId+")'>拒绝</button></div></div>";
                     }
                     console.log(dom);
                     $("#chanbody").append(dom);

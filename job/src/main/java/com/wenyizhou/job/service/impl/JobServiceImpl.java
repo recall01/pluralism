@@ -308,6 +308,60 @@ public class JobServiceImpl implements IJobService {
     }
 
     @Override
+    public Response closeJob(String jobId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(jobId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(!jobDao.changeJobStatus(jobId,2)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //重新加载数据
+        User user =(User) httpServletRequest.getSession().getAttribute("teacher");
+        if(user == null){
+            response.setError(ErrorCode.ACCOUNT_NOT_LOGIN);
+            return response;
+        }
+        response = userService.getTeacherInfo(user.getUserId());
+        if(response.getStatus() == 200){
+            response.setMsg("已经关闭兼职工作");
+        }else {
+            response.setMsg("操作失败");
+        }
+
+        return response;
+    }
+
+    @Override
+    public Response changeJobStatus(String jobId, Integer status) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(jobId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(!jobDao.changeJobStatus(jobId,status)){
+            response.setError(ErrorCode.SQL_OPERATING_FAIL);
+            return response;
+        }
+        //重新加载数据
+        User user =(User) httpServletRequest.getSession().getAttribute("teacher");
+        if(user == null){
+            response.setError(ErrorCode.ACCOUNT_NOT_LOGIN);
+            return response;
+        }
+        response = userService.getTeacherInfo(user.getUserId());
+        if(response.getStatus() == 200){
+            response.setMsg("修改工作状态成功");
+        }else {
+            response.setMsg("操作失败");
+        }
+
+        return response;
+    }
+
+    @Override
     @Transient
     public Response agreeJob(News news) {
         return this.handJob(news,1);

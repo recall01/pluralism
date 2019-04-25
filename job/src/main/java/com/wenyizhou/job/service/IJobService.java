@@ -41,4 +41,8 @@ public interface IJobService {
     Response changeJobInfo(Job job);
 
     Response getJobPage();
+
+    Response closeJob(String jobId);
+
+    Response changeJobStatus(String jobId, Integer status);
 }

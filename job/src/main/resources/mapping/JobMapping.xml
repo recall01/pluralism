@@ -116,6 +116,13 @@
         </trim>
         where JobId=#{jobId}
     </update>
+
+    <update id="updateJobStatus">
+        update Job set
+        Status = #{status}
+        where JobId=#{jobId}
+    </update>
+
     <select id="selectJobPage" resultType="int">
         select count(*) from Job
     </select>

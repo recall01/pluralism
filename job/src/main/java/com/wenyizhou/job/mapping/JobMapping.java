@@ -36,4 +36,6 @@ public interface JobMapping {
     Job selectJobInfoById(String jobId);
 
     int selectJobPage();
+
+    void updateJobStatus(Map m);
 }

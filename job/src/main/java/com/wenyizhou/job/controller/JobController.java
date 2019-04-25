@@ -93,4 +93,16 @@ public class JobController {
     public Response getJobPage(){
         return jobService.getJobPage();
     }
+    @PostMapping(value = "/closeJob",consumes = "application/x-www-form-urlencoded")
+    public Response closeJob(@RequestParam String jobId){
+        Response response = jobService.closeJob(jobId);
+        System.out.println(new Gson().toJson(response));
+        return response;
+    }
+    @PostMapping(value = "/changeJobStatus",consumes = "application/x-www-form-urlencoded")
+    public Response changeJobStatus(@RequestParam String jobId,@RequestParam Integer status){
+        Response response = jobService.changeJobStatus(jobId,status);
+        System.out.println(new Gson().toJson(response));
+        return response;
+    }
 }
