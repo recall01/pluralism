@@ -17,7 +17,7 @@ $("#register").on("click",function () {
                 alert("注册成功");
                 location.href="http://localhost:8080/index";
             }else {
-                alert("注册失败"+data.msg);
+                alert("注册失败");
             }
         },
         error:function (data) {

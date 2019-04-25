@@ -70,6 +70,7 @@ public class UserServiceImpl implements IUserService {
         if(StringUtils.isEmpty(user.getUserPassword())){
             user.setUserPassword("1234567a");
         }
+        System.out.println(new Gson().toJson(user));
         if(StringUtils.isEmpty(user.getUserName())||StringUtils.isEmpty(user.getUserPhone())||StringUtils.isEmpty(user.getUserEmail())||StringUtils.isEmpty(user.getUserPassword())){
             response.setError(ErrorCode.PARAMETER_ERROR.getErrCode(),"入参字段不能为空");
             return response;

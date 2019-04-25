@@ -25,6 +25,7 @@
             <result property="jobType" column="JobType"/>
             <result property="location" column="Location"/>
             <result property="salary" column="Salary"/>
+            <result property="status" column="Status"/>
             <result property="experience" column="Experience"/>
             <result property="userId" column="UserId"/>
             <result property="pubTime" column="PubTime"/>

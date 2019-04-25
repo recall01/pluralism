@@ -1,6 +1,5 @@
 package com.wenyizhou.job.service.impl;
 
-import com.google.gson.Gson;
 import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.model.*;
 import com.wenyizhou.job.model.VO.AppJobVO;
@@ -9,7 +8,6 @@ import com.wenyizhou.job.model.VO.TeacherVO;
 import com.wenyizhou.job.service.IJobService;
 import com.wenyizhou.job.utils.ErrorCode;
 import com.wenyizhou.job.utils.TimeUtil;
-import jdk.nashorn.internal.scripts.JO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -312,7 +310,6 @@ public class JobServiceImpl implements IJobService {
     @Override
     @Transient
     public Response agreeJob(News news) {
-        System.out.println(new Gson().toJson(news));
         return this.handJob(news,1);
     }
 

@@ -100,8 +100,10 @@
                                             <td th:text="${job.jobId}"></td>
                                             <td th:text="${job.jobName}"></td>
                                             <td th:text="${job.pubTime}"></td>
-                                            <td>招聘中</td>
-                                            <td><a href="#" th:onclick="|javascript:detailsJob(${job.jobId})|" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
+                                            <td th:if="${job.status} eq 0">失效</td>
+                                            <td th:if="${job.status} eq 1">招聘中</td>
+                                            <td th:if="${job.status} eq 2">已关闭</td>
+                                            <td><a class="my-btn text-capitalize" href="" th:if="${job.status} eq 1">关闭</a><a class="my-btn text-capitalize" href="" th:if="${job.status} eq 2">开启</a>|<a href="#" th:onclick="|javascript:detailsJob(${job.jobId})|" class="my-btn text-capitalize">编辑</a>|<a th:onclick="|javascript:delectJob(${job.jobId})|" href="#" class="my-btn text-capitalize">删除</a></td>
                                         </tr>
                                     </table>
                                     <a href="#" data-toggle="modal" data-target="#pubJobModal" class="btn text-capitalize" th:unless="${session.teacher.jobs}">还未发布招聘信息,点击进行发布</a>

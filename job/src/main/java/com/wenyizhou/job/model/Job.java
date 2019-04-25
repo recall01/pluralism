@@ -11,6 +11,8 @@ public class Job {
     private String location;
     private String salary;
     private String experience;
+    //工作状态:0:无效,1:招聘中,2:关闭
+    protected int status;
     private String userId;
     private String pubTime;
 
@@ -102,6 +104,14 @@ public class Job {
             }
         }
         return pubTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public void setPubTime(String pubTime) {
