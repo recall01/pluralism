@@ -95,9 +95,7 @@ public class JobController {
     }
     @PostMapping(value = "/closeJob",consumes = "application/x-www-form-urlencoded")
     public Response closeJob(@RequestParam String jobId){
-        Response response = jobService.closeJob(jobId);
-        System.out.println(new Gson().toJson(response));
-        return response;
+        return jobService.closeJob(jobId);
     }
     @PostMapping(value = "/changeJobStatus",consumes = "application/x-www-form-urlencoded")
     public Response changeJobStatus(@RequestParam String jobId,@RequestParam Integer status){
