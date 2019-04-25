@@ -38,6 +38,7 @@
         SELECT * FROM Job
         LEFT JOIN User
         ON Job.UserId = User.UserId
+        where Job.Status = 1
         order by Job.PubTime desc
         LIMIT #{page},#{count}
     </select>
@@ -48,6 +49,7 @@
         ON Job.UserId = User.UserId
         WHERE Job.PubTime &gt; #{startTime}
         AND Job.PubTime &lt; #{endTime}
+        and Job.Status = 1
         order by Job.PubTime desc
         LIMIT 6
     </select>
@@ -56,6 +58,7 @@
         LEFT JOIN User
         ON Job.UserId = User.UserId
         WHERE Job.JobType LIKE CONCAT('%',#{type},'%')
+        and Job.Status = 1
         order by Job.PubTime desc
         LIMIT 6
     </select>
@@ -67,6 +70,7 @@
         LEFT JOIN User
         ON Job.UserId = User.UserId
         WHERE Job.JobName LIKE CONCAT('%',#{jobName},'%')
+        and Job.Status = 1
         order by Job.PubTime desc
         LIMIT 9
     </select>
