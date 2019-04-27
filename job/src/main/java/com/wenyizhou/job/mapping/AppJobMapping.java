@@ -1,9 +1,8 @@
 package com.wenyizhou.job.mapping;
 
 import com.wenyizhou.job.model.AppJob;
-import com.wenyizhou.job.model.Job;
 import com.wenyizhou.job.model.VO.AppJobVO;
-import com.wenyizhou.job.model.VO.JobVO;
+import com.wenyizhou.job.model.VO.UserJobLink;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +21,6 @@ public interface AppJobMapping {
     void delectAppJobById(Map m);
 
     void updateJobStatus(Map m);
+
+    List<UserJobLink> selectJobRecord(String userId);
 }

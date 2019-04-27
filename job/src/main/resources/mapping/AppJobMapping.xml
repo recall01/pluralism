@@ -24,6 +24,32 @@
             <result property="registerTime" column="RegisterTime"/>
         </association>
     </resultMap>
+
+    <resultMap id="UserJobResult" type="com.wenyizhou.job.model.VO.UserJobLink">
+        <id property="appId" column="AppId"/>
+        <result property="appTime" column="AppTime"/>
+        <result property="status" column="Status"/>
+        <collection property="user" ofType="com.wenyizhou.job.model.User">
+            <result property="userId" column="userId"/>
+            <result property="userName" column="UserName"/>
+            <result property="userEmail" column="UserEmail"/>
+            <result property="userPhone" column="UserPhone"/>
+            <result property="roleType" column="RoleType"/>
+            <result property="registerTime" column="RegisterTime"/>
+        </collection>
+        <collection property="job" ofType="com.wenyizhou.job.model.Job">
+            <result property="jobId" column="JobId"/>
+            <result property="jobName" column="JobName"/>
+            <result property="introduction" column="Introduction"/>
+            <result property="jobType" column="JobType"/>
+            <result property="location" column="Location"/>
+            <result property="salary" column="Salary"/>
+            <result property="experience" column="Experience"/>
+            <result property="status" column="Status"/>
+            <result property="pubTime" column="PubTime"/>
+        </collection>
+    </resultMap>
+
     <select id="selectApplicant" resultMap="appJobVOResult">
         SELECT * FROM AppJob
         LEFT JOIN User
@@ -32,6 +58,15 @@
         and AppJob.Status = 1
         order by AppJob.AppTime desc
     </select>
+
+    <select id="selectJobRecord" resultMap="UserJobResult">
+        SELECT AppJob.*,Job.* FROM AppJob,Job
+        where AppJob.JobId = Job.JobId
+        and AppJob.UserId = #{userId}
+        order by AppJob.AppTime desc
+        limit 10
+    </select>
+
     <select id="selectAppJobById" resultMap="appJobResult">
         SELECT * FROM AppJob
         where JobId = #{jobId}

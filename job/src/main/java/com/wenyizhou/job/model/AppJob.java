@@ -6,34 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppJob {
-    protected int appId;
-    protected int jobId;
+    protected Integer appId;
+    protected Integer jobId;
     protected String userId;
     protected String appTime;
     //0:未知状态,1:未处理状态,2:已处理状态,3:同意,4:拒绝
-    protected int status;
+    protected Integer status;
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public int getAppId() {
+    public Integer getAppId() {
         return appId;
     }
 
-    public void setAppId(int appId) {
+    public void setAppId(Integer appId) {
         this.appId = appId;
     }
 
-    public int getJobId() {
+    public Integer getJobId() {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(Integer jobId) {
         this.jobId = jobId;
     }
 
@@ -51,6 +43,14 @@ public class AppJob {
 
     public void setAppTime(String appTime) {
         this.appTime = appTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override

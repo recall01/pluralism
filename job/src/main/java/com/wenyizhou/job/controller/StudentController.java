@@ -66,4 +66,11 @@ public class StudentController {
     public Response getStudentPage(){
         return studentService.getStudentPage();
     }
+
+    @GetMapping("/studentList")
+    public Response studentList(Integer page){
+        return studentService.studentList(page);
+    }
+
+
 }

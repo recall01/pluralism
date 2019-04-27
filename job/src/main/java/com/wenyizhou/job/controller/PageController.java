@@ -63,6 +63,10 @@ public class PageController {
     public String joblist(){
         return "job_list";
     }
+    @RequestMapping("/studentList")
+    public String studentList(){
+        return "student_list";
+    }
     @RequestMapping("/detailsJob")
     public String detailsJob(@RequestParam String jobId){
         if(StringUtils.isEmpty(jobId)){
@@ -127,6 +131,22 @@ public class PageController {
             return "/index";
         }
     }
+    @GetMapping("/jobRecord")
+    public String jobRecord(){
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        if(user == null){
+            return "/index";
+        }
+//        userService.getUserById(userId);
+        Response response = studentService.getJobRecord(user.getUserId());
+        if(response.getStatus()==200){
+            return "/student_appJobRecord";
+        }else {
+            return "/index";
+        }
+    }
+
+
     @GetMapping("/backstage")
     public String backstage(){
         User user =(User) httpServletRequest.getSession().getAttribute("user");

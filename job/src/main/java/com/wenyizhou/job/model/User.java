@@ -9,9 +9,8 @@ public class User {
     protected String userPhone;
     protected String userPassword;
     //角色类型 0:未验证状态 1:学生 2:教师/家长 3:管理员
-    protected int roleType;
+    protected Integer roleType;
     protected String registerTime;
-
 
     public String getUserId() {
         return userId;
@@ -53,16 +52,16 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public int getRoleType() {
+    public Integer getRoleType() {
         return roleType;
     }
 
-    public void setRoleType(int roleType) {
+    public void setRoleType(Integer roleType) {
         this.roleType = roleType;
     }
 
     public String getRegisterTime() {
-        return TimeUtil.handTimeForm(registerTime);
+        return registerTime;
     }
 
     public void setRegisterTime(String registerTime) {

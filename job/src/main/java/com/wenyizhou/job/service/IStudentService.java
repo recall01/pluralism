@@ -28,4 +28,8 @@ public interface IStudentService {
     Response changeStudentInfo(Student student);
 
     Response getStudentPage();
+
+    Response getJobRecord(String userId);
+
+    Response studentList(Integer page);
 }

@@ -32,4 +32,6 @@ public interface StudentMapping {
     void updateStudentInfo(Student student);
 
     int selectStudentPage();
+
+    List<StudentVO> selectStudentList(Integer page);
 }

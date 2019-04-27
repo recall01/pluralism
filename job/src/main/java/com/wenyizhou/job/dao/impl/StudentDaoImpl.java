@@ -154,4 +154,9 @@ public class StudentDaoImpl implements IStudentDao {
             return 0;
         }
     }
+
+    @Override
+    public List<StudentVO> studentList(Integer page) {
+        return studentMapping.selectStudentList(page);
+    }
 }

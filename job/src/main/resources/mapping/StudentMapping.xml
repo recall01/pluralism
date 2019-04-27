@@ -16,7 +16,6 @@
         <result property="jobType" column="JobType"/>
         <result property="userId" column="UserId"/>
         <association property="user" javaType="com.wenyizhou.job.model.User">
-            <result property="userId" column="UserId"/>
             <result property="userName" column="UserName"/>
             <result property="userEmail" column="UserEmail"/>
             <result property="userPhone" column="UserPhone"/>
@@ -46,6 +45,13 @@
         LEFT JOIN User
         on Student.UserId = User.UserId
         limit #{page},10
+    </select>
+
+    <select id="selectStudentList" resultMap="studentVOResult">
+        SELECT * FROM Student
+        LEFT JOIN User
+        on Student.UserId = User.UserId
+        limit #{page},6
     </select>
 
     <update id="updateIntroduction">

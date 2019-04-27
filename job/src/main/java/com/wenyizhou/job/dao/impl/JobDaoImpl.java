@@ -4,9 +4,7 @@ import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.mapping.*;
 import com.wenyizhou.job.model.*;
-import com.wenyizhou.job.model.VO.AppJobVO;
-import com.wenyizhou.job.model.VO.JobVO;
-import com.wenyizhou.job.model.VO.StudentVO;
+import com.wenyizhou.job.model.VO.*;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
@@ -258,6 +256,16 @@ public class JobDaoImpl implements IJobDao {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<UserJobLink> getJobRecord(String userId) {
+        try {
+            return appJobMapping.selectJobRecord(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 

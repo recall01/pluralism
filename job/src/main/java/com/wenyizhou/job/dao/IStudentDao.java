@@ -31,4 +31,6 @@ public interface IStudentDao {
     boolean changeStudentInfo(Student student);
 
     int getStudentPage();
+
+    List<StudentVO> studentList(Integer page);
 }

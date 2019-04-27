@@ -73,7 +73,7 @@
                                 <a href="#" data-toggle="modal" data-target="#baseInfoModal">基本信息</a>
                                 <a href="#" data-toggle="modal" data-target="#freeTimeModal">空闲时间</a>
                                 <a href="#" data-toggle="modal" data-target="#introductionModal">个人简介</a>
-                                <a href="#" data-toggle="modal" data-target="#introductionModal">申请记录</a>
+                                <a href="#" th:onclick="|javascript:applyRecord()|">申请记录</a>
                                 <a href="#" data-toggle="modal" data-target="#jobTypeModal" onclick="getJobType()">兼职类型</a>
                                 <a href="#" th:onclick="|javascript:studentMsg()|">消息中心</a>
                             </div>
@@ -122,8 +122,6 @@
                             <h5 class="w3layouts_pvt-head">个人简介.</h5>
                             <p th:if="${session.student}" th:text="${session.student.introduction}"></p>
                         </div>
-                        <a href="#introductionModal" class="btn wthree-bnr-btn text-capitalize" data-toggle="modal" aria-pressed="false"
-                           data-target="#introductionModal" role="button">完善个人简介</a>
                     </div>
 
                 </div>
@@ -189,16 +187,11 @@
                             <div class="form-group">
                                 <label for="sJobType" class="col-form-label">选择想从事的职业类型</label>
                                 <select id="sJobType" multiple class="form-control" >
-                                    <option value="导师项目">导师项目</option>
-                                    <option value="校园跑腿">校园跑腿</option>
-                                    <option value="校园跑腿">校园跑腿</option>
-                                    <option value="校园跑腿">校园跑腿</option>
-                                    <option value="校园跑腿">校园跑腿</option>
-                                    <option value="校园跑腿">校园跑腿</option>
+
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" th:if="${session.student}" th:value="${session.student.jobType}" id="input_jobType"></input>
+                                <input disabled class="form-control" th:if="${session.student}" th:value="${session.student.jobType}">
                             </div>
                             <div class="right-w3l">
                                 <input type="submit" class="form-control bg-theme" value="修改" id="changeJobType">
@@ -341,8 +334,28 @@
         function studentMsg() {
             location.href="http://localhost:8080/newsList";
         }
+        function applyRecord() {
+            location.href="http://localhost:8080/jobRecord";
+        }
         function getJobType() {
-            alert("动态加载数据");
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:8080/user/jobType",
+                success:function (data) {
+                    if(data.status == 200){
+                        var jobList = data.data;
+                        for (var i=0;i<jobList.length;i++){
+                            var job = jobList[i];
+                            $("#sJobType").append("<option value ='"+job.typeName+"'>"+job.typeName+"</option>");
+                        }
+                    }else {
+                        alert("获取工作类型失败");
+                    }
+                },
+                error:function (data) {
+                    alert("请求失败");
+                }
+            });
         }
     </script>
     <!-- script for password match -->
@@ -441,12 +454,17 @@
         });
         //修改期待工作类型按钮
         $("#changeJobType").on("click",function () {
-            var jobType = $("#input_jobType").val();
-            var userId = $("#userId").html();
-            if(jobType == null||"" == jobType){
-                alert("期待工作类型不能为空");
+
+            var selectedTexts = [];
+            $("#sJobType :selected").each(function() {
+                selectedTexts.push($(this).text());
+            });
+/*            if(selectedTexts.length == 0){
+                alert("请先选择兼职类型");
                 return false;
-            }
+            }*/
+            var jobType = selectedTexts.join(",");
+            var userId = $("#userId").html();
             if(userId == null||"" == userId){
                 alert("获取用户编号出错");
                 return false;

@@ -1,12 +1,16 @@
 package com.wenyizhou.job.service.impl;
 
+import com.google.gson.Gson;
+import com.wenyizhou.job.dao.IJobDao;
 import com.wenyizhou.job.dao.IStudentDao;
 import com.wenyizhou.job.dao.IUserDao;
 import com.wenyizhou.job.model.News;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.Student;
 import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.VO.JobVO;
 import com.wenyizhou.job.model.VO.StudentVO;
+import com.wenyizhou.job.model.VO.UserJobLink;
 import com.wenyizhou.job.service.IStudentService;
 import com.wenyizhou.job.service.IUserService;
 import com.wenyizhou.job.utils.ErrorCode;
@@ -27,6 +31,8 @@ public class StudentServiceImpl implements IStudentService {
     private IUserService userService;
     @Autowired
     private IStudentDao studentDao;
+    @Autowired
+    private IJobDao jobDao;
     @Autowired
     private IUserDao userDao;
     private final static int RESPONSE_SUCCESS = 200;
@@ -216,6 +222,39 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public Response getJobRecord(String userId) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(userId)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        List<UserJobLink> jobRecords = jobDao.getJobRecord(userId);
+        System.out.println(new Gson().toJson(jobRecords));
+        httpServletRequest.getSession().setAttribute("jobRecords",jobRecords);
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(jobRecords);
+        response.setMsg("获取数据成功");
+        return response;
+    }
+
+    @Override
+    public Response studentList(Integer page) {
+        Response response = new Response();
+        if(page == null||page == 0){
+            page = 1;
+        }
+        page--;
+        List<StudentVO> students = studentDao.studentList(page);
+        for (int i=0;i<students.size();i++){
+            students.get(i).setFreeTimes(null);
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(students);
+        response.setMsg("获取学生列表成功");
+        return response;
+    }
+
+    @Override
     public Response delectMsg(String userId, String newsId) {
         Response response = new Response();
         if(StringUtils.isEmpty(userId)||StringUtils.isEmpty(newsId)){
@@ -306,6 +345,7 @@ public class StudentServiceImpl implements IStudentService {
         response.setMsg("获取数据成功");
         return response;
     }
+
 
 
     //移除缓存

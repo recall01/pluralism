@@ -1,9 +1,7 @@
 package com.wenyizhou.job.dao;
 
 import com.wenyizhou.job.model.*;
-import com.wenyizhou.job.model.VO.AppJobVO;
-import com.wenyizhou.job.model.VO.JobVO;
-import com.wenyizhou.job.model.VO.StudentVO;
+import com.wenyizhou.job.model.VO.*;
 
 import java.util.List;
 
@@ -47,4 +45,6 @@ public interface IJobDao {
     boolean changeJobStatus(String jobId, int status);
 
     boolean changeAppJobStatus(String jobId, String accId, int status);
+
+    List<UserJobLink> getJobRecord(String userId);
 }

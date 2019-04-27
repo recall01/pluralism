@@ -145,6 +145,42 @@ function changeJobList(data) {
     $("#test").append(dom);
 }
 
+//修改学生列表的学生视图
+function changeStudentList(data) {
+    var studentList = data.data;
+    var hasTail = false;
+    var dom = "";
+    for (var i=0;i<studentList.length;i++){
+        var student = studentList[i];
+        if(i%2==0){
+            //奇数数列，加头部
+            hasTail = false;
+            dom = dom + "<div class='row'><div class='col-sm-6 e-left'><div class='e-desc'><h6><a>"+student.user.userName+"</a></h6><p class='testP'>"+student.introduction+"</p><hr><ul class='e-tags'>";
+            var jobTypes = student.jobList;
+            for(var j=0;j<jobTypes.length;j++){
+                var jobType = jobTypes[j];
+                dom = dom+"<li>"+jobType+"</li>";
+            }
+            dom = dom +"</ul><hr><ul class='desc-list'><li><span>特长:</span>"+student.specialty+"</li><li><span>薪资:</span>"+student.salary+"</li><li><span>邮箱:</span>"+student.user.userEmail+"</li><li><span>手机号: </span>"+student.user.userPhone+"</li></ul></div></div>"
+        }else {
+            //偶数数列，加尾部
+            hasTail = true;
+            dom = dom + "<div class='col-sm-6 e-left'><div class='e-desc'><h6><a>"+student.user.userName+"</a></h6><p class='testP'>"+student.introduction+"</p><hr><ul class='e-tags'>";
+            var jobTypes = student.jobList;
+            for(var j=0;j<jobTypes.length;j++){
+                var jobType = jobTypes[j];
+                dom = dom+"<li>"+jobType+"</li>";
+            }
+            dom = dom + "</ul><hr><ul class='desc-list'><li><span>特长:</span>"+student.specialty+"</li><li><span>薪资:</span>"+student.salary+"</li><li><span>邮箱:</span>"+student.user.userEmail+"</li><li><span>手机号: </span>"+student.user.userPhone+"</li></div></div></div>";
+        }
+    }
+    if(!hasTail){
+        dom = dom + "</div>";
+    }
+    console.log(dom);
+    $("#studentView").append(dom);
+}
+
 //修改找工作的工作列表视图
 function changeJobListInFindJob(data) {
     var jobList = data.data;
