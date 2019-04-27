@@ -40,4 +40,6 @@ public interface IUserService {
     Response getUserPage();
 
     Response getApplyPage();
+
+    User selectUserByphone(String userPhone);
 }

@@ -173,4 +173,14 @@ public class UserDaoImpl implements IUserDao {
             return 0;
         }
     }
+
+    @Override
+    public User selectUserByphone(String phone) {
+        try {
+            return userMapping.selectUserByphone(phone);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

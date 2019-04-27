@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/login",consumes = "application/x-www-form-urlencoded")
-    public Response login(@RequestParam String userPhone, @RequestParam String userPassword){
-        return userService.login(userPhone,userPassword);
+    public Response login(@RequestParam String username, @RequestParam String password){
+        return userService.login(username,password);
     }
     @PostMapping(value = "/userInfo",consumes = "application/x-www-form-urlencoded")
     public Response userInfo(@RequestParam String userId){

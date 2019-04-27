@@ -12,14 +12,20 @@ import com.wenyizhou.job.utils.IDUtil;
 import com.wenyizhou.job.utils.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.beans.Transient;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Autowired
     private HttpServletRequest httpServletRequest;
@@ -454,5 +460,38 @@ public class UserServiceImpl implements IUserService {
         response.setData(teacher);
         httpServletRequest.getSession().setAttribute("teacher",teacher);
         return response;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        if(StringUtils.isEmpty(userName)){
+            return null;
+        }
+        httpServletRequest.getSession().setAttribute("userPhone",userName);
+        //根据手机号查询学生信息
+        User user = userDao.selectUserByphone(userName);
+        if(user == null){
+            return null;
+        }
+        //根据user的roleType封装数据
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        GrantedAuthority authority;
+        switch (user.getRoleType()){
+            case 1:authority = new SimpleGrantedAuthority("ROLE_STUDENT");break;
+            case 2:authority = new SimpleGrantedAuthority("ROLE_TEACHER");break;
+            case 3:authority = new SimpleGrantedAuthority("ROLE_ADMIN");break;
+            default:authority = new SimpleGrantedAuthority("ROLE_TOURIST");break;
+        }
+        authorities.add(authority);
+        UserDe userDe = new UserDe(user.getUserPhone(), user.getUserPassword(), authorities);
+        return userDe;
+    }
+
+    @Override
+    public User selectUserByphone(String phone){
+        if(StringUtils.isEmpty(phone)){
+            return null;
+        }
+        return userDao.selectUserByphone(phone);
     }
 }

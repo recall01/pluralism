@@ -37,4 +37,6 @@ public interface IUserDao {
     int getUserPage();
 
     int getApplyPage();
+
+    User selectUserByphone(String phone);
 }

@@ -210,19 +210,19 @@
                 </div>
                 <div class="modal-body">
                     <!--<form action="" th:action="@{~/user/login}" method="post" class="p-3">-->
-                    <form method="post" class="p-3">
+                    <form th:action="@{~/user/login}" method="post" class="p-3">
                         <div class="form-group">
                             <label for="userPhone" class="col-form-label">手机号</label>
-                            <input type="text" class="form-control" placeholder=" " name="userName" id="userPhone"
+                            <input type="text" class="form-control" placeholder=" " name="username" id="userPhone"
                                 required="">
                         </div>
                         <div class="form-group">
                             <label for="userPassword" class="col-form-label">密码</label>
-                            <input type="password" class="form-control" placeholder=" " name="userPassword" id="userPassword"
+                            <input type="password" class="form-control" placeholder=" " name="password" id="userPassword"
                                 required="">
                         </div>
                         <div class="right-w3l">
-                            <input type="submit" class="form-control bg-theme" value="Login" id="login">
+                            <input type="submit" class="form-control bg-theme" value="Login" >
                         </div>
                         <p class="text-center dont-do">没有账号?
                             <a href="#" data-toggle="modal" data-target="#registerModal" class="text-dark">

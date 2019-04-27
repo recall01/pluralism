@@ -44,6 +44,9 @@
                         <li class="nav-item active mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                             <a th:href="@{~/jobList}">工作列表</a>
                         </li>
+                        <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3" th:if="${session.user} and ${session.user.roleType} eq 2">
+                            <a th:href="@{~/studentList}">人才中心</a>
+                        </li>
                         <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                             <a th:href="@{~/about}">勤工通告</a>
                         </li>

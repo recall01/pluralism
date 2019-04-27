@@ -41,6 +41,11 @@
         select * from User
         where UserPhone = #{userPhone} and UserPassword = #{userPassword}
     </select>
+    <select id="selectUserByphone" resultMap="userResult">
+        select * from User
+        where UserPhone = #{phone}
+    </select>
+
     <select id="selectUserById" resultMap="userResult">
         select * from User
         where UserId = #{userId}

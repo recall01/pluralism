@@ -25,4 +25,6 @@ public interface UserMapping {
     void delectUser(String userId);
 
     int selectUserTotal();
+
+    User selectUserByphone(String phone);
 }

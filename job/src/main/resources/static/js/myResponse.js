@@ -27,7 +27,7 @@ $("#register").on("click",function () {
     return false;
 });
 //登录按钮点击事件
-$("#login").on("click",function () {
+/*$("#login").on("click",function () {
     var userPhone = $("#userPhone").val();
     var userPassword = $("#userPassword").val();
     if(userPhone == null){
@@ -43,8 +43,8 @@ $("#login").on("click",function () {
         contentType:"application/x-www-form-urlencoded",
         url:"http://localhost:8080/user/login",
         data:{
-            "userPhone":userPhone,
-            "userPassword":userPassword
+            "username":userPhone,
+            "password":userPassword
         },
         success:function (data) {
             if(data != null){
@@ -54,11 +54,11 @@ $("#login").on("click",function () {
             }
         },
         error:function (data) {
-            alert("请求失败"+userPhone+" "+userPassword);
+            alert("请求失败");
         }
     });
     return false;
-});
+});*/
 $("#userInfo").on("click",function () {
     var userId = $("#userId").html();
     var roleType = $("#roleType").html();
@@ -94,6 +94,7 @@ $("#userInfo").on("click",function () {
             }
         },
         error:function (data) {
+            console.log(data);
             alert("请求失败");
         }
     });

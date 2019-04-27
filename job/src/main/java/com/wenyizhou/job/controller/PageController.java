@@ -1,11 +1,16 @@
 package com.wenyizhou.job.controller;
 
+import com.google.gson.Gson;
 import com.wenyizhou.job.model.Response;
 import com.wenyizhou.job.model.User;
+import com.wenyizhou.job.model.UserDe;
 import com.wenyizhou.job.service.IStudentService;
 import com.wenyizhou.job.service.IUserService;
+import com.wenyizhou.job.utils.ErrorCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +34,7 @@ public class PageController {
     public String index(){
         return "index";
     }
+
     @RequestMapping("/studentInfo")
     public String jobSingle(){
         return "student_info";
@@ -55,6 +61,30 @@ public class PageController {
     public String about(){
         return "about";
     }
+    @RequestMapping("/login")
+    public String login(){
+        String userPhone =(String) httpServletRequest.getSession().getAttribute("userPhone");
+        if(StringUtils.isEmpty(userPhone)){
+            return "/index";
+        }
+        User user = userService.selectUserByphone(userPhone);
+        //先移除verify缓存
+        String verfy = (String) httpServletRequest.getSession().getAttribute("verify");
+        if(verfy != null){
+            httpServletRequest.getSession().removeAttribute("verify");
+        }
+        if (user.getRoleType() == 0){ //未验证
+            httpServletRequest.getSession().setAttribute("verify","还未验证");
+        }
+        //将数据存入session
+        if(user != null){
+            httpServletRequest.getSession().setAttribute("user",user);
+        }
+        return "/index";
+    }
+
+
+
     @RequestMapping("/contact")
     public String contact(){
         return "contact";
@@ -77,18 +107,7 @@ public class PageController {
     }
     @RequestMapping("/teacherInfo")
     public String teacherInfo(){
-        //验证用户是否登录,并且是否为老师
-        User user = (User)httpServletRequest.getSession().getAttribute("user");
-        if(user == null){
-            return "/index";
-        }
-        if(user.getRoleType() == 2){
-            return "/teacher_info";
-        }else if(user.getRoleType() == 1){
-            return "/student_info";
-        }else {
-            return "/index";
-        }
+        return "/teacher_info";
     }
     @GetMapping("/findJob")
     public String findJob(@RequestParam String jobName, @RequestParam String jobTypeName){
