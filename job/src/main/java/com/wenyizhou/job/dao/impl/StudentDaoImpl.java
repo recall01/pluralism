@@ -159,4 +159,17 @@ public class StudentDaoImpl implements IStudentDao {
     public List<StudentVO> studentList(Integer page) {
         return studentMapping.selectStudentList(page);
     }
+
+    @Override
+    public List<StudentVO> studentListByJobType(String jobType, Integer page) {
+        try {
+            Map m = new HashMap();
+            m.put("jobType",jobType);
+            m.put("page",page);
+            return studentMapping.selectStudentListByJobType(m);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

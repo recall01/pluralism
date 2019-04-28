@@ -255,6 +255,28 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public Response studentListByJobType(String jobType, Integer page) {
+        Response response = new Response();
+        if(StringUtils.isEmpty(jobType)){
+            response.setError(ErrorCode.PARAMETER_ERROR);
+            return response;
+        }
+        if(page == null||page == 0){
+            page = 1;
+        }
+        page--;
+
+        List<StudentVO> students = studentDao.studentListByJobType(jobType,page);
+        for (int i=0;i<students.size();i++){
+            students.get(i).setFreeTimes(null);
+        }
+        response.setStatus(RESPONSE_SUCCESS);
+        response.setData(students);
+        response.setMsg("获取学生列表成功");
+        return response;
+    }
+
+    @Override
     public Response delectMsg(String userId, String newsId) {
         Response response = new Response();
         if(StringUtils.isEmpty(userId)||StringUtils.isEmpty(newsId)){

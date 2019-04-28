@@ -34,4 +34,6 @@ public interface StudentMapping {
     int selectStudentPage();
 
     List<StudentVO> selectStudentList(Integer page);
+
+    List<StudentVO> selectStudentListByJobType(Map m);
 }

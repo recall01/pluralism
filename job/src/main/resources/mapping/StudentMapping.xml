@@ -53,6 +53,13 @@
         on Student.UserId = User.UserId
         limit #{page},6
     </select>
+    <select id="selectStudentListByJobType" resultMap="studentVOResult">
+        SELECT * FROM Student
+        LEFT JOIN User
+        on Student.UserId = User.UserId
+        WHERE Student.JobType LIKE CONCAT('%',#{jobType},'%')
+        limit #{page},6
+    </select>
 
     <update id="updateIntroduction">
         update Student set

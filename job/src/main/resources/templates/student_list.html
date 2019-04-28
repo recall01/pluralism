@@ -229,12 +229,12 @@
                     var typeName = label.innerText;
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:8080/job/jobListByJobType?type="+typeName,
+                        url:"http://localhost:8080/student/studentListByJobType?type="+typeName+"&page=1",
                         success:function (data) {
                             if(data.status == 200){
                                 //先移除之前填充的html代码
-                                $("#test").children().remove();
-                                changeJobList(data);
+                                $("#studentView").children().remove();
+                                changeStudentList(data);
                             }else {
                                 alert("获取工作类型失败");
                             }

@@ -33,4 +33,6 @@ public interface IStudentDao {
     int getStudentPage();
 
     List<StudentVO> studentList(Integer page);
+
+    List<StudentVO> studentListByJobType(String jobType, Integer page);
 }

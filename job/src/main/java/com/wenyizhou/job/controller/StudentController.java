@@ -71,6 +71,9 @@ public class StudentController {
     public Response studentList(Integer page){
         return studentService.studentList(page);
     }
-
+    @GetMapping("/studentListByJobType")
+    public Response studentListByJobType(@RequestParam String type,@RequestParam Integer page){
+        return studentService.studentListByJobType(type,page);
+    }
 
 }

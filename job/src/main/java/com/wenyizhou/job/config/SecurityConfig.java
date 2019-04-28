@@ -24,7 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 //区分大小写
-                .antMatchers("/studentList","/teacherInfo" ).hasRole("TEACHER")
+                .antMatchers("/studentList","/teacherInfo","/detailsJob" ).hasRole("TEACHER")
+                .antMatchers("/studentInfo","/newsList","/jobRecord","/improveInfo").hasRole("STUDENT")
                 .antMatchers("/backstage").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and().anonymous()

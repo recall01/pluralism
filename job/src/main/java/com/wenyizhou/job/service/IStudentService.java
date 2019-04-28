@@ -32,4 +32,6 @@ public interface IStudentService {
     Response getJobRecord(String userId);
 
     Response studentList(Integer page);
+
+    Response studentListByJobType(String jobType, Integer page);
 }
