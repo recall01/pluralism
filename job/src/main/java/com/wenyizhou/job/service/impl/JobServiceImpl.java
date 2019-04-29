@@ -240,7 +240,11 @@ public class JobServiceImpl implements IJobService {
         }
         if(!user.getUserId() .equals(userId)){
             response.setError(ErrorCode.ACCOUNT_NOT_EXIST);
-            System.out.println(user.getUserId() +"---"+userId);
+            return response;
+        }
+        //获取user类型是否为学生
+        if(user.getRoleType() != 1){
+            response.setError(20004,"不是学生，无法申请工作");
             return response;
         }
         //2.在AppJob表中查询数据是否已经存在

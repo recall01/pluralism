@@ -111,7 +111,7 @@
                                 </div>
                                 <hr>
                                 <div class="tech-job">
-                                    <h5 class="w3layouts_pvt-head" id="jobType" data-toggle="modal" data-target="#jobTypeModal" title="点击添加兼职类型">想从事兼职类型.</h5>
+                                    <h5 class="w3layouts_pvt-head">想从事兼职类型.</h5>
                                     <p hidden th:if="${session.student}" th:text="${session.student.jobType}"></p>
                                     <ul class="e-tags">
                                         <li th:if="${session.student}" th:each="job:${session.student.jobList}" th:text="${job}"></li>

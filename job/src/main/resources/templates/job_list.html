@@ -65,9 +65,16 @@
                     <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
                             th:if="${session.user}" th:text="${session.user.userName}" id="userInfo">
                     </button>
-                    <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
                     <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
-                            data-toggle="modal" aria-pressed="false" data-target="#userInfoModal" th:if="${session.user}" id="exit">退出系统
+                            data-toggle="modal" aria-pressed="false" data-target="#verifyModal" th:if="${session.verify}" id="verify">验证用户
+                    </button>
+                    <p hidden="hidden" th:if="${session.user}" th:text="${session.user.userId}" id="userId"></p>
+                    <p hidden="hidden" th:if="${session.user}" th:text="${session.user.roleType}" id="roleType"></p>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" th:if="${session.user}" id="exit">退出系统
+                    </button>
+                    <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                            data-toggle="modal" th:if="${session.user} and ${session.user.roleType} eq 3" id="backstage">后台管理
                     </button>
                 </div>
             </nav>

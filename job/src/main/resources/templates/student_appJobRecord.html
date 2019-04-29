@@ -31,7 +31,7 @@
         <header>
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
-                    <h1><a class="navbar-brand" href=" " th:href="@{~/index}">大学生勤工俭学网</a></h1>
+                    <h1><a class="navbar-brand" href=" ">学生信息管理中心</a></h1>
                     <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -39,11 +39,14 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="ml-lg-5 navbar-nav mr-lg-auto">
-                            <li class="nav-item active  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                            <li class="nav-item mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                                 <a th:href="@{~/index}">首页</a>
                             </li>
                             <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                                 <a th:href="@{~/jobList}">工作列表</a>
+                            </li>
+                            <li class="nav-item active  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
+                                <a href="">学生信息</a>
                             </li>
                             <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                                 <a th:href="@{~/about}">勤工通告</a>
@@ -268,5 +271,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/myResponse.js"></script>
 </body>
 </html>

@@ -32,7 +32,7 @@
         <header>
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
-                    <h1><a class="navbar-brand" href=" " th:href="@{~/index}">大学生勤工俭学网</a></h1>
+                    <h1><a class="navbar-brand" href=" ">教师信息管理中心</a></h1>
                     <button class="navbar-toggler ml-lg-auto ml-sm-5 bg-light" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -45,6 +45,9 @@
                             </li>
                             <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                                 <a th:href="@{~/jobList}">工作列表</a>
+                            </li>
+                            <li class="nav-item mr-lg-4 mt-lg-0 mt-sm-4 mt-3" th:if="${session.user} and ${session.user.roleType} eq 2">
+                                <a th:href="@{~/studentList}">人才中心</a>
                             </li>
                             <li class="nav-item  mr-lg-4 mt-lg-0 mt-sm-4 mt-3">
                                 <a th:href="@{~/about}">勤工通告</a>
@@ -63,14 +66,17 @@
                         </button>
                         <div class="navbar-nav dropdown mr-lg-4 my-lg-0 my-sm-4 my-3">
                             <button class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block" role="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false" th:if="${session.user}" th:text="${session.user.userName}">
+                                    aria-expanded="false" th:if="${session.user}" th:text="${session.user.userName}">
                             </button>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                                 <a href="#" data-toggle="modal" data-target="#pubJobModal">发布招聘</a>
                                 <a href="#" data-toggle="modal" data-target="#freeTimeModal">我的招聘</a>
                             </div>
                         </div>
-
+                        <p hidden="hidden" th:if="${session.user}" th:text="${session.user.roleType}" id="roleType"></p>
+                        <button type="button" class="btn w3ls-btn ml-lg-1 text-uppercase font-weight-bold d-block"
+                                data-toggle="modal" th:if="${session.user}" id="exit">退出系统
+                        </button>
                     </div>
                 </nav>
             </div>
@@ -418,5 +424,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/myResponse.js"></script>
 </body>
 </html>
